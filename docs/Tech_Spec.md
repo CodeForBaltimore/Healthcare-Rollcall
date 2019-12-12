@@ -36,7 +36,7 @@ Based on findings in the research phase the development will be broken into segm
 ### Implementation
 Based on development timelines implementation of the system will be rolled out in phases.
 
-## Components
+## Stack (System Components)
 ### Web Portal
 [VueJS](https://vuejs.org/) - Client Logic and display framework in JavaScript, HTML, and CSS. A peer to Angular and React, but is Open Source. 
 
