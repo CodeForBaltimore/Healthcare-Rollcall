@@ -36,6 +36,25 @@ Based on findings in the research phase the development will be broken into segm
 ### Implementation
 Based on development timelines implementation of the system will be rolled out in phases.
 
+## Components
+### Web Portal
+[VueJS](https://vuejs.org/) - Client Logic and display framework in JavaScript, HTML, and CSS. A peer to Angular and React, but is Open Source. 
+
+### Server Technologies
+[Node JS](https://nodejs.org/en/) JavaScript runtime environment
+Node provides the following services
+* Package management
+* JS interpreter for logic (routing, business, database access, etc.)
+
+[Express JS](https://expressjs.com/en/guide/routing.html) Provides the http(s) server for the application
+Express JS provides the interface between the the web client and the server-side logic. Runs on Node.
+
+[Docker](https://www.docker.com/products/docker-desktop) Container system. Used for code deployment and server configuration. This allows developers to run the product locally on an identical environment as the Cloud application. Typically, a we would set up Docker container on a Cloud vender which runs the Node environment. There are docker containers for almost any runtime environment under the sun. 
+
+[Heroku](https://www.heroku.com/) The standard cloud vender for _Code for Baltimore._ A competitor to AWS, Google Cloud, Azure etc.
+
+### Database
+[PosgreSQL](https://www.docker.com/products/docker-desktop) Heroku's preferred relational database technology. Uses the popular SQL standard.
 
 ## Contact Info
 Tech Lead: [Jason Anton](https://github.com/revjtanton)
