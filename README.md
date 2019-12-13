@@ -11,12 +11,15 @@ This system will make use of digital services and modern methodologies to automa
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
 ## Setup
-What does someone need to do to get started with your project? Do they need to:
-* install software?
-* run some commands?
-* do something else?
+To run locally you will need NodeJS installed. You can find install information for your operating system at the official website https://nodejs.org/en/
 
-In this section of the `README` you should include any information a new contributor or user of the project needs to know to get running locally and setup.
+Once Node is install you may run the app locally by running the following commands from the `app` directory:
+```
+npm install
+npm start
+```
+
+The application will be available at http://localhost:3000/
 
 ## Using this product
 How would someone use this product? Give a few examples here.
