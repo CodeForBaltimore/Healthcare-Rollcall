@@ -11,15 +11,24 @@ This system will make use of digital services and modern methodologies to automa
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
 ## Setup
-To run locally you will need NodeJS installed. You can find install information for your operating system at the official website https://nodejs.org/en/
+To run locally you will need NodeJS and Docker installed. You can find install information for your operating system at https://nodejs.org/en/ and https://docs.docker.com/v17.09/engine/installation/
 
 Once Node is install you may run the app locally by running the following commands from the `app` directory:
 ```
+cd /backend
 npm install
-npm start
+
+cd ..
+cd /frontend 
+npm install 
+
+cd ..
+docker-compose up
 ```
 
-The application will be available at http://localhost:3000/
+The application will be available at http://localhost:8080/  
+
+**Note:** Depending on the OS you are running Docker on your localhost may be mapped to a different IP address. The standard IP address Docker is mapped to on Windows is 192.168.99.100 so you would access the application at 192.168.99.100:8080.  
 
 ## Using this product
 How would someone use this product? Give a few examples here.
