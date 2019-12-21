@@ -13,7 +13,7 @@ We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) a
 ## Setup
 To run locally you will need NodeJS and Docker installed. You can find install information for your operating system at https://nodejs.org/en/ and https://docs.docker.com/v17.09/engine/installation/
 
-Once Node is install you may run the app locally by running the following commands from the `app` directory:
+Once Node is install you may run the app locally by running the following commands from the `root` directory:
 ```
 cd /backend
 npm install
