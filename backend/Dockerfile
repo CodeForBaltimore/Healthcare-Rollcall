@@ -2,8 +2,8 @@
 FROM node:12.11.0-alpine
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/backend
+WORKDIR /usr/src/backend
 
 # Bundle app source
 COPY . .
