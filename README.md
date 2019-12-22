@@ -20,7 +20,7 @@ Once Node is install you may run the app locally by running the following comman
 
 The application will be available at http://localhost:8080/  
 
-**Note:** Depending on the OS you are running Docker on your localhost may be mapped to a different IP address. The standard IP address Docker is mapped to on Windows is 192.168.99.100 so you would access the application at 192.168.99.100:8080.  
+**Note:** Depending on the OS you are running `Docker` on your localhost may be mapped to a different IP address. The standard IP address `Docker` is mapped to on Windows is `192.168.99.100` so you would access the application at `192.168.99.100:8080`.  
 
 ## Using this product
 How would someone use this product? Give a few examples here.
