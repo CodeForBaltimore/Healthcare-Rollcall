@@ -5,11 +5,12 @@ FROM node:12.11.0-alpine
 RUN mkdir -p /usr/src/frontend
 WORKDIR /usr/src/frontend
 
+# Install app dependencies
+COPY ./frontend/package*.json ./
+RUN npm install
+
 # Bundle app source
 COPY . .
-
-# Install app dependencies
-RUN npm install
 
 # Expose port (will not be respected by Heroku, must be defined in app)
 EXPOSE 8080
