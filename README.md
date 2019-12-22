@@ -15,15 +15,7 @@ To run locally you will need NodeJS and Docker installed. You can find install i
 
 Once Node is install you may run the app locally by running the following commands from the `root` directory:
 ```
-cd /backend
-npm install
-
-cd ..
-cd /frontend 
-npm install 
-
-cd ..
-docker-compose up
+./start.sh
 ```
 
 The application will be available at http://localhost:8080/  
