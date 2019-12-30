@@ -11,6 +11,7 @@ services:
     build: ./frontend
     volumes:
       - ./frontend:/usr/src/frontend
+      - usr/src/frontend/node_modules
     ports:
       - "8080:8080"  
     environment:
