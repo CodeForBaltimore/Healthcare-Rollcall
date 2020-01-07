@@ -1,14 +1,19 @@
 # Tech Spec
+
 *_Healthcare Rollcall_* is an open-source project designed to be used by the City of Baltimore to supplement its existing emergency response plan. The application will be an API-first project to ensure maximum extendibility and flexibility..
 
 ## Overview
+
 In the event of a disaster (defined as greater than 20% of the city being without electrical power), Baltimore City and the Baltimore City Health Department (BCHD) is required, by law, to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track if any provider:
+
 * Has power
 * Is running on backup power
 * Has no power
+
 This system will make use of digital services and modern methodologies to automate parts of the check-in process to help the city prioritize its call list and response plan. Additionally, the system will validate contact information regularly during non-emergency times to ensure the city has the most up-to-date information for each provider.
 
 ## Scenarios
+
 Healthcare Rollcall is a multi-faceted and interconnected system with various check-in methods to a single source content management system and event dashboard. In this section we will review scenarios for how this system will be used by various identified stakeholders of the project.
 
 ### Flexible check-in process
@@ -34,27 +39,33 @@ With the dashboard present in the web app city employees can be notified of expi
 A dashboard view can provide each employee as much information as they need to know at any given time to make the most efficient use of the time in a crisis when every second counts.
 
 ## Non Goals
-1.  _Mobile app_: The initial product will not include a dedicated mobile app for any mobile platform.
-2.  _Hardware-based check-in solutions_: The initial product will not provide any hardware specific implementation of a check-in process. 
-3.  _Role-based dashboards_: The initial product will not provide customizable dashboards for various city user roles. A single dashboard with all information will be developed. 
+
+1. _Mobile app_: The initial product will not include a dedicated mobile app for any mobile platform.
+2. _Hardware-based check-in solutions_: The initial product will not provide any hardware specific implementation of a check-in process.
+3. _Role-based dashboards_: The initial product will not provide customizable dashboards for various city user roles. A single dashboard with all information will be developed.
 
 ## Minimum Viable Product
+
 1. _Automated or semi-automated check-in system_: The system will allow providers to automatically, or semi-automatically, check-in with the city and provide their status in an emergency.
 2. _Emergency administration and triage dashboards_: The system will have a detailed dashboard tailored to specific roles within a response team to inform city workers of the state of responses and assign priorities.
 3. _Contact management system_: The system will include methods to verify and update provider contact information.
 4. _Extendability_: The system will be designed to interface with other systems to integrate information as it becomes available (ie: power grid data).
 
 ## Components
+
 This system will be comprised of a single _Content Management System_ (CMS) and the potential for many check-in applications.
 
 ### Contact Management System
+
 ![User flow](img/cms_user_flow.png)
 
-[VueJS](https://vuejs.org/) - Client Logic and display framework in JavaScript, HTML, and CSS. A peer to Angular and React, but is Open Source. 
+[VueJS](https://vuejs.org/) - Client Logic and display framework in JavaScript, HTML, and CSS. A peer to Angular and React, but is Open Source.
 
 #### Server Technologies
+
 [Node JS](https://nodejs.org/en/) JavaScript runtime environment
 Node provides the following services
+
 * Package management
 * JS interpreter for logic (routing, business, database access, etc.)
 
@@ -66,20 +77,28 @@ Express JS provides the interface between the the web client and the server-side
 [Heroku](https://www.heroku.com/) The standard cloud vender for _Code for Baltimore._ A competitor to AWS, Google Cloud, Azure etc.
 
 #### Database
+
 [PosgreSQL](https://www.docker.com/products/docker-desktop) Heroku's preferred relational database technology. Uses the popular SQL standard.
 
+## Roadmap
 
-## Roadmap 
-### Research 
+### Research
+
 Code for Baltimore and partners will conduct research to identify UX priorities, alert and check-in methods, and how the product can best supplement Baltimore’s response plan.
-### Development 
+
+### Development
+
 Each high-level component of the system will be developed as on its own with its own roadmap and Github project. These projects will include:
--   Research
--   Content Mangement System and Crisis Management Dashboard
--   Check-in applications
+
+* Research
+* Content Mangement System and Crisis Management Dashboard
+* Check-in applications
+
 ### Implementation
+
 Based on development timelines implementation of the system will be rolled out in phases.
 
 ## Contact Info
--   _Tech Lead_: [Jason Anton](https://github.com/revjtanton)
--   _Developer_: [Jason Bixon](https://github.com/jbixon13)
+
+* _Tech Lead_: [Jason Anton](https://github.com/revjtanton)
+* _Developer_: [Jason Bixon](https://github.com/jbixon13)
