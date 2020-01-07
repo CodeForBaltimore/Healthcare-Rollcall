@@ -2,11 +2,11 @@
 FROM node:12.11.0-alpine
 
 # Create app directory
-RUN mkdir -p /usr/src/frontend
-WORKDIR /usr/src/frontend
+RUN mkdir -p /usr/src
+WORKDIR /usr/src
 
 # Install app dependencies
-COPY ./frontend/package*.json ./
+COPY ./package*.json ./
 RUN npm install
 
 # Bundle app source
