@@ -22,19 +22,19 @@ _Johns Hopkins Hospital_ keeps a staff on-call during emergency situations. Ther
 
 With _Healthcare Rollcall_ the hospital can provide current and accurate information to the City of Baltimore in a number of ways. The system will allow an automated check in via an app that sends push notifications to remind authorized users. This way hospital employees can provide the city with the information it needs to prioritize response without sacrificing time and attention that could be used elsewhere.
 
-During non-emergency times the hospital staff can use the system to list responsible individuals, grant access as needed, and otherwise keep their contact information and preferences current. 
+During non-emergency times the hospital staff can use the system to list responsible individuals, grant access as needed, and otherwise keep their contact information and preferences current.
 
 ### Up to date info
 
-Many providers in Baltimore City are smaller care facilities who care for only a few patients at a time. These facilities may only have a few employees, and may lack the resources of the larger hospitals. In these cases higher-tech solutions, and a contact tree, may turn out to be more of a burden than a help. 
+Many providers in Baltimore City are smaller care facilities who care for only a few patients at a time. These facilities may only have a few employees, and may lack the resources of the larger hospitals. In these cases higher-tech solutions, and a contact tree, may turn out to be more of a burden than a help.
 
-The flexibility of the contact management system will allow smaller facilities to simply provide up to date phone contact information so the city can take the initiative to check-in during an emergency. Non-emergency time will give the smaller facilities time to easily and quickly update their contact information. 
+The flexibility of the contact management system will allow smaller facilities to simply provide up to date phone contact information so the city can take the initiative to check-in during an emergency. Non-emergency time will give the smaller facilities time to easily and quickly update their contact information.
 
 ### City dashboard
 
 City employees need to be enabled to keep track of the status of more than 400 facilities in the greater Baltimore area. During an emergency this can mean calling and re-calling all 400 facilities on the list in no particular order.
 
-With the dashboard present in the web app city employees can be notified of expired updates and better prioritize the call list based on more up-to-date information shared between city employees. 
+With the dashboard present in the web app city employees can be notified of expired updates and better prioritize the call list based on more up-to-date information shared between city employees.
 
 A dashboard view can provide each employee as much information as they need to know at any given time to make the most efficient use of the time in a crisis when every second counts.
 
@@ -72,7 +72,7 @@ Node provides the following services
 [Express JS](https://expressjs.com/en/guide/routing.html) Provides the http(s) server for the application
 Express JS provides the interface between the the web client and the server-side logic. Runs on Node.
 
-[Docker](https://www.docker.com/products/docker-desktop) Container system. Used for code deployment and server configuration. This allows developers to run the product locally on an identical environment as the Cloud application. Typically, a we would set up Docker container on a Cloud vender which runs the Node environment. There are docker containers for almost any runtime environment under the sun. 
+[Docker](https://www.docker.com/products/docker-desktop) Container system. Used for code deployment and server configuration. This allows developers to run the product locally on an identical environment as the Cloud application. Typically, a we would set up Docker container on a Cloud vender which runs the Node environment. There are docker containers for almost any runtime environment under the sun.
 
 [Heroku](https://www.heroku.com/) The standard cloud vender for _Code for Baltimore._ A competitor to AWS, Google Cloud, Azure etc.
 

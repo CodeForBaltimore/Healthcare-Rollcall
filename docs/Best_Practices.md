@@ -1,4 +1,5 @@
 # Best Practices
+
 Code for Baltimore projects should be built with the intention of deploying on [Heroku](https://heroku.com). For details on Heroku Best Practices see their [developer documentation](https://devcenter.heroku.com/articles/node-best-practices).
 
 ## Project Management
@@ -53,4 +54,4 @@ Branch names should follow this patter: `<your github username>/issue-<github is
 
 When work is complete, and after static code analysis has been performed, the developer should submit a pull request in Github.  A pull request template has been provided, and developers should take care to fill out the form as completely as possible when submitting new pull requests omitting any sections that are deemed unnecessary for that particular submission.  Pull requests should require at least 1 review from another verified team member before they are approved and merged into the `master` branch.  
 
-While not strictly required, it is recommended that pull requests are submitted early on in the development process with the intention of maintaining high visibility over the work while it is in progress. 
+While not strictly required, it is recommended that pull requests are submitted early on in the development process with the intention of maintaining high visibility over the work while it is in progress.
