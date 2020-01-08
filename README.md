@@ -1,9 +1,5 @@
 # Healthcare Rollcall
 
-<p align="center">
-    <img src="docs/img/CFB.png" width="400">
-</p>
-
 In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) is required to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track if any provider:
 
 * Has power
@@ -59,3 +55,7 @@ What does someone need to do to test their work? Have you included a specific te
 ## Sources and Links
 
 If referencing any third party service, code, etc, cite it here.
+
+<p align="center">
+    <img src="docs/img/CfB.png" width="400">
+</p>
