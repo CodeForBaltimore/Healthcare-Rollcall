@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive)
+
 # Healthcare Rollcall
 
 In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) is required to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track if any provider:
@@ -54,7 +56,9 @@ What does someone need to do to test their work? Have you included a specific te
 
 ## Sources and Links
 
-If referencing any third party service, code, etc, cite it here.
+We are also building a back-end API to feed and manage data for this project. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Bmore-Responsive
+
+We will be including multi-repo build processes with the back-end that will reference this project.
 
 <p align="center">
     <img src="docs/img/CfB.png" width="400">
