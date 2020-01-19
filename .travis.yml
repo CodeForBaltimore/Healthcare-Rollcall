@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-    - "node"
+- node
 sudo: required
-
 services:
 - docker
-
 script:
 - npm test
+notifications:
+  slack:
+    secure: N+v2bD1U8P5lcmNXDFAk1AJW0L4oUAzXsCzsfJno3jXs+1x/uEY/qX4mdyUuYMEuQoSDdP6Uljdrl2xA+uwLJkTjEJa5Q0jf5qWzxLjRn9VtxZTTe8LHUbM7YdjXCMBM6bXb2IkAXYhdh0lcpZOH7R/316vukWaAJPhGJPTG8LELb61SuGbwf2z6RQ2wxjdj5BxPBrL+h9fFEHjXaLk+MmnLATPCNjS0dqgTpwQ8RHFyke+BU9QgTuOd/uBIxlUlkODO6soQw/z9VppzX8t12cod7VNBK+TpBweD/xehdogrVvWfTT4GRFJzRhu1adaZFzR/YwYZy3WiBJ8i6J7ZO8X2oL/iTtwFPz6wL47PTsqnYLJpFaLUBT6nkKf3u2+zDQJNriCkXI9BrVd7zFx9bgPaGInF/s51KYH9z3/O97NJ4ifG1lQyojBRdXsNRUX7uW6xYijiTbX2Vdn96xXBnj4Ups7lS6uCx8fzVh5QFLU0h86LLjRUINYROCKg+A9v6uDj+wGrJ9JMHvHsqOprJ6xV4GLAkt0ZeC+SxcsHji3LWWnTQ3UKmi2Wk+h4PWAKIYvdakhHkkqrfUtTnqTtlCMz+mfG77AjmGP0UNbVEZ2eQOSSRKaWZgyL1et5iHSzkD5yc2lwllgg8zApysanIuveuSp9CN7QEkVrSq7SnV8=
