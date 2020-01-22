@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <img alt="Vue logo" src="./assets/CfB.png">
         <div id="nav">
             <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
         </div>
@@ -36,15 +37,27 @@
 </script>
 
 <style>
-    body {
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  width: 100%;
+  margin: auto;
+}
+
+body {
         background-color: #F0F0F0;
     }
     h1 {
         padding: 0;
         margin-top: 0;
     }
-    #app {
-        width: 100%;
-        margin: auto;
-    }
+
+#app img{
+  max-width: 25vw;
+  min-width: 200px;
+}
 </style>
