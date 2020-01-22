@@ -24,7 +24,7 @@
           //TODO: call API here
           if(this.input.username === this.$parent.mockAccount.username && this.input.password === this.$parent.mockAccount.password) {
             this.$emit("authenticated", true);
-            this.$router.replace({ name: "secure" });
+            this.$router.replace({ name: "hello" });
           } else {
             // eslint-disable-next-line no-console
             console.log("The username and / or password is incorrect");
