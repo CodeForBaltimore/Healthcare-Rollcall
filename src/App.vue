@@ -15,7 +15,7 @@
             return {
                 authenticated: false,
                 mockAccount: {
-                    username: "admin",
+                    email: "admin",
                     password: "admin"
                 }
             }
