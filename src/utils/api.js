@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 export const postLogin = (email, password) => {
+    const fullUrl = new URL('/user/login', process.env.BASE_API_URL);
     return axios.post(
-        'http://localhost:5433/user/login',
+        fullUrl.toString(),
         {
             email,
             password

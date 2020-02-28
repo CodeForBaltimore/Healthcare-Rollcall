@@ -20,6 +20,12 @@ We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) a
 npm install
 ```
 
+Add the following to a file named `.env` in your project directory:
+```shell
+BASE_API_URL=YOUR_API_URL
+```
+Where YOUR_API_URL would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
+
 ### Compiles and hot-reloads for development
 
 ```shell
