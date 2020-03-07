@@ -1,15 +1,15 @@
 <template>
   <div id="login" >
     <h1>Login</h1>
-    <form class="login-container">
+    <form class="login-container" v-on:submit.prevent>
       <label>
         <input type="text" name="email" v-model="input.email" placeholder="Email" />
       </label>
       <label>
         <input type="password" name="password" v-model="input.password" placeholder="Password" />
       </label>
+      <button type="submit" v-on:click="login()">Login</button>
     </form>
-    <button type="button" v-on:click="login()">Login</button>
   </div>
 </template>
 
