@@ -22,9 +22,9 @@ npm install
 
 Add the following to a file named `.env` in your project directory:
 ```shell
-BASE_API_URL=YOUR_API_URL
+VUE_APP_BASE_API_URL=<your API url>
 ```
-Where YOUR_API_URL would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
+Where <your API url> would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
 
 ### Compiles and hot-reloads for development
 

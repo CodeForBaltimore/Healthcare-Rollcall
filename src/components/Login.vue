@@ -28,6 +28,7 @@
     },
     methods: {
       login() {
+        console.log(process.env.VUE_APP_BASE_API_URL)
         if(this.input.email !== "" && this.input.password !== "") {
           const response = postLogin(this.input.email, this.input.password);
           response.then((data)  => {
