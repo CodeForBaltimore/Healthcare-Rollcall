@@ -14,10 +14,6 @@
         data() {
             return {
                 authenticated: false,
-                mockAccount: {
-                    email: "admin",
-                    password: "admin"
-                }
             }
         },
         mounted() {
@@ -43,7 +39,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   width: 100%;
   margin: auto;
 }
