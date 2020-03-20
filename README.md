@@ -20,6 +20,12 @@ We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) a
 npm install
 ```
 
+Add the following to a file named `.env` in your project directory:
+```shell
+VUE_APP_BASE_API_URL=<your API url>
+```
+Where <your API url> would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
+
 ### Compiles and hot-reloads for development
 
 ```shell
