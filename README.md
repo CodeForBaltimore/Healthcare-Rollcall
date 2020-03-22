@@ -45,6 +45,8 @@ DATABASE_PASSWORD=<your password>
 ```
 The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgress://username:password@host:port/database_name`
 
+An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
+
 ## 2.2. Compiles and hot-reloads for development
 
 ```shell
