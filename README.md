@@ -43,6 +43,7 @@ DATABASE_URL=postgres://user:pass@example.com:5432/dbname
 DATABASE_USER=<your username>
 DATABASE_PASSWORD=<your password>
 ```
+The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgress://username:password@host:port/database_name`
 
 ## 2.2. Compiles and hot-reloads for development
 
