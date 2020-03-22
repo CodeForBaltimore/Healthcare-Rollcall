@@ -2,11 +2,11 @@
 - [1. Healthcare Rollcall](#1-healthcare-rollcall)    
     - [1.1. Documentation](#11-documentation)
 - [2. Project setup](#2-project-setup)        
-        - [2.0.1. Docker and docker-compose](#201-docker-and-docker-compose)  
-    - [2.1. Compiles and hot-reloads for development](#21-compiles-and-hot-reloads-for-development)   
-    - [2.2. Compiles and minifies for production](#22-compiles-and-minifies-for-production)    
-    - [2.3. Lints and fixes files](#23-lints-and-fixes-files)    
-    - [2.4. Customize configuration](#24-customize-configuration)
+    - [2.1. Docker and docker-compose](#201-docker-and-docker-compose)  
+    - [2.2. Compiles and hot-reloads for development](#21-compiles-and-hot-reloads-for-development)   
+    - [2.3. Compiles and minifies for production](#22-compiles-and-minifies-for-production)    
+    - [2.4. Lints and fixes files](#23-lints-and-fixes-files)    
+    - [2.5. Customize configuration](#24-customize-configuration)
 - [3. Using this product](#3-using-this-product)    
     - [3.1. Testing](#31-testing)
 - [4. Sources and Links](#4-sources-and-links)
@@ -36,7 +36,7 @@ VUE_APP_BASE_API_URL=<your API url>
 ```
 Where <your API url> would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
 
-### 2.0.1. Docker and docker-compose
+## 2.1. Docker and docker-compose
 To use the backend of this project in an easy way, a `docker-compose` file has been included for convenience. To run this you must add a few entries to your `.env` file.
 ```shell
 DATABASE_URL=postgres://user:pass@example.com:5432/dbname
@@ -44,7 +44,7 @@ DATABASE_USER=<your username>
 DATABASE_PASSWORD=<your password>
 ```
 
-## 2.1. Compiles and hot-reloads for development
+## 2.2. Compiles and hot-reloads for development
 
 ```shell
 npm run serve
@@ -54,19 +54,19 @@ The application will be available at http://localhost:8080/
 
 **Note:** Depending on the OS you are running `Docker` on your localhost may be mapped to a different IP address. The standard IP address `Docker` is mapped to on Windows is `192.168.99.100` so you would access the application at `192.168.99.100:8080`.  
 
-## 2.2. Compiles and minifies for production
+## 2.3. Compiles and minifies for production
 
 ```shell
 npm run build
 ```
 
-## 2.3. Lints and fixes files
+## 2.4. Lints and fixes files
 
 ```shell
 npm run lint
 ```
 
-## 2.4. Customize configuration
+## 2.5. Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
