@@ -8,7 +8,7 @@
       <label>
         <input type="password" name="password" v-model="input.password" placeholder="Password" />
       </label>
-      <button type="submit" v-on:click="login()">Login</button>
+      <b-button type="submit" v-on:click="login()">Login</b-button>
     </form>
   </div>
 </template>
@@ -34,7 +34,7 @@
           response.then((data)  => {
             if (data.status === 200) { //TODO: store JWT and check it here instead of 200
               this.$emit("authenticated", true);
-              this.$router.replace({name: "hello"});
+              this.$router.replace({name: "secure"});
             } else {
               // eslint-disable-next-line no-console
               console.log("The email and / or password is incorrect");
@@ -52,7 +52,6 @@
 <style scoped>
   #login {
     width: 500px;
-    border: 1px solid #CCCCCC;
     background-color: #FFFFFF;
     margin: auto;
     padding: 20px;
