@@ -1,5 +1,15 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
-<!-- TOC -->autoauto- [1. Healthcare Rollcall](#1-healthcare-rollcall)auto    - [1.1. Documentation](#11-documentation)auto- [2. Project setup](#2-project-setup)auto        - [2.0.1. Docker and docker-compose](#201-docker-and-docker-compose)auto    - [2.1. Compiles and hot-reloads for development](#21-compiles-and-hot-reloads-for-development)auto    - [2.2. Compiles and minifies for production](#22-compiles-and-minifies-for-production)auto    - [2.3. Lints and fixes files](#23-lints-and-fixes-files)auto    - [2.4. Customize configuration](#24-customize-configuration)auto- [3. Using this product](#3-using-this-product)auto    - [3.1. Testing](#31-testing)auto- [4. Sources and Links](#4-sources-and-links)autoauto<!-- /TOC -->
+- [1. Healthcare Rollcall](#1-healthcare-rollcall)    
+    - [1.1. Documentation](#11-documentation)
+- [2. Project setup](#2-project-setup)        
+        - [2.0.1. Docker and docker-compose](#201-docker-and-docker-compose)  
+    - [2.1. Compiles and hot-reloads for development](#21-compiles-and-hot-reloads-for-development)   
+    - [2.2. Compiles and minifies for production](#22-compiles-and-minifies-for-production)    
+    - [2.3. Lints and fixes files](#23-lints-and-fixes-files)    
+    - [2.4. Customize configuration](#24-customize-configuration)
+- [3. Using this product](#3-using-this-product)    
+    - [3.1. Testing](#31-testing)
+- [4. Sources and Links](#4-sources-and-links)
 # 1. Healthcare Rollcall
 
 In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) is required to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track if any provider:
