@@ -1,0 +1,23 @@
+version: '3'
+services:
+  api:
+    image: codeforbaltimore/bmore-responsive:release-1.0.0-rc
+    depends_on: 
+      - db
+    links:
+      - "db: database"
+    ports:
+      - '3000:3000'
+    command: >
+      sh -c "npm run db-create && 
+             npm start"
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    env_file: .env
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
