@@ -1,15 +1,4 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
-- [1. Healthcare Rollcall](#1-healthcare-rollcall)    
-    - [1.1. Documentation](#11-documentation)
-- [2. Project setup](#2-project-setup)        
-    - [2.1. Docker and docker-compose](#21-docker-and-docker-compose)  
-    - [2.2. Compiles and hot-reloads for development](#22-compiles-and-hot-reloads-for-development)   
-    - [2.3. Compiles and minifies for production](#23-compiles-and-minifies-for-production)    
-    - [2.4. Lints and fixes files](#24-lints-and-fixes-files)    
-    - [2.5. Customize configuration](#25-customize-configuration)
-- [3. Using this product](#3-using-this-product)    
-    - [3.1. Testing](#31-testing)
-- [4. Sources and Links](#4-sources-and-links)
 # 1. Healthcare Rollcall
 
 In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) is required to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track if any provider:
@@ -48,6 +37,18 @@ The `DATABASE_URL` is not a very clear var name, and the string is broken down a
 An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
 
 You would then run the docker-compose setup with `docker-compose up -d` to run the Db & API in detached mode and then `npm run serve` to run the frontend.
+
+### Full .env example
+Here is a full example of default values for our `.env` file. You should be able to copy/paste this directly and it will work locally, however we ***STRONGLY*** encourage you to use custom values.
+```
+VUE_APP_BASE_API_URL=http://localhost:3000
+NODE_ENV=development
+DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+JWT_KEY=abc123
+BYPASS_LOGIN=true
+```
 
 ## 2.2. Compiles and hot-reloads for development
 
