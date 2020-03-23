@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: codeforbaltimore/bmore-responsive:release-1.0.0-rc
+    image: codeforbaltimore/bmore-responsive
     depends_on: 
       - db
     links:
@@ -9,7 +9,9 @@ services:
     ports:
       - '3000:3000'
     command: >
-      sh -c "npm run db-create && 
+      sh -c "npm run db-delete &&
+             npm run db-create && 
+             npm run db-seed &&
              npm start"
     volumes:
       - .:/app/
