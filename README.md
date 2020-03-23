@@ -43,6 +43,11 @@ DATABASE_URL=postgres://user:pass@example.com:5432/dbname
 DATABASE_USER=<your username>
 DATABASE_PASSWORD=<your password>
 ```
+The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgres://username:password@host:port/database_name`
+
+An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
+
+You would then run the docker-compose setup with `docker-compose up -d` to run the Db & API in detached mode and then `npm run serve` to run the frontend.
 
 ## 2.2. Compiles and hot-reloads for development
 
