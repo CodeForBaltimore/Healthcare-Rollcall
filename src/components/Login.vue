@@ -1,5 +1,5 @@
 <template>
-  <div id="login" >
+  <div id="login">
     <h1>Login</h1>
     <form class="login-container" v-on:submit.prevent>
       <label>
@@ -14,57 +14,60 @@
 </template>
 
 <script>
-  import {postLogin} from '../utils/api';
+import { postLogin } from "../utils/api";
+import { mapActions } from "vuex";
 
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        input: {
-          email: "",
-          password: ""
-        }
+export default {
+  name: "Login",
+  data() {
+    return {
+      input: {
+        email: "",
+        password: ""
       }
-    },
-    methods: {
-      login() {
-        console.log(process.env.VUE_APP_BASE_API_URL)
-        if(this.input.email !== "" && this.input.password !== "") {
-          const response = postLogin(this.input.email, this.input.password);
-          response.then((data)  => {
-            if (data.status === 200) { //TODO: store JWT and check it here instead of 200
-              this.$emit("authenticated", true);
-              this.$router.replace({name: "dashboard"});
-            } else {
-              // eslint-disable-next-line no-console
-              console.log("The email and / or password is incorrect");
-            }
-          })
-        } else {
-          // eslint-disable-next-line no-console
-          console.log("A email and password must be present");
-        }
+    };
+  },
+  methods: {
+    ...mapActions(["authenticate"]),
+    login() {
+      console.log(process.env.VUE_APP_BASE_API_URL);
+      if (this.input.email !== "" && this.input.password !== "") {
+        const response = postLogin(this.input.email, this.input.password);
+        response.then(data => {
+          if (data.data) {
+            this.authenticate(data.data);
+            this.$emit("authenticated", true);
+            this.$router.replace({ name: "dashboard" });
+          } else {
+            // eslint-disable-next-line no-console
+            console.log("The email and / or password is incorrect");
+          }
+        });
+      } else {
+        // eslint-disable-next-line no-console
+        console.log("A email and password must be present");
       }
     }
   }
+};
 </script>
 
 <style scoped>
-  #login {
-    width: 500px;
-    background-color: #FFFFFF;
-    margin: auto;
-    padding: 20px;
-  }
-  .login-container {
-    margin: auto;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+#login {
+  width: 500px;
+  background-color: #ffffff;
+  margin: auto;
+  padding: 20px;
+}
+.login-container {
+  margin: auto;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .login-container > input {
-    margin-bottom: 10px;
-  }
+.login-container > input {
+  margin-bottom: 10px;
+}
 </style>
