@@ -7,6 +7,7 @@
         <b-row>
             <b-col cols="4">
                 <b-card title="Contact Information">
+                    <!-- Show Address if available -->
                     <h6 class="card-subtitle mb-2" v-if="data.address">Address</h6>
                     <p v-if="data.address">
                         <span v-for="line in data.address.street" v-bind:key="line" class="address-line">{{ line }}</span>
@@ -14,6 +15,8 @@
                             {{ data.address.city }}, {{ data.address.state }} {{ data.address.zip }}
                         </span>
                     </p>
+
+                    <!-- Show Email Address if available -->
                     <h6 class="card-subtitle mb-2" v-if="data.email.length > 0">Email Addresses</h6>
                     <p v-if="data.email.length == 1" v-bind:class="{ primary: data.email[0].isPrimary }">
                         <a v-bind:href="'mailto:' +  data.email[0].address">{{ data.email[0].address }}</a>
@@ -23,6 +26,8 @@
                             v-bind:key="address.address"
                             v-bind:class="{ primary: address.isPrimary }"><a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a></li>
                     </ol>
+
+                    <!-- Show Phone Numbers if available -->
                     <h6 class="card-subtitle mb-2" v-if="data.phone.length > 0">Phone Numbers</h6>
                     <p v-if="data.phone.length == 1" v-bind:class="{ primary: data.phone[0].isPrimary }">
                         {{ data.phone[0].number }}
@@ -32,6 +37,8 @@
                             v-bind:key="number.number"
                             v-bind:class="{ primary: number.isPrimary }">{{ number.number }}</li>
                     </ol>
+
+                    <!-- Show Contacts if available -->
                     <h6 class="card-subtitle mb-2" v-if="data.contacts.length > 0">Contacts</h6>
                 </b-card>
             </b-col>

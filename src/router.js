@@ -27,6 +27,7 @@ export default new Router({
             component: DashboardComponent
         },
         {
+            // Add new route with entity ID
             path: '/facility/:entityID',
             name: 'facility',
             component: FacilityComponent

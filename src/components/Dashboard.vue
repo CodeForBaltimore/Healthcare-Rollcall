@@ -3,6 +3,7 @@
         <h1>Dashboard</h1>
         <b-row>
             <b-col>
+                <!-- Dashboard Table -->
                 <table class="table">
                     <tr>
                         <td>Name</td>
@@ -41,6 +42,7 @@
             axios
                 .get(self.api + '/entity')
                 .then(function(response) {
+                    // Save API response to component data
                     self.updateEntities(response.data.results);
                 })
                 .catch(function(err) {
@@ -51,5 +53,8 @@
 </script>
 
 <style scoped>
+    h1 {
+        text-align: left;
+    }
 
 </style>
