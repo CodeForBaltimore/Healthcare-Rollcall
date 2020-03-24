@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import LoginComponent from "./components/Login.vue"
-import SecureComponent from "./components/Secure.vue"
+import DashboardComponent from "./components/Dashboard.vue"
 import FacilityComponent from "./components/Facility.vue"
 import HelloWorldComponent from "./components/HelloWorld.vue"
 
@@ -22,9 +22,9 @@ export default new Router({
             component: LoginComponent
         },
         {
-            path: "/secure",
-            name: "secure",
-            component: SecureComponent
+            path: "/dashboard",
+            name: "dashboard",
+            component: DashboardComponent
         },
         {
             path: '/facility/:entityID',

@@ -34,7 +34,7 @@
           response.then((data)  => {
             if (data.status === 200) { //TODO: store JWT and check it here instead of 200
               this.$emit("authenticated", true);
-              this.$router.replace({name: "secure"});
+              this.$router.replace({name: "dashboard"});
             } else {
               // eslint-disable-next-line no-console
               console.log("The email and / or password is incorrect");
