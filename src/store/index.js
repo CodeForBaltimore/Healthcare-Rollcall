@@ -9,12 +9,18 @@ export default new Vuex.Store({
   },
   mutations: {
     AUTHENTICATE: (state, token) =>{
-      state.auth = token
+      state.auth = token;
+    },
+    UNSETAUTH: (state) => {
+      state.auth = '';
     }
   },
   actions: {
     authenticate: (context, token) => {
-      context.commit("AUTHENTICATE", token)
+      context.commit("AUTHENTICATE", token);
+    },
+    unsetAuth: (context) => {
+      context.commit("UNSETAUTH");
     }
   },
   modules: {

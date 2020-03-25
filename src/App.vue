@@ -11,33 +11,33 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
-  data() {
-    return {
-      authenticated: () =>{
-          if(this.auth_token){
-              return true
-          }else{
-              return false
-          }
-      }
-    };
-  },
   computed: mapState({
     auth_token: "auth"
   }),
+  data() {
+    return {
+      authenticated: false
+    }
+  },
   mounted() {
+    if(this.auth_token != ''){
+      this.authenticated = true;
+    }
     if (!this.authenticated) {
       this.$router.replace({ name: "login" });
     }
   },
   methods: {
+    ...mapActions(["unsetAuth"]),
     setAuthenticated(status) {
       this.authenticated = status;
     },
     logout() {
+      this.unsetAuth();
       this.authenticated = false;
     }
   }
