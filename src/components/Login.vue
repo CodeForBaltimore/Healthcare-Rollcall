@@ -30,11 +30,11 @@ export default {
   methods: {
     ...mapActions(["authenticate"]),
     login() {
-      console.log(process.env.VUE_APP_BASE_API_URL);
       if (this.input.email !== "" && this.input.password !== "") {
         const response = postLogin(this.input.email, this.input.password);
         response.then(data => {
           if (data.data) {
+            this.$cookies.set('Health_Auth', data.data, '1D', true);
             this.authenticate(data.data);
             this.$emit("authenticated", true);
             this.$router.replace({ name: "dashboard" });

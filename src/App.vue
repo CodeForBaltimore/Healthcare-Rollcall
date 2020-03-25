@@ -24,21 +24,25 @@ export default {
     }
   },
   mounted() {
-    if(this.auth_token != ''){
+    if(this.$cookies.isKey('Health_Auth')){
+      this.authenticate(this.$cookies.get('Health_Auth'));
       this.authenticated = true;
     }
     if (!this.authenticated) {
       this.$router.replace({ name: "login" });
+    }else{
+      this.$router.replace({name: 'dashboard'});
     }
   },
   methods: {
-    ...mapActions(["unsetAuth"]),
+    ...mapActions(["unsetAuth", "authenticate"]),
     setAuthenticated(status) {
       this.authenticated = status;
     },
     logout() {
       this.unsetAuth();
       this.authenticated = false;
+      this.$cookies.remove('Health_Auth');
     }
   }
 };
