@@ -17,7 +17,11 @@
                 :to="{ name: 'facility', params: { entityID: entity.id }}"
               >{{ entity.name }}</router-link>
             </td>
-            <td>{{ entity.checkIn[0] }}</td>
+            <td>
+              <div v-if="entity.checkin">
+              {{ entity.checkIn.checkIns[0] }}
+              </div>
+              </td>
             <td>{{ entity.updatedAt }}</td>
           </tr>
         </table>
