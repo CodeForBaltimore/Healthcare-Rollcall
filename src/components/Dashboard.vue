@@ -1,6 +1,7 @@
 <template>
   <b-container fluid="md" id="secure">
     <h1>Dashboard</h1>
+    <h3>Hello {{this.$jwt.decode(auth_token).email}}</h3>
     <b-row>
       <b-col>
         <!-- Dashboard Table -->
@@ -16,13 +17,12 @@
                 :to="{ name: 'facility', params: { entityID: entity.id }}"
               >{{ entity.name }}</router-link>
             </td>
-            <td>{{ entity.checkIn }}</td>
+            <td>{{ entity.checkIn[0] }}</td>
             <td>{{ entity.updatedAt }}</td>
           </tr>
         </table>
       </b-col>
     </b-row>
-    <div>{{ auth_token }}</div>
   </b-container>
 </template>
 
