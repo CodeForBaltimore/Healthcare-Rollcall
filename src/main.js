@@ -20,7 +20,9 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   if(Vue.$cookies.get('Health_Auth')) {
     next();
-  } else if (to.name !== 'login' && !store.state.authenticated) {
+  } else if(to.name == 'reset' && !store.state.authenticated){
+    next();
+  }else if (to.name !== 'login' && !store.state.authenticated) {
     next({name: 'login'});
   } else {
     next();
