@@ -18,3 +18,18 @@ export const postReset = (email) => {
             email
         }).then(response => response)
 };
+
+export const updateUser = (email_token, email, password) => {
+    const fullUrl = new URL('/user', process.env.VUE_APP_BASE_API_URL);
+    return axios.put(fullUrl.toString(),
+        {
+            email,
+            password,
+        },
+        {
+            headers: {
+                'email_token': email_token
+            }
+        }
+    ).then(response => response);
+}
