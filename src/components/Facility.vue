@@ -75,8 +75,15 @@
                 <b-row>
                     <b-col>
                         <b-card title="New Check-In" class="facility-check-in">
-                            <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
+                            <b-alert show variant="success" v-if="!showForm">
+                                <h6 class="alert-heading">Check-In Complete</h6>
+                                <p>The form was successfully saved for {{ entity.name }}.</p>
+                            </b-alert>
+
+                            <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
+
                             <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
+                                <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
                                 <h5>Question 1</h5>
                                 <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.question1[0].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="Yes">Yes</b-form-radio>
