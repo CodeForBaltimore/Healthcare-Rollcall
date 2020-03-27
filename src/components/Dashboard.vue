@@ -9,15 +9,15 @@
                 striped
                 hover
                 :items="entities"
-                :fields="['name', 'checkIn', 'updatedAt']"
+                :fields="['name', 'lastCheckIn', 'updatedAt']"
         >
           <template v-slot:cell(name)="data">
             <router-link
                     :to="{ name: 'facility', params: { entityID: data.item.id }}"
             >{{ data.item.name }}</router-link>
           </template>
-          <template v-slot:cell(checkIn)="data">
-            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[0] }}</span>
+          <template v-slot:cell(lastCheckIn)="data">
+            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[0][data.item.checkIn.checkIns[0].length-1].status }}</span>
           </template>
         </b-table>
         <b-pagination
