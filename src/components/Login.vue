@@ -10,11 +10,28 @@
       </label>
       <b-button type="submit" v-on:click="login()">Login</b-button>
     </form>
+    <div>
+      <a v-b-modal.reset-pass href="#">Forgot Password?</a>
+    </div>
+    <b-modal id="reset-pass" title="Reset Password" hide-footer>
+      <p class="my-4">Please provide the email of the account to reset the password for:</p>
+      <label>
+        <input type="text" name="email" v-model="input.reset_email" placeholder="Email" />
+      </label>
+      <b-button type="submit" v-on:click="resetPass()">Reset Password</b-button>
+      <b-alert
+        :show="this.dismissCountDown"
+        dismissible
+        fade
+        variant="warning"
+        @dismiss-count-down="this.countDownChanged"
+      >{{this.reset_alert}}</b-alert>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import { postLogin } from "../utils/api";
+import { postLogin, postReset } from "../utils/api";
 
 export default {
   name: "Login",
@@ -22,14 +39,18 @@ export default {
     return {
       input: {
         email: "",
-        password: ""
-      }
+        password: "",
+        reset_email: ""
+      },
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      reset_alert: ""
     };
   },
   created() {
-    if(this.$root.getAuthenticationStatus()) {
+    if (this.$root.getAuthenticationStatus()) {
       this.$router.replace({ name: "dashboard" });
-    } else if(this.$root.getTokenFromCookie()) {
+    } else if (this.$root.getTokenFromCookie()) {
       this.$root.authenticateUser(this.$root.getTokenFromCookie());
       this.$router.replace({ name: "dashboard" });
     }
@@ -51,6 +72,23 @@ export default {
         // eslint-disable-next-line no-console
         console.log("A email and password must be present");
       }
+    },
+    resetPass() {
+      if (this.input.reset_email !== "") {
+        const response = postReset(this.input.reset_email);
+        response
+          .then(() => {
+            this.showAlert("Password reset email sent!");
+          })
+          .catch(this.showAlert("Failed sending email"));
+      }
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    showAlert(msg) {
+      this.reset_alert = msg;
+      this.dismissCountDown = this.dismissSecs;
     }
   }
 };
@@ -65,6 +103,7 @@ export default {
 }
 .login-container {
   margin: auto;
+  margin-bottom: 1rem;
   width: 200px;
   display: flex;
   flex-direction: column;
