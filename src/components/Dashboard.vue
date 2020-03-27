@@ -1,30 +1,31 @@
 <template>
-  <b-container fluid="md" id="secure">
+  <b-container fluid="md" id="dashboard">
     <h1>Dashboard</h1>
-    <h3>Hello {{this.$jwt.decode(this.$root.auth_token).email}}</h3>
     <b-row>
       <b-col>
         <!-- Dashboard Table -->
-        <table class="table">
-          <tr>
-            <td>Name</td>
-            <td>Status</td>
-            <td>Updated</td>
-          </tr>
-          <tr v-for="entity in entities" v-bind:key="entity.id">
-            <td>
-              <router-link
-                :to="{ name: 'facility', params: { entityID: entity.id }}"
-              >{{ entity.name }}</router-link>
-            </td>
-            <td>
-              <div v-if="entity.checkin">
-              {{ entity.checkIn.checkIns[0] }}
-              </div>
-              </td>
-            <td>{{ entity.updatedAt }}</td>
-          </tr>
-        </table>
+        <b-table
+                id="dashboard-table"
+                striped
+                hover
+                :items="entities"
+                :fields="['name', 'checkIn', 'updatedAt']"
+        >
+          <template v-slot:cell(name)="data">
+            <router-link
+                    :to="{ name: 'facility', params: { entityID: data.item.id }}"
+            >{{ data.item.name }}</router-link>
+          </template>
+          <template v-slot:cell(checkIn)="data">
+            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[0] }}</span>
+          </template>
+        </b-table>
+        <b-pagination
+                v-model="table.currentPage"
+                :total-rows="table.rows"
+                :per-page="10"
+                aria-controls="dashboard-table"
+        ></b-pagination>
       </b-col>
     </b-row>
   </b-container>
@@ -35,7 +36,11 @@
     name: "Dashboard",
     data() {
       return {
-        entities: null
+        entities: null,
+        table: {
+          rows: 0,
+          currentPage: 1
+        }
       };
     },
     methods: {
@@ -44,13 +49,24 @@
       }
     },
     mounted() {
-      this.$root.apiRequest("/entity", this.updateEntities);
+      this.$root.apiGETRequest("/entity", this.updateEntities);
     }
   }
 </script>
 
-<style scoped>
+<style>
   h1, h3 {
     text-align: left;
+  }
+  table tr > th, table tr > td {
+    text-align: left !important;
+  }
+  ul.pagination {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  ul.pagination > li {
+    display: inline-block;
   }
 </style>
