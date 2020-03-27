@@ -3,22 +3,22 @@
     <h1>Login</h1>
     <form class="login-container" v-on:submit.prevent>
       <label>
-        <input type="text" name="email" v-model="input.email" placeholder="Email" />
+        <b-form-input type="text" name="email" v-model="input.email" placeholder="Email" />
       </label>
       <label>
-        <input type="password" name="password" v-model="input.password" placeholder="Password" />
+        <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
       </label>
-      <b-button type="submit" v-on:click="login()">Login</b-button>
+      <div>
+        <a v-b-modal.reset-pass href="#">Forgot Password?</a>
+      </div>
+      <b-button type="submit" v-on:click="login()" variant="primary">Login</b-button>
     </form>
-    <div>
-      <a v-b-modal.reset-pass href="#">Forgot Password?</a>
-    </div>
     <b-modal id="reset-pass" title="Reset Password" hide-footer>
       <p class="my-4">Please provide the email of the account to reset the password for:</p>
       <label>
-        <input type="text" name="email" v-model="input.reset_email" placeholder="Email" />
+        <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" />
       </label>
-      <b-button type="submit" v-on:click="resetPass()">Reset Password</b-button>
+      <b-button type="submit" v-on:click="resetPass()" variant="primary">Reset Password</b-button>
       <b-alert
         :show="this.dismissCountDown"
         dismissible
@@ -108,6 +108,23 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#login .login-container {
+  text-align: left;
+  margin: 0;
+  margin-top: 15px;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.login-container button {
+  margin-top:15px;
+  min-width: 40%;
+}
+
+#login label, #login label input {
+  width: 100% !important;
 }
 
 .login-container > input {

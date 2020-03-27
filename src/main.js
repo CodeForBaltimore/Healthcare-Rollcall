@@ -79,8 +79,7 @@ new Vue({
       this.unsetAuth();
       this.$cookies.remove('Health_Auth');
     },
-    apiRequest(endpoint, callback) {
-      console.log(this.getSavedToken());
+    apiGETRequest(endpoint, callback) {
       let self = this;
       axios
           .get(self.api + endpoint, {
@@ -93,7 +92,23 @@ new Vue({
           })
           .catch(function(err) {
             console.log(err);
-            return false;
+            callback(false);
+          });
+    },
+    apiPUTRequest(endpoint, payload, callback) {
+      let self = this;
+      axios
+          .put(self.api + endpoint, payload, {
+            headers: {
+              'token': self.getSavedToken()
+            },
+          })
+          .then(function(response) {
+            callback(response);
+          })
+          .catch(function(err) {
+            console.log(err);
+            callback(false);
           });
     },
   },
