@@ -2,7 +2,7 @@
     <b-container fluid="md" id="facility">
         <h1>{{ entity.name }}</h1>
         <b-row>
-            <b-col cols="4">
+            <b-col cols="12" md="4">
                 <b-card title="Contact Information">
                     <!-- Show Address if available -->
                     <h6 class="card-subtitle mb-2" v-if="entity.address">Address</h6>
@@ -58,7 +58,7 @@
 
                 </b-card>
             </b-col>
-            <b-col cols="8">
+            <b-col cols="12" md="8">
                 <b-row>
                     <b-col>
                         <b-card title="Previous Check-In" class="facility-check-in">
