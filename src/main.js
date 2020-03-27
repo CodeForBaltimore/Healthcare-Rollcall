@@ -31,7 +31,8 @@ new Vue({
   store,
   render: h => h(App),
   computed: mapState({
-    auth_token: "auth"
+    auth_token: "auth",
+    auth_state: "authenticated"
   }),
   data(){
     return {
@@ -39,38 +40,39 @@ new Vue({
       authenticated: false
     }
   },
+  created: function () {
+    if(!this.authenticated && this.getTokenFromCookie()) {
+      this.authenticateUser(this.getTokenFromCookie());
+    }
+  },
   methods: {
     ...mapActions(["unsetAuth", "authenticate"]),
     authenticateUser(response) {
-      this.authenticated = true;
       this.setAuthCookie(response);
       this.authenticate(response);
-      this.$emit("authenticated", true);
     },
     setAuthCookie(response) {
-      this.setToken(response);
-      this.$cookies.set('Health_Auth', response, '1D', true);
-    },
-    setToken(token) {
-      store.state.auth = token;
+      if(this.getTokenFromCookie() && !this.getTokenFromCookie().localeCompare(response)){
+        this.$cookies.remove('Health_Auth');
+        this.$cookies.set('Health_Auth', response, '1D', true);
+      } else if(!this.getTokenFromCookie()) {
+        this.$cookies.set('Health_Auth', response, '1D', true);
+      }
     },
     getAuthenticationStatus() {
-      return this.authenticated;
+      return this.auth_state;
     },
     getSavedToken() {
-      return store.state.auth;
+      return this.auth_token;
     },
     getTokenFromCookie() {
-      this.setToken(this.$cookies.get('Health_Auth'));
-      return this.getSavedToken();
+      return this.$cookies.get('Health_Auth');
     },
-    logout() {
-      this.authenticated = false;
+    destroySession() {
       this.unsetAuth();
       this.$cookies.remove('Health_Auth');
-      this.setToken(null);
     },
-    apiRequest(endpoint) {
+    apiRequest(endpoint, callback) {
       let self = this;
       axios
           .get(self.api + endpoint, {
@@ -79,8 +81,7 @@ new Vue({
             },
           })
           .then(function(response) {
-            // Save API response to component data
-            return response.data.results;
+            callback(response.data);
           })
           .catch(function(err) {
             console.log(err);

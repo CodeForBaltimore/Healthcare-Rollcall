@@ -1,6 +1,6 @@
 <template>
     <b-container fluid="md" id="facility">
-        <h1>{{ data.name }}</h1>
+        <h1>{{ entity.name }}</h1>
         <p class="return-link">
             <router-link :to="{ name: 'dashboard'}">&larr; Back to Dashboard</router-link>
         </p>
@@ -8,40 +8,40 @@
             <b-col cols="4">
                 <b-card title="Contact Information">
                     <!-- Show Address if available -->
-                    <h6 class="card-subtitle mb-2" v-if="data.address">Address</h6>
-                    <p v-if="data.address">
-                        <span v-for="line in data.address.street" v-bind:key="line" class="address-line">{{ line }}</span>
-                        <span v-if="data.address.city && data.address.state && data.address.zip" class="address-line">
-                            {{ data.address.city }}, {{ data.address.state }} {{ data.address.zip }}
+                    <h6 class="card-subtitle mb-2" v-if="entity.address">Address</h6>
+                    <p v-if="entity.address">
+                        <span v-for="line in entity.address.street" v-bind:key="line" class="address-line">{{ line }}</span>
+                        <span v-if="entity.address.city && entity.address.state && entity.address.zip" class="address-line">
+                            {{ entity.address.city }}, {{ entity.address.state }} {{ entity.address.zip }}
                         </span>
                     </p>
 
                     <!-- Show Email Address if available -->
-                    <h6 class="card-subtitle mb-2" v-if="data.email">Email Addresses</h6>
-                    <p v-if="data.email" v-bind:class="{ primary: data.email[0].isPrimary }">
-                        <a v-bind:href="'mailto:' +  data.email[0].address">{{ data.email[0].address }}</a>
+                    <h6 class="card-subtitle mb-2" v-if="entity.email">Email Addresses</h6>
+                    <p v-if="entity.email" v-bind:class="{ primary: entity.email[0].isPrimary }">
+                        <a v-bind:href="'mailto:' +  entity.email[0].address">{{ entity.email[0].address }}</a>
                     </p>
-                    <ol v-if="data.email">
-                        <li v-for="address in data.email"
+                    <ol v-if="entity.email">
+                        <li v-for="address in entity.email"
                             v-bind:key="address.address"
                             v-bind:class="{ primary: address.isPrimary }"><a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a></li>
                     </ol>
 
                     <!-- Show Phone Numbers if available -->
-                    <h6 class="card-subtitle mb-2" v-if="data.phone">Phone Numbers</h6>
-                    <p v-if="data.phone" v-bind:class="{ primary: data.phone[0].isPrimary }">
-                        {{ data.phone[0].number }}
+                    <h6 class="card-subtitle mb-2" v-if="entity.phone">Phone Numbers</h6>
+                    <p v-if="entity.phone" v-bind:class="{ primary: entity.phone[0].isPrimary }">
+                        {{ entity.phone[0].number }}
                     </p>
-                    <ol v-if="data.phone">
-                        <li v-for="number in data.phone"
+                    <ol v-if="entity.phone">
+                        <li v-for="number in entity.phone"
                             v-bind:key="number.number"
                             v-bind:class="{ primary: number.isPrimary }">{{ number.number }}</li>
                     </ol>
 
                     <!-- Show Contacts if available -->
-                    <h6 class="card-subtitle mb-2" v-if="data.contacts">Contacts</h6>
-                    <ul v-if="data.contacts">
-                        <li v-for="contact in data.contacts"
+                    <h6 class="card-subtitle mb-2" v-if="entity.contacts">Contacts</h6>
+                    <ul v-if="entity.contacts">
+                        <li v-for="contact in entity.contacts"
                             v-bind:key="contact.id">
                             <a v-bind:href="`/user/${contact.contact.id}`">{{contact.contact.name}}</a><br />
                             Phone:
@@ -86,18 +86,18 @@
         name: "Facility",
         data() {
             return {
-                data: {
-                    name: ""
+                entity: {
+                    name: "Loading..."
                 }
             }
         },
         methods: {
             updateFacilityData(obj) {
-                this.data = obj;
+                this.entity = obj;
             }
         },
-        created() {
-            this.updateFacilityData(this.$root.apiRequest("/entity/" + this.$route.params.entityID));
+        mounted() {
+            this.$root.apiRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
         }
     }
 </script>

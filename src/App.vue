@@ -2,27 +2,19 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/CfB.png" />
     <div id="nav">
-      <a href="#" v-if="isAuthenticated()" v-on:click.prevent="logout()">Logout</a>
+      <b-button variant="link" v-if="this.$root.auth_state" v-on:click="logout()">Logout</b-button>
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
     name: "App",
-    created() {
-      if(!this.isAuthenticated() && this.$root.getTokenFromCookie()) {
-        this.$root.authenticateUser(this.$root.getTokenFromCookie());
-      }
-    },
     methods: {
-      isAuthenticated() {
-        return this.$root.getAuthenticationStatus();
-      },
       logout() {
-        this.$root.logout();
-        this.$router.replace({ name: "login" });
+        this.$root.destroySession();
+        this.$router.push({ name: "login" });
       }
     }
   };
