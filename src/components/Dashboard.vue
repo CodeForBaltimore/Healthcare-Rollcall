@@ -17,7 +17,7 @@
             >{{ data.item.name }}</router-link>
           </template>
           <template v-slot:cell(lastCheckIn)="data">
-            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[0][data.item.checkIn.checkIns[0].length-1].status }}</span>
+            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
           </template>
         </b-table>
         <b-pagination
