@@ -82,13 +82,10 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
     export default {
         name: "Facility",
         data() {
             return {
-                api: this.$root.$data.apiEndpoint,
                 data: {
                     name: ""
                 }
@@ -100,15 +97,7 @@
             }
         },
         created() {
-            let self = this;
-            axios
-                .get(self.api + '/entity/' + self.$route.params.entityID)
-                .then(function(response) {
-                    self.updateFacilityData(response.data);
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+            this.updateFacilityData(this.$root.apiRequest("/entity/" + this.$route.params.entityID));
         }
     }
 </script>

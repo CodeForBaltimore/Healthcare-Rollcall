@@ -15,7 +15,6 @@
 
 <script>
 import { postLogin } from "../utils/api";
-import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -27,16 +26,21 @@ export default {
       }
     };
   },
+  created() {
+    if(this.$root.getAuthenticationStatus()) {
+      this.$router.replace({ name: "dashboard" });
+    } else if(this.$root.getTokenFromCookie()) {
+      this.$root.authenticateUser(this.$root.getTokenFromCookie());
+      this.$router.replace({ name: "dashboard" });
+    }
+  },
   methods: {
-    ...mapActions(["authenticate"]),
     login() {
       if (this.input.email !== "" && this.input.password !== "") {
         const response = postLogin(this.input.email, this.input.password);
         response.then(data => {
           if (data.data) {
-            this.$cookies.set('Health_Auth', data.data, '1D', true);
-            this.authenticate(data.data);
-            this.$emit("authenticated", true);
+            this.$root.authenticateUser(data.data);
             this.$router.replace({ name: "dashboard" });
           } else {
             // eslint-disable-next-line no-console

@@ -1,7 +1,7 @@
 <template>
   <b-container fluid="md" id="secure">
     <h1>Dashboard</h1>
-    <h3>Hello {{this.$jwt.decode(auth_token).email}}</h3>
+    <h3>Hello {{this.$jwt.decode(this.$root.getSavedToken()).email}}</h3>
     <b-row>
       <b-col>
         <!-- Dashboard Table -->
@@ -27,36 +27,23 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapState } from "vuex";
 
 export default {
   name: "dashboard",
   data() {
     return {
-      api: this.$root.$data.apiEndpoint,
       entities: null
     };
   },
-  computed: mapState({
-    auth_token: "auth"
-  }),
   methods: {
     updateEntities(obj) {
       this.entities = obj;
     }
   },
-  created() {
-    let self = this;
-    axios
-      .get(self.api + "/entity")
-      .then(function(response) {
-        // Save API response to component data
-        self.updateEntities(response.data.results);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+  mounted() {
+    this.updateEntities(
+      this.$root.apiRequest("/entity")
+    );
   }
 };
 </script>

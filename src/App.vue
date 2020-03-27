@@ -2,49 +2,30 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/CfB.png" />
     <div id="nav">
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+      <a href="#" v-if="isAuthenticated()" v-on:click.prevent="logout()">Logout</a>
     </div>
-    <router-view @authenticated="setAuthenticated" />
+    <router-view/>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapActions } from "vuex";
-
-export default {
-  name: "App",
-  computed: mapState({
-    auth_token: "auth"
-  }),
-  data() {
-    return {
-      authenticated: false
-    }
-  },
-  mounted() {
-    if(this.$cookies.isKey('Health_Auth')){
-      this.authenticate(this.$cookies.get('Health_Auth'));
-      this.authenticated = true;
-    }
-    if (!this.authenticated) {
-      this.$router.replace({ name: "login" });
-    }else{
-      this.$router.replace({name: 'dashboard'});
-    }
-  },
-  methods: {
-    ...mapActions(["unsetAuth", "authenticate"]),
-    setAuthenticated(status) {
-      this.authenticated = status;
+  export default {
+    name: "App",
+    created() {
+      if(!this.isAuthenticated() && this.$root.getTokenFromCookie()) {
+        this.$root.authenticateUser(this.$root.getTokenFromCookie());
+      }
     },
-    logout() {
-      this.unsetAuth();
-      this.authenticated = false;
-      this.$cookies.remove('Health_Auth');
+    methods: {
+      isAuthenticated() {
+        return this.$root.getAuthenticationStatus();
+      },
+      logout() {
+        this.$root.logout();
+        this.$router.replace({ name: "login" });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
