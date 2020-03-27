@@ -50,13 +50,18 @@ new Vue({
     authenticateUser(response) {
       this.setAuthCookie(response);
       this.authenticate(response);
+      this.$emit("authenticated", true);
     },
     setAuthCookie(response) {
-      if(this.getTokenFromCookie() && !this.getTokenFromCookie().localeCompare(response)){
+      if(this.getTokenFromCookie() && this.getTokenFromCookie() !== response){
+        console.log("cookie looks different.");
         this.$cookies.remove('Health_Auth');
-        this.$cookies.set('Health_Auth', response, '1D', true);
+        this.$cookies.set('Health_Auth', response, '1D', null);
       } else if(!this.getTokenFromCookie()) {
-        this.$cookies.set('Health_Auth', response, '1D', true);
+        console.log("no cookie detected. adding new cookie.");
+        this.$cookies.set('Health_Auth', response, '1D', null);
+      } else {
+        console.log("cookies are the same. doing nothing.");
       }
     },
     getAuthenticationStatus() {
@@ -73,6 +78,7 @@ new Vue({
       this.$cookies.remove('Health_Auth');
     },
     apiRequest(endpoint, callback) {
+      console.log(this.getSavedToken());
       let self = this;
       axios
           .get(self.api + endpoint, {

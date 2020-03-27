@@ -97,7 +97,9 @@
             }
         },
         mounted() {
-            this.$root.apiRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
+            if(this.$root.auth_state) {
+                this.$root.apiRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
+            }
         }
     }
 </script>

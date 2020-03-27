@@ -46,7 +46,7 @@
     mounted() {
       this.$root.apiRequest("/entity", this.updateEntities);
     }
-  };
+  }
 </script>
 
 <style scoped>
