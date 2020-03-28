@@ -1,4 +1,4 @@
-            <template>
+<template>
   <b-container fluid="md" id="dashboard">
     <h1>Dashboard Test</h1>
     <b-row>
@@ -27,20 +27,20 @@
         </b-form-group>
       </b-col>
 
-       <b-table
-                id="dashboard-table"
-                striped
-                hover
-                :filter="filter"
-                :filterIncludedFields="filterOn"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
-                :sort-direction="sortDirection"
-                @filtered="onFiltered"
-                stickyheader:true
-                :items="entities"
-                :fields="[
-{
+      <b-table
+        id="dashboard-table"
+        striped
+        hover
+        :filter="filter"
+        :filterIncludedFields="filterOn"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :sort-direction="sortDirection"
+        @filtered="onFiltered"
+        stickyheader:true
+        :items="entities"
+        :fields="[
+          {
             key: 'name', stickyColumn: true, isRowHeader: true,   
             sortable: true
           },
@@ -55,11 +55,7 @@
             // Variant applies to the whole column, including the header and footer
             //variant: 'danger'
           }
-
-
-]"
-        >
-
+        ]">
 
           <template v-slot:cell(name)="data">
             <router-link
@@ -70,16 +66,16 @@
             <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
           </template>
         </b-table>
-       <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      first-text="⏮"
-      prev-text="⏪"
-      next-text="⏩"
-      last-text="⏭"
-      class="mt-4"
-    ></b-pagination>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          first-text="⏮"
+          prev-text="⏪"
+          next-text="⏩"
+          last-text="⏭"
+          class="mt-4"
+        ></b-pagination>
       </b-col>
     </b-row>
   </b-container>
@@ -90,16 +86,21 @@
     name: "Dashboard",
     data() {
       return {
-      rows: 20,
+        rows: 20,
         perPage: 10,
         currentPage: 1,
-      filter: null,
+        filter: null,
         filterOn: [],
         entities: null,
         table: {
           rows: 0,
           currentPage: 1
-        }
+        },
+        fields: [
+            { key: 'name', sortable: true },
+            { key: 'lastCheckIn', sortable: true },
+            { key: 'updatedAt', sortable: true }
+        ]
       };
     },
     methods: {
