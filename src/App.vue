@@ -40,7 +40,10 @@
       }
     },
     created() {
-      this.user = this.$jwt.decode(this.$root.auth_token).email;
+      var decoded = this.$jwt.decode(this.$root.auth_token);
+      if(decoded){
+        this.user = decoded.email;
+      }
     },
     methods: {
       logout() {

@@ -51,6 +51,11 @@
               key: 'updatedAt',
               label: 'Updated',
               sortable: true,
+              formatter: value => {
+                var date = new Date(value);
+                var formatted = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+                return formatted;
+              }
               // Variant applies to the whole column, including the header and footer
               //variant: 'danger'
             }
