@@ -68,6 +68,7 @@
           </template>
           <template v-slot:cell(status)="data">
             <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
+            <span v-if="!data.item.checkIn">No Previous Check-in</span>
           </template>
         </b-table>
         <b-pagination
