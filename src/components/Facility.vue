@@ -37,10 +37,15 @@
 
                     <!-- Show Contacts if available -->
                     <h6 class="card-subtitle mb-2" v-if="entity.contacts && entity.contacts.length > 0">Contacts</h6>
-                    <ul v-if="entity.contacts.length > 0">
+                    <div v-if="entity.contacts.length === 1">
+                        <p><a v-bind:href="'/user/' + entity.contacts[0].contact.id">{{ entity.contacts[0].contact.name }}</a></p>
+                        <p v-if="entity.contacts[0].phone.length === 1">Phone: {{ entity.contacts[0].phone[0].number}}</p>
+                        <p v-if="entity.contacts[0].email.length === 1">Email: <a v-bind:href="'mailto:' + entity.contacts[0].email[0].address">{{ entity.contacts[0].email[0].address}}</a></p>
+                    </div>
+                    <ul v-if="entity.contacts && entity.contacts.length > 1">
                         <li v-for="contact in entity.contacts"
-                            v-bind:key="contact.id">
-                            <a v-bind:href="`/user/${contact.contact.id}`">{{contact.contact.name}}</a><br />
+                            v-bind:key="contact.contact.id">
+                            <br />
                             Phone:
                             <ol v-if="contact.contact.phone">
                                 <li v-for="number in contact.contact.phone"
@@ -55,7 +60,7 @@
                             </ol>
                         </li>
                     </ul>
-
+                    <b-button v-on:click="addNed()">Add Ned</b-button>
                 </b-card>
             </b-col>
             <b-col cols="12" md="8">
@@ -290,6 +295,15 @@
                         this.lastCheckInStatus.state = "danger";
                         break;
                 }
+            },
+            addNed() {
+                let payload = {
+                    id: "f633ed0e-0362-4cbe-b8cc-a2aba5b5758f",
+                    EntityId: "a04f258b-4a9d-494a-8787-16292e2d1140"
+                };
+                this.$root.apiPUTRequest("/contact", payload, function(response) {
+                    console.log(response);
+                });
             }
         },
         mounted() {
@@ -301,6 +315,9 @@
 <style scoped>
     h1 {
         text-align: left;
+    }
+    .card h6 {
+        font-weight: bold;
     }
     form h5 {
         border-bottom: 2px solid #42484f;

@@ -1,6 +1,7 @@
 <template>
   <b-container fluid="md" id="dashboard">
-    <h1>Dashboard</h1>
+    <h1>Provider Status Dashboard</h1>
+    <h4 class="text-muted">Status &amp; Check-in Starting Point</h4>
     <b-row>
       <b-col>
         <!-- Dashboard Table -->

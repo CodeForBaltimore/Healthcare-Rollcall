@@ -62,7 +62,7 @@
     font-family: "Open Sans", OpenSans, Open-Sans, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+    text-align: left;
     color: #2c3e50;
     width: 100%;
     margin: auto;
@@ -101,6 +101,13 @@
   h1 {
     padding: 0;
     margin-top: 0;
+    font-size: 36px !important;
+  }
+
+  p.lead {
+    font-size: 18px;
+    font-weight: unset;
+    margin-top: 30px;
   }
 
   nav#primary-nav img.seal {
@@ -114,5 +121,9 @@
     height: 60px;
     max-height: 60px;
     margin-left: 15px;
+  }
+
+  strong {
+    font-weight: bold;
   }
 </style>
