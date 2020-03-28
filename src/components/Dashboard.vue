@@ -9,7 +9,7 @@
                 striped
                 hover
                 :items="entities"
-                :fields="['name', 'lastCheckIn', 'updatedAt']"
+                :fields="fields"
         >
           <template v-slot:cell(name)="data">
             <router-link
@@ -40,7 +40,12 @@
         table: {
           rows: 0,
           currentPage: 1
-        }
+        },
+        fields: [
+            { key: 'name', sortable: true },
+            { key: 'lastCheckIn', sortable: true },
+            { key: 'updatedAt', sortable: true }
+        ]
       };
     },
     methods: {
