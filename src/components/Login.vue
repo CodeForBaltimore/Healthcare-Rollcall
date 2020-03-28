@@ -1,18 +1,28 @@
 <template>
-  <div id="login">
-    <h1>Login</h1>
-    <form class="login-container" v-on:submit.prevent>
-      <label>
-        <b-form-input type="text" name="email" v-model="input.email" placeholder="Email" />
-      </label>
-      <label>
-        <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
-      </label>
-      <div>
-        <a v-b-modal.reset-pass href="#">Forgot Password?</a>
-      </div>
-      <b-button type="submit" v-on:click="login()" variant="primary">Login</b-button>
-    </form>
+  <b-container fluid="md" id="login">
+    <b-row>
+      <b-col cols="12" md="6">
+        <h1>Welcome to Healthcare Roll Call</h1>
+        <h4 class="text-muted">Check-in for Healthcare Providers</h4>
+        <p class="lead"><strong>Healthcare Roll Call</strong> allows municipalities to keep track of the status of local healthcare providers connectivity and emergency-related needs.  The <strong>Healthcare Roll Call</strong> collects and consolidates all emergency information in one database, allowing city employees to easily track provider status.</p>
+      </b-col>
+      <b-col cols="12" md="6">
+        <b-card title="Login">
+          <form class="login-container" v-on:submit.prevent>
+            <label>
+              <b-form-input type="text" name="email" v-model="input.email" placeholder="Email" />
+            </label>
+            <label>
+              <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
+            </label>
+            <div>
+              <a v-b-modal.reset-pass href="#">Forgot/Reset Password</a>
+            </div>
+            <b-button type="submit" v-on:click="login()" variant="primary">Login</b-button>
+          </form>
+        </b-card>
+      </b-col>
+    </b-row>
     <b-modal id="reset-pass" title="Reset Password" hide-footer>
       <p class="my-4">Please provide the email of the account to reset the password for:</p>
       <label>
@@ -27,7 +37,7 @@
         @dismiss-count-down="this.countDownChanged"
       >{{this.reset_alert}}</b-alert>
     </b-modal>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -95,39 +105,41 @@ export default {
 </script>
 
 <style scoped>
-#login {
-  width: 500px;
-  background-color: #ffffff;
-  margin: auto;
-  padding: 20px;
-}
-.login-container {
-  margin: auto;
-  margin-bottom: 1rem;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#login .login-container {
-  text-align: left;
-  margin: 0;
-  margin-top: 15px;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-}
+  #login {
+    background-color: #ffffff;
+    margin: auto;
+    padding: 20px;
+  }
+  .login-container {
+    margin: auto;
+    margin-bottom: 1rem;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #login .login-container {
+    text-align: left;
+    margin: 0;
+    margin-top: 15px;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.login-container button {
-  margin-top:15px;
-  min-width: 40%;
-}
+  .login-container button {
+    margin-top:15px;
+    min-width: 40%;
+  }
 
-#login label, #login label input {
-  width: 100% !important;
-}
+  #login label, #login label input {
+    width: 100% !important;
+  }
 
-.login-container > input {
-  margin-bottom: 10px;
-}
+  .login-container > input {
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 36px !important;
+  }
 </style>
