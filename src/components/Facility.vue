@@ -287,16 +287,21 @@
                 console.log(response);
                 this.setLastCheckInData();
             },
+            toggleForm(){
+                this.resetCheckin();
+                this.showForm = true;
+            },
             resetCheckin() {
-                this.newCheckIn.question1[0].value = null;
-                this.newCheckIn.question2[0].value = null;
-                this.newCheckIn.question2[1].value = null;
-                this.newCheckIn.question2[2].value = null;
-                this.newCheckIn.question2[3].value = null;
-                this.newCheckIn.question3[0].value = null;
-                this.newCheckIn.question4[0].value = null;
-                this.newCheckIn.question5[0].value = null;
-                this.newCheckIn.comments = null;
+                this.newCheckIn.questionnaire.question1[0].value = null;
+                this.newCheckIn.questionnaire.question2[0].value = null;
+                this.newCheckIn.questionnaire.question2[1].value = null;
+                this.newCheckIn.questionnaire.question2[2].value = null;
+                this.newCheckIn.questionnaire.question2[3].value = null;
+                this.newCheckIn.questionnaire.question3[0].value = null;
+                this.newCheckIn.questionnaire.question4[0].value = null;
+                this.newCheckIn.questionnaire.question5[0].value = null;
+                this.newCheckIn.questionnaire.comments.value = null;
+                this.newCheckIn.status = null;
             },
             addNewCheckin() {
                 this.showForm = false;
