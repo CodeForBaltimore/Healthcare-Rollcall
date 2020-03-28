@@ -6,14 +6,55 @@
         <h4 class="text-muted">Status &amp; Check-in Starting Point</h4>
         <p class="lead">Choose a Provider from the list below to begin Check-in. You can edit all provider info once inside their page.</p>
         <!-- Dashboard Table -->
-       <b-col lg="6" class="my-1">
-        <b-form-group
-          label="Filter"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="sm"
-          label-for="dashboard-table"
-          class="mb-0"
+        <b-row>
+          <b-col cols="4">
+            <b-form-group
+                    label="Filter"
+                    label-align="left"
+                    label-for="dashboard-table">
+              <b-input-group>
+                <b-form-input
+                        v-model="filter"
+                        type="search"
+                        id="dashboard-table"
+                        placeholder="Type to Search"
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''" variant="outline-primary">Clear</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-table
+          id="dashboard-table"
+          striped
+          hover
+          sticky-header
+          :filter="filter"
+          :filterIncludedFields="filterOn"
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
+          :sort-direction="sortDirection"
+          @filtered="onFiltered"
+          :items="entities"
+          :fields="[
+            {
+              key: 'name', stickyColumn: true, isRowHeader: true,
+              sortable: true
+            },
+            {
+              key: 'status',
+              sortable: true
+            },
+            {
+              key: 'updatedAt',
+              label: 'Updated',
+              sortable: true,
+              // Variant applies to the whole column, including the header and footer
+              //variant: 'danger'
+            }
+          ]"
         >
           <template v-slot:cell(name)="data">
             <router-link
