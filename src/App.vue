@@ -101,7 +101,6 @@
   h1 {
     padding: 0;
     margin-top: 0;
-    font-size: 36px !important;
   }
 
   p.lead {

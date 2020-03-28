@@ -29,6 +29,19 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+Vue.filter('phone', function (phone) {
+  return phone.replace(/[^0-9]/g, '')
+      .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+});
+
+Vue.filter('nullToNone', function (value) {
+  if(value == null) {
+    return "None";
+  } else {
+    return value;
+  }
+});
+
 new Vue({
   store,
   render: h => h(App),

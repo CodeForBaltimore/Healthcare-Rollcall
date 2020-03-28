@@ -105,38 +105,41 @@ export default {
 </script>
 
 <style scoped>
-#login {
-  background-color: #ffffff;
-  margin: auto;
-  padding: 20px;
-}
-.login-container {
-  margin: auto;
-  margin-bottom: 1rem;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#login .login-container {
-  text-align: left;
-  margin: 0;
-  margin-top: 15px;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-}
+  #login {
+    background-color: #ffffff;
+    margin: auto;
+    padding: 20px;
+  }
+  .login-container {
+    margin: auto;
+    margin-bottom: 1rem;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #login .login-container {
+    text-align: left;
+    margin: 0;
+    margin-top: 15px;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.login-container button {
-  margin-top:15px;
-  min-width: 40%;
-}
+  .login-container button {
+    margin-top:15px;
+    min-width: 40%;
+  }
 
-#login label, #login label input {
-  width: 100% !important;
-}
+  #login label, #login label input {
+    width: 100% !important;
+  }
 
-.login-container > input {
-  margin-bottom: 10px;
-}
+  .login-container > input {
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 36px !important;
+  }
 </style>

@@ -27,20 +27,20 @@
                     <!-- Show Phone Numbers if available -->
                     <h6 class="card-subtitle mb-2" v-if="entity.phone">Phone Numbers</h6>
                     <p v-if="entity.phone" v-bind:class="{ primary: entity.phone[0].isPrimary }">
-                        {{ entity.phone[0].number }}
+                        {{ entity.phone[0].number | phone }}
                     </p>
                     <ol v-if="entity.phone">
                         <li v-for="number in entity.phone"
                             v-bind:key="number.number"
-                            v-bind:class="{ primary: number.isPrimary }">{{ number.number }}</li>
+                            v-bind:class="{ primary: number.isPrimary }">{{ number.number | phone }}</li>
                     </ol>
 
                     <!-- Show Contacts if available -->
-                    <h6 class="card-subtitle mb-2" v-if="entity.contacts && entity.contacts.length > 0">Contacts</h6>
-                    <div v-if="entity.contacts.length === 1">
+                    <h6 class="card-subtitle mb-2" v-if="entity.contacts.length > 0">Contacts</h6>
+                    <div v-if="entity.contacts.length === 1" class="contact">
                         <p><a v-bind:href="'/user/' + entity.contacts[0].contact.id">{{ entity.contacts[0].contact.name }}</a></p>
-                        <p v-if="entity.contacts[0].phone.length === 1">Phone: {{ entity.contacts[0].phone[0].number}}</p>
-                        <p v-if="entity.contacts[0].email.length === 1">Email: <a v-bind:href="'mailto:' + entity.contacts[0].email[0].address">{{ entity.contacts[0].email[0].address}}</a></p>
+                        <p v-if="entity.contacts[0].contact.phone.length === 1">Phone: {{ entity.contacts[0].contact.phone[0].number | phone }}</p>
+                        <p v-if="entity.contacts[0].contact.email.length === 1">Email: <a v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address">{{ entity.contacts[0].contact.email[0].address}}</a></p>
                     </div>
                     <ul v-if="entity.contacts && entity.contacts.length > 1">
                         <li v-for="contact in entity.contacts"
@@ -50,7 +50,7 @@
                             <ol v-if="contact.contact.phone">
                                 <li v-for="number in contact.contact.phone"
                                     v-bind:key="number.number"
-                                    v-bind:class="{ primary: number.isPrimary }"><a v-bind:href="`tel:${number.number}`">{{ number.number }}</a></li>
+                                    v-bind:class="{ primary: number.isPrimary }">{{ number.number | phone }}</li>
                             </ol>
                             Email:
                             <ol v-if="contact.contact.email">
@@ -60,19 +60,34 @@
                             </ol>
                         </li>
                     </ul>
-                    <b-button v-on:click="addNed()">Add Ned</b-button>
+<!--                    <b-button v-on:click="addNed()">Add Ned</b-button>-->
                 </b-card>
             </b-col>
             <b-col cols="12" md="8">
                 <b-row>
                     <b-col>
+                        <h2>Begin New Check-In</h2>
+                        <ol>
+                            <li v-if="entity.phone || entity.contacts[0].contact.phone.length > 0">Call the phone number
+                                <span v-if="entity.contacts[0].contact.phone[0].number">{{ entity.contacts[0].contact.phone[0].number | phone }}</span>
+                                <span v-if="entity.phone && !entity.contacts[0].contact.phone[0].number">{{ entity.phone[0].number | phone }}</span>
+                            </li>
+                            <li v-if="!entity.phone && !entity.contacts[0].contact.phone.length > 0">Contact the facility using the contact information to the left.</li>
+                            <li>Start the check-in by asking the 5 questions under &quot;New Check-in&quot;</li>
+                            <li>Once you are finished, click &quot;Submit&quot; at the bottom of the form</li>
+                            <li>Start the next provider</li>
+                        </ol>
                         <b-card title="Previous Check-In" class="facility-check-in">
-                            <b-alert show variant="info" v-if="entity.checkIn.checkIns.length == 0">
+                            <b-alert show variant="info" v-if="!lastCheckIn">
                                 <h6 class="alert-heading">Nothing to show</h6>
                                 <p>There are no check-ins on record for this facility.</p>
                             </b-alert>
-                            <div v-if="entity.checkIn.checkIns.length > 0">
+                            <div v-if="lastCheckIn" class="last-checkin">
                                 <h5>Status: <b-badge pill v-bind:variant="lastCheckInStatus.state">{{ lastCheckInStatus.status }}</b-badge></h5>
+                                <h6>Comments</h6>
+                                <p>{{ lastCheckIn.questionnaire.comments.value | nullToNone }}</p>
+                                <h6>Questionnaire</h6>
+                                <p><strong>Time of last check-in: </strong>{{ lastCheckIn.date }}</p>
                             </div>
                         </b-card>
                     </b-col>
@@ -93,62 +108,67 @@
                                 <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.question1[0].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="Yes">Yes</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="No">No</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 2</h5>
                                 <h6>Part A</h6>
                                 <b-form-group id="check-in-input-question-2a" v-bind:label="newCheckIn.questionnaire.question2[0].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="Yes">Yes</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="No">No</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part B</h6>
                                 <b-form-group id="check-in-input-question-2b" v-bind:label="newCheckIn.questionnaire.question2[1].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="Yes">Yes</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="No">No</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part C</h6>
                                 <b-form-group id="check-in-input-question-2c" v-bind:label="newCheckIn.questionnaire.question2[2].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="Yes">Yes</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="No">No</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part D</h6>
                                 <b-form-group id="check-in-input-question-2d" v-bind:label="newCheckIn.questionnaire.question2[3].label">
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="Yes">Yes</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="No">No</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 3</h5>
                                 <b-form-group id="check-in-input-question-3" v-bind:label="newCheckIn.questionnaire.question3[0].label" label-for="question-3">
-                                    <b-form-input
+                                    <b-form-textarea
                                             id="question-3"
                                             v-model="newCheckIn.questionnaire.question3[0].value"
-                                            required
                                             placeholder="Response"
-                                    ></b-form-input>
+                                            rows="3"
+                                    ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Question 4</h5>
                                 <b-form-group id="check-in-input-question-4" v-bind:label="newCheckIn.questionnaire.question4[0].label" label-for="question-4">
-                                    <b-form-input
+                                    <b-form-textarea
                                             id="question-4"
                                             v-model="newCheckIn.questionnaire.question4[0].value"
-                                            required
                                             placeholder="Response"
-                                    ></b-form-input>
+                                            rows="3"
+                                    ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Question 5</h5>
                                 <b-form-group id="check-in-input-question-5" v-bind:label="newCheckIn.questionnaire.question5[0].label" label-for="question-5">
-                                    <b-form-input
+                                    <b-form-textarea
                                             id="question-5"
                                             v-model="newCheckIn.questionnaire.question5[0].value"
-                                            required
                                             placeholder="Response"
-                                    ></b-form-input>
+                                            rows="3"
+                                    ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Comments</h5>
                                 <b-form-group id="check-in-input-comments" v-bind:label="newCheckIn.questionnaire.comments.label" label-for="comments">
                                     <b-form-textarea
                                             id="comments"
                                             v-model="newCheckIn.questionnaire.comments.value"
-                                            required
                                             placeholder="Response"
+                                            rows="3"
                                     ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Status Rating</h5>
@@ -157,7 +177,7 @@
                                     <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Monitoring">Monitoring</b-form-radio>
                                     <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Critical">Critical</b-form-radio>
                                 </b-form-group>
-                                <b-button type="submit" variant="primary">Submit</b-button>
+                                <b-button type="submit" variant="primary">Submit Check-In</b-button>
                                 <b-button type="reset" variant="outline-secondary">Reset</b-button>
                             </b-form>
                         </b-card>
@@ -180,12 +200,14 @@
                     name: null
                 },
                 showForm: true,
+                lastCheckIn: null,
                 lastCheckInStatus: {
                     state: "dark",
                     status: "Unknown"
                 },
                 newCheckIn: {
                     status: null,
+                    date: null,
                     questionnaire: {
                         question1: [
                             {
@@ -252,6 +274,14 @@
                     this.entityCheckIn.checkIn = this.duplicateData(this.entityCheckIn.checkIn.checkIns);
                     this.setLastCheckInData();
                 }
+                if(obj.contacts.length == 0) {
+                    let emptyContact = {
+                        phone: [],
+                        email: []
+                    };
+                    this.entity.contacts = this.duplicateData(emptyContact);
+                    this.entityCheckIn.contacts = this.duplicateData(emptyContact);
+                }
             },
             checkinCallback(response) {
                 console.log(response);
@@ -270,6 +300,7 @@
             },
             addNewCheckin() {
                 this.showForm = false;
+                this.newCheckIn.date = new Date();
                 this.entity.checkIn.checkIns.push(this.newCheckIn);
                 this.entityCheckIn.checkIn = this.newCheckIn;
                 this.$root.apiPUTRequest("/entity", this.entityCheckIn, this.checkinCallback);
@@ -281,8 +312,8 @@
                 return JSON.parse(JSON.stringify(object));
             },
             setLastCheckInData() {
-                let lastCheckIn = this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length-1];
-                this.lastCheckInStatus.status = lastCheckIn.status;
+                this.lastCheckIn = this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length-1];
+                this.lastCheckInStatus.status = this.lastCheckIn.status;
 
                 switch(this.lastCheckInStatus.status) {
                     case "Safe":
@@ -297,12 +328,18 @@
                 }
             },
             addNed() {
+                let self = this;
                 let payload = {
-                    id: "f633ed0e-0362-4cbe-b8cc-a2aba5b5758f",
-                    EntityId: "a04f258b-4a9d-494a-8787-16292e2d1140"
+                    id: null,
+                    EntityId: null
                 };
-                this.$root.apiPUTRequest("/contact", payload, function(response) {
-                    console.log(response);
+                this.$root.apiGETRequest("/contact", function(response) {
+                    console.log(response.results);
+                    payload.id = response.results[0].id;
+                    payload.EntityId = self.$route.params.entityID;
+                    self.$root.apiPUTRequest("/contact", payload, function(response) {
+                        console.log(response);
+                    });
                 });
             }
         },
@@ -315,6 +352,7 @@
 <style scoped>
     h1 {
         text-align: left;
+        margin-bottom:30px;
     }
     .card h6 {
         font-weight: bold;
@@ -324,17 +362,23 @@
         padding-bottom: 8px;
         margin: 16px 0;
     }
-    form h6 {
+    form h6, .last-checkin h6 {
         font-weight: bold;
         background-color: #f1f1f1;
         box-sizing: border-box;
-        padding:8px;
+        padding: 8px;
+    }
+    .last-checkin p {
+        padding: 0 8px;
     }
     .card-body {
         text-align: left;
     }
     p.return-link {
         text-align: left;
+    }
+    .contact p {
+        margin: 0;
     }
     .facility-check-in {
         margin-bottom: 24px;
@@ -351,5 +395,15 @@
     }
     p:last-child {
         margin-bottom: 0;
+    }
+    .custom-control-label {
+        cursor: pointer;
+    }
+    button {
+        margin-right: 15px;
+    }
+    button.btn-primary {
+        padding-left: 30px;
+        padding-right: 30px;
     }
 </style>
