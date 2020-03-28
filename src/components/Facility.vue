@@ -36,16 +36,16 @@
                     </ol>
 
                     <!-- Show Contacts if available -->
-                    <h6 class="card-subtitle mb-2" v-if="entity.contacts.length > 0">Contacts</h6>
-                    <div v-if="entity.contacts.length === 1" class="contact">
+                    <h6 class="card-subtitle mb-2" v-if="entity.contacts && entity.contacts.length > 0">Contacts</h6>
+                    <div v-if="entity.contacts && entity.contacts.length === 1" class="contact">
                         <p><a v-bind:href="'/user/' + entity.contacts[0].contact.id">{{ entity.contacts[0].contact.name }}</a></p>
                         <p v-if="entity.contacts[0].contact.phone.length === 1">Phone: {{ entity.contacts[0].contact.phone[0].number | phone }}</p>
                         <p v-if="entity.contacts[0].contact.email.length === 1">Email: <a v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address">{{ entity.contacts[0].contact.email[0].address}}</a></p>
                     </div>
                     <ul v-if="entity.contacts && entity.contacts.length > 1">
                         <li v-for="contact in entity.contacts"
-                            v-bind:key="contact.contact.id">
-                            <br />
+                            v-bind:key="contact.id">
+                            <a v-bind:href="`/contact/${contact.contact.EntityId}/${contact.contact.id}`">{{contact.contact.name}}</a><br />
                             Phone:
                             <ol v-if="contact.contact.phone">
                                 <li v-for="number in contact.contact.phone"
@@ -68,7 +68,7 @@
                     <b-col>
                         <h2>Begin New Check-In</h2>
                         <ol>
-                            <li v-if="entity.phone || entity.contacts[0].contact.phone.length > 0">Call the phone number
+                            <li v-if="entity.phone || (entity.contacts && entity.contacts[0].contact.phone.length > 0)">Call the phone number
                                 <span v-if="entity.contacts[0].contact.phone[0].number">{{ entity.contacts[0].contact.phone[0].number | phone }}</span>
                                 <span v-if="entity.phone && !entity.contacts[0].contact.phone[0].number">{{ entity.phone[0].number | phone }}</span>
                             </li>
@@ -194,7 +194,7 @@
         data() {
             return {
                 entity: {
-                    name: "Loading..."
+                    name: "Loading...",
                 },
                 entityCheckIn: {
                     name: null
@@ -261,6 +261,7 @@
         },
         methods: {
             updateFacilityData(obj) {
+                console.log(JSON.stringify(obj));
                 if(obj.checkIn === null) {
                     this.entity = this.duplicateData(obj);
                     this.entity.checkIn = {
@@ -275,13 +276,14 @@
                     this.setLastCheckInData();
                 }
                 if(obj.contacts.length == 0) {
-                    let emptyContact = {
+                    let emptyContact = [{
                         phone: [],
                         email: []
-                    };
+                    }];
                     this.entity.contacts = this.duplicateData(emptyContact);
                     this.entityCheckIn.contacts = this.duplicateData(emptyContact);
                 }
+                console.log(JSON.stringify(this.entity));
             },
             checkinCallback(response) {
                 console.log(response);
