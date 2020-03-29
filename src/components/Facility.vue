@@ -123,7 +123,7 @@
               </li>
               <li v-else>Contact the facility using the contact information to the left.</li>
               <li>Start the check-in by asking the 5 questions under &quot;New Check-in&quot;</li>
-              <li>Once you are finished, click &quot;Submit&quot; at the bottom of the form</li>
+              <li>Once you are finished, click &quot;Submit Check-In&quot; at the bottom of the form</li>
               <li>Start the next provider</li>
             </ol>
             <b-card title="Previous Check-In" class="facility-check-in">
@@ -162,7 +162,7 @@
               <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
 
               <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
-                <p>Begin a new check-in by answering the questions below. Click "Submit" once you are done.</p>
+                <p>Begin a new check-in by answering the questions below. Click "Submit Check-In" once you are done.</p>
                 <h5>Question 1</h5>
                 <b-form-group
                   id="check-in-input-question-1"
