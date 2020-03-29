@@ -60,7 +60,6 @@
                             </ol>
                         </li>
                     </ul>
-<!--                    <b-button v-on:click="addNed()">Add Ned</b-button>-->
                 </b-card>
             </b-col>
             <b-col cols="12" md="8">
@@ -87,7 +86,8 @@
                                 <h6>Comments</h6>
                                 <p>{{ lastCheckIn.questionnaire.comments.value | nullToNone }}</p>
                                 <h6>Questionnaire</h6>
-                                <p><strong>Time of last check-in: </strong>{{ lastCheckIn.date }}</p>
+                                <p><strong>Time of last check-in: </strong>{{ lastCheckIn.date | timestamp }}</p>
+                                <b-button v-b-modal.checkin-detail-modal>Review previous checkin</b-button>
                             </div>
                         </b-card>
                     </b-col>
@@ -105,77 +105,119 @@
                             <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
                                 <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
                                 <h5>Question 1</h5>
-                                <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.question1[0].label">
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="No">No</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question1[0].value" name="question-1-radio" value="I don't know">I don't know</b-form-radio>
+                                <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.questions[0].parts[0].label">
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 2</h5>
                                 <h6>Part A</h6>
-                                <b-form-group id="check-in-input-question-2a" v-bind:label="newCheckIn.questionnaire.question2[0].label">
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="No">No</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[0].value" name="question-2a-radio" value="I don't know">I don't know</b-form-radio>
+                                <b-form-group id="check-in-input-question-2a" v-bind:label="newCheckIn.questionnaire.questions[1].parts[0].label">
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part B</h6>
-                                <b-form-group id="check-in-input-question-2b" v-bind:label="newCheckIn.questionnaire.question2[1].label">
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="No">No</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[1].value" name="question-2b-radio" value="I don't know">I don't know</b-form-radio>
+                                <b-form-group id="check-in-input-question-2b" v-bind:label="newCheckIn.questionnaire.questions[1].parts[1].label">
+                                    <b-form-input
+                                        id="question-2b"
+                                        type="number"
+                                        v-model="newCheckIn.questionnaire.questions[1].parts[1].value"
+                                        placeholder="0"
+                                    ></b-form-input>
                                 </b-form-group>
                                 <h6>Part C</h6>
-                                <b-form-group id="check-in-input-question-2c" v-bind:label="newCheckIn.questionnaire.question2[2].label">
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="No">No</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[2].value" name="question-2c-radio" value="I don't know">I don't know</b-form-radio>
+                                <b-form-group id="check-in-input-question-2c" v-bind:label="newCheckIn.questionnaire.questions[1].parts[2].label">
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part D</h6>
-                                <b-form-group id="check-in-input-question-2d" v-bind:label="newCheckIn.questionnaire.question2[3].label">
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="No">No</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.questionnaire.question2[3].value" name="question-2d-radio" value="I don't know">I don't know</b-form-radio>
+                                <b-form-group id="check-in-input-question-2d" v-bind:label="newCheckIn.questionnaire.questions[1].parts[3].label">
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="I don't know">I don't know</b-form-radio>
+                                </b-form-group>
+                                <h6>Part E</h6>
+                                <b-form-group id="check-in-input-question-2e" v-bind:label="newCheckIn.questionnaire.questions[1].parts[4].label">
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 3</h5>
-                                <b-form-group id="check-in-input-question-3" v-bind:label="newCheckIn.questionnaire.question3[0].label" label-for="question-3">
+                                <b-form-group id="check-in-input-question-3" v-bind:label="newCheckIn.questionnaire.questions[2].parts[0].label" label-for="question-3">
+                                    <p class="pi-alert" v-if="elementFocus === 'question3'">
+                                        <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg"/> <strong>Remember: </strong> Do not include any personal information
+                                    </p>
                                     <b-form-textarea
                                             id="question-3"
-                                            v-model="newCheckIn.questionnaire.question3[0].value"
+                                            v-model="newCheckIn.questionnaire.questions[2].parts[0].value"
                                             placeholder="Response"
+                                            @focus="elementFocus = 'question3'"
+                                            @blur="elementFocus = 'null'"
                                             rows="3"
                                     ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Question 4</h5>
-                                <b-form-group id="check-in-input-question-4" v-bind:label="newCheckIn.questionnaire.question4[0].label" label-for="question-4">
+                                <b-form-group id="check-in-input-question-4" v-bind:label="newCheckIn.questionnaire.questions[3].parts[0].label" label-for="question-4">
+                                    <p class="pi-alert" v-if="elementFocus === 'question4'">
+                                        <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg"/> <strong>Remember: </strong> Do not include any personal information
+                                    </p>
                                     <b-form-textarea
                                             id="question-4"
-                                            v-model="newCheckIn.questionnaire.question4[0].value"
+                                            v-model="newCheckIn.questionnaire.questions[3].parts[0].value"
                                             placeholder="Response"
+                                            @focus="elementFocus = 'question4'"
+                                            @blur="elementFocus = 'null'"
                                             rows="3"
                                     ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Question 5</h5>
-                                <b-form-group id="check-in-input-question-5" v-bind:label="newCheckIn.questionnaire.question5[0].label" label-for="question-5">
+                                <h6>Part A</h6>
+                                <b-form-group id="check-in-input-question-5a" v-bind:label="newCheckIn.questionnaire.questions[4].parts[0].label">
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value1" name="question-5a-option-1" value="Gloves">Gloves</b-form-checkbox>
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value2" name="question-5a-option-2" value="Masks">Masks</b-form-checkbox>
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value3" name="question-5a-option-3" value="Sanitizer">Sanitizer</b-form-checkbox>
+                                </b-form-group>
+                                <h6>Part B</h6>
+                                <b-form-group id="check-in-input-question-5b" v-bind:label="newCheckIn.questionnaire.questions[4].parts[1].label" label-for="question-5">
+                                    <p class="pi-alert" v-if="elementFocus === 'question5'">
+                                        <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg"/> <strong>Remember: </strong> Do not include any personal information
+                                    </p>
                                     <b-form-textarea
                                             id="question-5"
-                                            v-model="newCheckIn.questionnaire.question5[0].value"
+                                            v-model="newCheckIn.questionnaire.questions[4].parts[1].value"
                                             placeholder="Response"
+                                            @focus="elementFocus = 'question5'"
+                                            @blur="elementFocus = 'null'"
                                             rows="3"
                                     ></b-form-textarea>
                                 </b-form-group>
                                 <h5>Comments</h5>
-                                <b-form-group id="check-in-input-comments" v-bind:label="newCheckIn.questionnaire.comments.label" label-for="comments">
+                                <b-form-group id="check-in-input-comments" v-bind:label="newCheckIn.comments.label" label-for="comments">
+                                    <p class="pi-alert" v-if="elementFocus === 'comments'">
+                                        <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg"/> <strong>Remember: </strong> Do not include any personal information
+                                    </p>
                                     <b-form-textarea
                                             id="comments"
-                                            v-model="newCheckIn.questionnaire.comments.value"
+                                            v-model="newCheckIn.comments.value"
                                             placeholder="Response"
+                                            @focus="elementFocus = 'comments'"
+                                            @blur="elementFocus = 'null'"
                                             rows="3"
                                     ></b-form-textarea>
                                 </b-form-group>
-                                <h5>Status Rating</h5>
-                                <b-form-group id="check-in-input-status" label="Facility Operating Status">
-                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Safe">Safe</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Monitoring">Monitoring</b-form-radio>
-                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Critical">Critical</b-form-radio>
+                                <h5>Call Outcome &amp; Follow-up</h5>
+                                <b-form-group id="check-in-input-status" label="Choose an outcome and indicate if a follow-up is needed">
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Spoke to owner. No follow-up needed.">Spoke to owner.  No follow-up needed.</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Spoke to owner. Follow-up needed.">Spoke to owner.  Follow-up needed.</b-form-radio>
+                                    <hr/>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Spoke to someone besides owner. No follow-up needed.">Spoke to someone besides owner.  No follow-up needed.</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Spoke to someone besides owner. Follow-up needed.">Spoke to someone besides owner.  Follow-up needed.</b-form-radio>
+                                    <hr/>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Called. No Answer. Left a message.">Called.  No Answer.  Left a message.</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Called. No Answer. Did not leave a message.">Called.  No Answer.  Did not leave a message.</b-form-radio>
+                                    <b-form-radio required v-model="newCheckIn.status" name="question-status" value="Wrong number">Wrong Number</b-form-radio>
                                 </b-form-group>
                                 <b-button type="submit" variant="primary">Submit Check-In</b-button>
                                 <b-button type="reset" variant="outline-secondary">Reset</b-button>
@@ -185,6 +227,15 @@
                 </b-row>
             </b-col>
         </b-row>
+        <b-modal v-if="lastCheckIn" id="checkin-detail-modal" size="lg" v-bind:title="entity.name + ' Previous Check-In'">
+            <h4>{{ lastCheckIn.date | timestamp }}</h4>
+            <p>Hello from modal!</p>
+            <template v-slot:modal-footer="{ ok }">
+                <b-button size="md" variant="primary" @click="ok()">
+                    Close
+                </b-button>
+            </template>
+        </b-modal>
     </b-container>
 </template>
 
@@ -201,6 +252,7 @@
                 },
                 showForm: true,
                 lastCheckIn: null,
+                elementFocus: null,
                 lastCheckInStatus: {
                     state: "dark",
                     status: "Unknown"
@@ -209,52 +261,74 @@
                     status: null,
                     date: null,
                     questionnaire: {
-                        question1: [
+                        questions: [
                             {
-                                label: 'Have you seen the recommendations by the State called the "Recommendations for infection control & prevention of COVID-19 in facilities serving older adults"?',
-                                value: null
-                            }
-                        ],
-                        question2: [
-                            {
-                                label: "Is your location limiting visitors?",
-                                value: null
+                                parts: [
+                                    {
+                                        label: 'Have you seen the recommendations by the State called the "Recommendations for infection control & prevention of COVID-19 in facilities serving older adults"?',
+                                        value: null
+                                    }
+                                ]
                             },
                             {
-                                label: "Are they actively screening and monitoring for those who are sick for both those who are patients and employees? (looking for signs/symptoms of cough fever, shortness of breath or taking temperatures)",
-                                value: null
+                                parts: [
+                                    {
+                                        label: "Is your location limiting visitors?",
+                                        value: null
+                                    },
+                                    {
+                                        label: "How many patients do you have at your facility?",
+                                        value: null
+                                    },
+                                    {
+                                        label: "Are they actively screening and monitoring for those who are sick for both those who are patients and employees? (looking for signs/symptoms of cough fever, shortness of breath or taking temperatures)",
+                                        value: null
+                                    },
+                                    {
+                                        label: "Has your location stopped having congregate meals?",
+                                        value: null
+                                    },
+                                    {
+                                        label: "Has your location posted signs for handwashing?",
+                                        value: null
+                                    }
+                                ]
                             },
                             {
-                                label: "Has your location stopped having congregate meals?",
-                                value: null
+                                parts: [
+                                    {
+                                        label: "How is your facility handling leave of absences from nursing homes (i.e. doctor's visits, dialysis, and outside medical visits)?",
+                                        value: null
+                                    }
+                                ]
                             },
                             {
-                                label: "Has your location posted signs for handwashing?",
-                                value: null
-                            }
-                        ],
-                        question3: [
+                                parts: [
+                                    {
+                                        label: "We would like to send you more materials. What is the best way? (Fax number or email)",
+                                        value: null
+                                    }
+                                ]
+                            },
                             {
-                                label: "How is your facility handling leave of absences from nursing homes (i.e. doctor's visits, dialysis, and outside medical visits)?",
-                                value: null
+                                parts: [
+                                    {
+                                        label: "Do you need any additional supplies?",
+                                        value1: null,
+                                        value2: null,
+                                        value3: null
+                                    },
+                                    {
+                                        label: "Other issues or needs (i.e. PPE)",
+                                        value: null
+                                    }
+                                ]
                             }
-                        ],
-                        question4: [
-                            {
-                                label: "We would like to send you more materials. What is the best way? (Fax number or email)",
-                                value: null
-                            }
-                        ],
-                        question5: [
-                            {
-                                label: "Note any issues or needs (i.e. PPE)",
-                                value: null
-                            }
-                        ],
-                        comments: {
-                            label: "Any additional comments?",
-                            value: null
-                        }
+                        ]
+                    },
+                    comments: {
+                        label: "Any additional comments?",
+                        value: null
                     }
                 }
             }
@@ -299,7 +373,10 @@
                 this.newCheckIn.questionnaire.question2[3].value = null;
                 this.newCheckIn.questionnaire.question3[0].value = null;
                 this.newCheckIn.questionnaire.question4[0].value = null;
-                this.newCheckIn.questionnaire.question5[0].value = null;
+                this.newCheckIn.questionnaire.question5[0].value1 = null;
+                this.newCheckIn.questionnaire.question5[0].value2 = null;
+                this.newCheckIn.questionnaire.question5[0].value3 = null;
+                this.newCheckIn.questionnaire.question5[1].value = null;
                 this.newCheckIn.questionnaire.comments.value = null;
                 this.newCheckIn.status = null;
             },
@@ -321,31 +398,28 @@
                 this.lastCheckInStatus.status = this.lastCheckIn.status;
 
                 switch(this.lastCheckInStatus.status) {
-                    case "Safe":
+                    case "Spoke to owner. No follow-up needed.":
                         this.lastCheckInStatus.state = "success";
                         break;
-                    case "Monitoring":
+                    case "Spoke to someone besides owner. No follow-up needed.":
+                        this.lastCheckInStatus.state = "success";
+                        break;
+                    case "Spoke to owner. Follow-up needed.":
                         this.lastCheckInStatus.state = "warning";
                         break;
-                    case "Critical":
+                    case "Spoke to someone besides owner. Follow-up needed.":
+                        this.lastCheckInStatus.state = "warning";
+                        break;
+                    case "Called. No answer. Left a message.":
+                        this.lastCheckInStatus.state = "danger";
+                        break;
+                    case "Called. No answer. Did not leave a message.":
+                        this.lastCheckInStatus.state = "danger";
+                        break;
+                    case "Wrong number":
                         this.lastCheckInStatus.state = "danger";
                         break;
                 }
-            },
-            addNed() {
-                let self = this;
-                let payload = {
-                    id: null,
-                    EntityId: null
-                };
-                this.$root.apiGETRequest("/contact", function(response) {
-                    console.log(response.results);
-                    payload.id = response.results[0].id;
-                    payload.EntityId = self.$route.params.entityID;
-                    self.$root.apiPUTRequest("/contact", payload, function(response) {
-                        console.log(response);
-                    });
-                });
             }
         },
         mounted() {
@@ -410,5 +484,15 @@
     button.btn-primary {
         padding-left: 30px;
         padding-right: 30px;
+    }
+    .pi-alert {
+        font-size: 12px;
+        margin-top: 12px;
+    }
+    .pi-alert img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        margin-top: -2px;
     }
 </style>

@@ -28,6 +28,11 @@
       </b-container>
     </b-navbar>
     <router-view></router-view>
+    <b-container fluid="md" id="footer">
+      <img alt="Code for Baltimore Logo" src="./assets/CfB.png" width="200"/><br/>
+      <strong>Proudly Designed &amp; Developed by <a href="https://codeforbaltimore.org/" target="_blank">Code for Baltimore</a></strong><br/>
+      A local chapter of <a href="https://www.codeforamerica.org/" target="_blank">Code for America</a>
+    </b-container>
   </div>
 </template>
 
@@ -127,5 +132,10 @@
 
   strong {
     font-weight: bold;
+  }
+
+  #footer {
+    margin: 60px auto;
+    text-align: center;
   }
 </style>

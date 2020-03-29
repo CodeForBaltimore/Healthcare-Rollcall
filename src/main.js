@@ -34,6 +34,28 @@ Vue.filter('phone', function (phone) {
       .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 });
 
+Vue.filter('timestamp', function(input) {
+  let now = new Date();
+  let date = new Date(input);
+  let ampm = date.getHours() >= 12 ? 'pm' : 'am';
+  let hours = date.getHours() % 12;
+  let formattedHours = hours ? hours : 12;
+  let isToday = (now.getDate() === date.getDate() &&
+      now.getMonth() === date.getMonth() &&
+      now.getFullYear() === date.getFullYear());
+  let isYesterday = (now.getDate() === date.getDate()-1 &&
+      now.getMonth() === date.getMonth() &&
+      now.getFullYear() === date.getFullYear());
+  let dateOutput = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear() + ' ';
+  if(isToday) {
+    dateOutput = "Today at "
+  } else if(isYesterday) {
+    dateOutput = "Yesterday at "
+  }
+  return dateOutput + formattedHours + ':' +
+      (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + ampm;
+});
+
 Vue.filter('nullToNone', function (value) {
   if(value == null) {
     return "None";
