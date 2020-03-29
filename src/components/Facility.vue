@@ -61,13 +61,13 @@
                   v-bind:href="`/contact/${entity.id}/${entity.contacts[0].contact.id}`"
                 >{{ entity.contacts[0].contact.name }}</a>
               </p>
-              <p v-if="entity.contacts[0].contact.phone.length === 1">
+              <p v-if="entity.contacts[0].contact.phone && entity.contacts[0].contact.phone.length === 1">
                 Phone:
                 <a
-                  v-bind:href="'tel:' + entity.contacts[0].contact.number.number"
+                  v-bind:href="'tel:' + entity.contacts[0].contact.phone[0].number"
                 >{{ entity.contacts[0].contact.phone[0].number | phone }}</a>
               </p>
-              <p v-if="entity.contacts[0].contact.email.length === 1">
+              <p v-if="entity.contacts[0].contact.email && entity.contacts[0].contact.email.length === 1">
                 Email:
                 <a
                   v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address"
@@ -100,11 +100,11 @@
                 </ol>
               </li>
             </ul>
-            <b-button
+          </div>
+          <b-button
               type="submit"
               v-bind:href="`/contact/${this.$route.params.entityID}`"
             >Add Contact</b-button>
-          </div>
         </b-card>
       </b-col>
       <b-col cols="12" md="8">
@@ -113,7 +113,7 @@
             <h2>Begin New Check-In</h2>
             <ol>
               <li
-                v-if="entity.phone || (entity.contacts && entity.contacts[0] && entity.contacts[0].contact.phone)"
+                v-if="entity.phone || (entity.contacts && entity.contacts[0] && entity.contacts[0].contact.phone && entity.contacts[0].contact.phone[0])"
               >
                 Call the phone number
                 <span
@@ -582,13 +582,14 @@ export default {
         );
         this.setLastCheckInData();
       }
-      if (obj.contacts.length == 0) {
+      if (!obj.contacts || obj.contacts.length == 0) {
         let emptyContact = {
           phone: [],
           email: []
         };
+        this.entityCheckIn.contacts = [];
         this.entity.contacts = this.duplicateData(emptyContact);
-        this.entityCheckIn.contacts = this.duplicateData(emptyContact);
+        this.entityCheckIn.contacts.push(this.duplicateData(emptyContact));
       }
     },
     toggleForm() {
