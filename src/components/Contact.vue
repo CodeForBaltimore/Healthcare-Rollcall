@@ -5,15 +5,15 @@
       <b-col>
         <b-form @submit="submitForm">
           <b-form-group id="contact-name" label="Name">
-            <input v-model="contact.name" placeholder="John Doe" />
+            <input required v-model="contact.name" />
           </b-form-group>
           <b-form-group id="contact-phone" label="Phone Number">
-            <input v-model="contact.phone[0].number" placeholder="1234567890" />
+            <input v-model="contact.phone[0].number" />
           </b-form-group>
           <b-form-group id="contact-email" label="Email Address">
-            <input v-model="contact.email[0].address" placeholder="john@doe.com" />
+            <input v-model="contact.email[0].address" />
           </b-form-group>
-          <b-button type="submit" variant="primary">Create Contact</b-button>
+          <b-button type="submit" variant="primary">{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
         </b-form>
         <p>{{ contact }}</p>
       </b-col>
@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     updateContact(obj) {
-      console.log(obj);
       let tempObj = obj;
       if (!tempObj.phone || tempObj.phone.length === 0) {
         tempObj.phone = [{ phone: null, isPrimary: true }];
@@ -61,22 +60,25 @@ export default {
     getContact(id) {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
     },
-    submitCallback(response) {
-      console.log('SUCCESS');
-      console.log(response);
-      this.getContact();
+    submitCallback() {
+      this.$router.push('/facility/' + this.$route.params.entityID);
     },
     submitForm() {
+      let newContact = this.duplicateData(this.contact)
+      newContact.phone = newContact.phone.filter(phone => !!phone.number);
+      newContact.phone = newContact.phone.length > 0 ? newContact.phone : null;
+      newContact.email = newContact.email.filter(email => !!email.address);
+      newContact.email = newContact.email.length > 0 ? newContact.email : null;
       if (this.$route.params.contactID) {
         this.$root.apiPUTRequest(
           "/contact",
-          this.contact,
+          newContact,
           this.submitCallback
         );
       } else {
           this.$root.apiPOSTRequest(
           "/contact",
-          this.contact,
+          newContact,
           this.submitCallback
         );
       }
