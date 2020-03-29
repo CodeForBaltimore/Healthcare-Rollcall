@@ -4,6 +4,7 @@ import LoginComponent from "./components/Login.vue"
 import DashboardComponent from "./components/Dashboard.vue"
 import FacilityComponent from "./components/Facility.vue"
 import PasswordResetComponent from "./components/PasswordReset.vue"
+import ContactComponent from "./components/Contact.vue"
 
 Vue.use(Router);
 
@@ -36,6 +37,16 @@ export default new Router({
             path: "/reset/:token",
             name: 'reset',
             component: PasswordResetComponent
+        },
+        {
+            path: "/contact/:entityID",
+            name: 'create-contact',
+            component: ContactComponent
+        },
+        {
+            path: "/contact/:entityID/:contactID",
+            name: 'update-contact',
+            component: ContactComponent
         },
         {
             path: '*',
