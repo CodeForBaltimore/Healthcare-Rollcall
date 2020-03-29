@@ -61,13 +61,17 @@
                   v-bind:href="`/contact/${entity.id}/${entity.contacts[0].contact.id}`"
                 >{{ entity.contacts[0].contact.name }}</a>
               </p>
-              <p v-if="entity.contacts[0].contact.phone && entity.contacts[0].contact.phone.length === 1">
+              <p
+                v-if="entity.contacts[0].contact.phone && entity.contacts[0].contact.phone.length === 1"
+              >
                 Phone:
                 <a
                   v-bind:href="'tel:' + entity.contacts[0].contact.phone[0].number"
                 >{{ entity.contacts[0].contact.phone[0].number | phone }}</a>
               </p>
-              <p v-if="entity.contacts[0].contact.email && entity.contacts[0].contact.email.length === 1">
+              <p
+                v-if="entity.contacts[0].contact.email && entity.contacts[0].contact.email.length === 1"
+              >
                 Email:
                 <a
                   v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address"
@@ -79,25 +83,14 @@
                 <a
                   v-bind:href="`/contact/${entity.id}/${contact.contact.id}`"
                 >{{ contact.contact.name }}</a>
-                <br />Phone:
-                <ol v-if="contact.contact.phone">
-                  <li
-                    v-for="number in contact.contact.phone"
-                    v-bind:key="number.number"
-                    v-bind:class="{ primary: number.isPrimary }"
-                  >
-                    <a v-bind:href="'tel:' + number.number">{{ number.number | phone }}</a>
-                  </li>
-                </ol>Email:
-                <ol v-if="contact.contact.email">
-                  <li
-                    v-for="address in contact.contact.email"
-                    v-bind:key="address.address"
-                    v-bind:class="{ primary: address.isPrimary }"
-                  >
-                    <a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a>
-                  </li>
-                </ol>
+                <p v-if="contact.contact.phone && contact.contact.phone[0]">
+                  Phone:
+                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a> 
+                </p>
+                <p v-if="contact.contact.email && contact.contact.email[0]">
+                    Email:
+                    <a v-bind:href="'mailto:' +  contact.contact.email[0].address">{{ contact.contact.email[0].address }}</a>
+                </p>
               </li>
             </ul>
           </div>
