@@ -3,29 +3,6 @@
     <h1>Contact Information</h1>
     <b-row>
       <b-col>
-        <!-- Contacts Table -->
-        <!--<b-table
-          id="contacts-table"
-          striped
-          hover
-          :items="contacts"
-          :fields="['name', 'phone', 'email']"
-        >
-          <template v-slot:cell(name)="data">{{ data.item }}</template>
-          <template
-            v-slot:cell(phone)="data"
-          >{{ data.item.phone && data.item.phone.length > 0 ? data.item.phone[0].number : '' }}</template>
-          <template
-            v-slot:cell(email)="data"
-          >{{ data.item.email && data.item.email.length > 0 ? data.item.email[0].address : '' }}</template>
-        </b-table>
-        <b-pagination
-          v-model="table.currentPage"
-          :total-rows="table.rows"
-          :per-page="10"
-          aria-controls="contacts-table"
-        ></b-pagination>-->
-
         <b-form @submit="submitForm">
           <b-form-group id="contact-name" label="Name">
             <input v-model="contact.name" placeholder="John Doe" />
@@ -37,7 +14,6 @@
             <input v-model="contact.email[0].address" placeholder="john@doe.com" />
           </b-form-group>
           <b-button type="submit" variant="primary">Create Contact</b-button>
-          <b-button type="reset" variant="outline-secondary">Reset</b-button>
         </b-form>
         <p>{{ contact }}</p>
       </b-col>
@@ -53,7 +29,7 @@ export default {
       contact: {
         id: null,
         UserId: null,
-        EntityId: null,
+        EntityId: this.$route.params.entityID,
         name: null,
         phone: [
           {
@@ -86,6 +62,7 @@ export default {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
     },
     submitCallback(response) {
+      console.log('SUCCESS');
       console.log(response);
       this.getContact();
     },
