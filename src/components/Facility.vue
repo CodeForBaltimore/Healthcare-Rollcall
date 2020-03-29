@@ -84,7 +84,7 @@
                             <div v-if="lastCheckIn" class="last-checkin">
                                 <h5>Status: <b-badge pill v-bind:variant="lastCheckInStatus.state">{{ lastCheckInStatus.status }}</b-badge></h5>
                                 <h6>Comments</h6>
-                                <p>{{ lastCheckIn.questionnaire.comments.value | nullToNone }}</p>
+                                <p>{{ lastCheckIn.comments.value | nullToNone }}</p>
                                 <h6>Questionnaire</h6>
                                 <p><strong>Time of last check-in: </strong>{{ lastCheckIn.date | timestamp }}</p>
                                 <b-button v-b-modal.checkin-detail-modal>Review previous checkin</b-button>
@@ -106,43 +106,43 @@
                                 <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
                                 <h5>Question 1</h5>
                                 <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.questions[0].parts[0].label">
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="No">No</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value" name="question-1-radio" value="I don't know">I don't know</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value[0]" name="question-1-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value[0]" name="question-1-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value[0]" name="question-1-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 2</h5>
                                 <h6>Part A</h6>
                                 <b-form-group id="check-in-input-question-2a" v-bind:label="newCheckIn.questionnaire.questions[1].parts[0].label">
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="No">No</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value" name="question-2a-radio" value="I don't know">I don't know</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value[0]" name="question-2a-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value[0]" name="question-2a-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[0].value[0]" name="question-2a-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part B</h6>
                                 <b-form-group id="check-in-input-question-2b" v-bind:label="newCheckIn.questionnaire.questions[1].parts[1].label">
                                     <b-form-input
                                         id="question-2b"
                                         type="number"
-                                        v-model="newCheckIn.questionnaire.questions[1].parts[1].value"
+                                        v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
                                         placeholder="0"
                                     ></b-form-input>
                                 </b-form-group>
                                 <h6>Part C</h6>
                                 <b-form-group id="check-in-input-question-2c" v-bind:label="newCheckIn.questionnaire.questions[1].parts[2].label">
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="No">No</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value" name="question-2b-radio" value="I don't know">I don't know</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value[0]" name="question-2b-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value[0]" name="question-2b-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[2].value[0]" name="question-2b-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part D</h6>
                                 <b-form-group id="check-in-input-question-2d" v-bind:label="newCheckIn.questionnaire.questions[1].parts[3].label">
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="No">No</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value" name="question-2c-radio" value="I don't know">I don't know</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]" name="question-2c-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]" name="question-2c-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]" name="question-2c-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h6>Part E</h6>
                                 <b-form-group id="check-in-input-question-2e" v-bind:label="newCheckIn.questionnaire.questions[1].parts[4].label">
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="Yes">Yes</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="No">No</b-form-radio>
-                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value" name="question-2d-radio" value="I don't know">I don't know</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]" name="question-2d-radio" value="Yes">Yes</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]" name="question-2d-radio" value="No">No</b-form-radio>
+                                    <b-form-radio v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]" name="question-2d-radio" value="I don't know">I don't know</b-form-radio>
                                 </b-form-group>
                                 <h5>Question 3</h5>
                                 <b-form-group id="check-in-input-question-3" v-bind:label="newCheckIn.questionnaire.questions[2].parts[0].label" label-for="question-3">
@@ -151,7 +151,7 @@
                                     </p>
                                     <b-form-textarea
                                             id="question-3"
-                                            v-model="newCheckIn.questionnaire.questions[2].parts[0].value"
+                                            v-model="newCheckIn.questionnaire.questions[2].parts[0].value[0]"
                                             placeholder="Response"
                                             @focus="elementFocus = 'question3'"
                                             @blur="elementFocus = 'null'"
@@ -165,7 +165,7 @@
                                     </p>
                                     <b-form-textarea
                                             id="question-4"
-                                            v-model="newCheckIn.questionnaire.questions[3].parts[0].value"
+                                            v-model="newCheckIn.questionnaire.questions[3].parts[0].value[0]"
                                             placeholder="Response"
                                             @focus="elementFocus = 'question4'"
                                             @blur="elementFocus = 'null'"
@@ -175,9 +175,9 @@
                                 <h5>Question 5</h5>
                                 <h6>Part A</h6>
                                 <b-form-group id="check-in-input-question-5a" v-bind:label="newCheckIn.questionnaire.questions[4].parts[0].label">
-                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value1" name="question-5a-option-1" value="Gloves">Gloves</b-form-checkbox>
-                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value2" name="question-5a-option-2" value="Masks">Masks</b-form-checkbox>
-                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value3" name="question-5a-option-3" value="Sanitizer">Sanitizer</b-form-checkbox>
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value[0]" name="question-5a-option-1" value="Gloves">Gloves</b-form-checkbox>
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value[1]" name="question-5a-option-2" value="Masks">Masks</b-form-checkbox>
+                                    <b-form-checkbox v-model="newCheckIn.questionnaire.questions[4].parts[0].value[2]" name="question-5a-option-3" value="Sanitizer">Sanitizer</b-form-checkbox>
                                 </b-form-group>
                                 <h6>Part B</h6>
                                 <b-form-group id="check-in-input-question-5b" v-bind:label="newCheckIn.questionnaire.questions[4].parts[1].label" label-for="question-5">
@@ -186,7 +186,7 @@
                                     </p>
                                     <b-form-textarea
                                             id="question-5"
-                                            v-model="newCheckIn.questionnaire.questions[4].parts[1].value"
+                                            v-model="newCheckIn.questionnaire.questions[4].parts[1].value[0]"
                                             placeholder="Response"
                                             @focus="elementFocus = 'question5'"
                                             @blur="elementFocus = 'null'"
@@ -227,11 +227,17 @@
                 </b-row>
             </b-col>
         </b-row>
-        <b-modal v-if="lastCheckIn" id="checkin-detail-modal" size="lg" v-bind:title="entity.name + ' Previous Check-In'">
-            <h4>{{ lastCheckIn.date | timestamp }}</h4>
-            <p>Hello from modal!</p>
-            <template v-slot:modal-footer="{ ok }">
-                <b-button size="md" variant="primary" @click="ok()">
+        <b-modal v-if="lastCheckIn" id="checkin-detail-modal" size="lg" v-bind:title="entity.name + ' Previous Check-In'" @hidden="setLastCheckInData">
+            <div v-if="lastCheckIn.comments.value !== ''">
+                <h5>Check-In Comments</h5>
+                <p>{{ lastCheckIn.comments.value }}</p>
+            </div>
+            <hr />
+            <h6>Check-In Time: {{ lastCheckIn.date | timestamp }}</h6>
+            <hr />
+            <question-readout v-for="(question, index) in lastCheckIn.questionnaire.questions" :question="question" :number="index" :key="index"/>
+            <template v-slot:modal-footer="{ close }">
+                <b-button size="md" variant="primary" @click="close()">
                     Close
                 </b-button>
             </template>
@@ -240,8 +246,13 @@
 </template>
 
 <script>
+    import questionReadout from "./questionReadout";
+
     export default {
         name: "Facility",
+        components: {
+            questionReadout
+        },
         data() {
             return {
                 entity: {
@@ -266,7 +277,9 @@
                                 parts: [
                                     {
                                         label: 'Have you seen the recommendations by the State called the "Recommendations for infection control & prevention of COVID-19 in facilities serving older adults"?',
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     }
                                 ]
                             },
@@ -274,23 +287,33 @@
                                 parts: [
                                     {
                                         label: "Is your location limiting visitors?",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     },
                                     {
                                         label: "How many patients do you have at your facility?",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     },
                                     {
                                         label: "Are they actively screening and monitoring for those who are sick for both those who are patients and employees? (looking for signs/symptoms of cough fever, shortness of breath or taking temperatures)",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     },
                                     {
                                         label: "Has your location stopped having congregate meals?",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     },
                                     {
                                         label: "Has your location posted signs for handwashing?",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     }
                                 ]
                             },
@@ -298,7 +321,9 @@
                                 parts: [
                                     {
                                         label: "How is your facility handling leave of absences from nursing homes (i.e. doctor's visits, dialysis, and outside medical visits)?",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     }
                                 ]
                             },
@@ -306,7 +331,9 @@
                                 parts: [
                                     {
                                         label: "We would like to send you more materials. What is the best way? (Fax number or email)",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     }
                                 ]
                             },
@@ -314,13 +341,17 @@
                                 parts: [
                                     {
                                         label: "Do you need any additional supplies?",
-                                        value1: null,
-                                        value2: null,
-                                        value3: null
+                                        value: [
+                                            null,
+                                            null,
+                                            null
+                                        ]
                                     },
                                     {
                                         label: "Other issues or needs (i.e. PPE)",
-                                        value: null
+                                        value: [
+                                            null
+                                        ]
                                     }
                                 ]
                             }
@@ -357,27 +388,24 @@
                     this.entityCheckIn.contacts = this.duplicateData(emptyContact);
                 }
             },
-            checkinCallback(response) {
-                console.log(response);
-                this.setLastCheckInData();
-            },
             toggleForm(){
                 this.resetCheckin();
                 this.showForm = true;
             },
             resetCheckin() {
-                this.newCheckIn.questionnaire.question1[0].value = null;
-                this.newCheckIn.questionnaire.question2[0].value = null;
-                this.newCheckIn.questionnaire.question2[1].value = null;
-                this.newCheckIn.questionnaire.question2[2].value = null;
-                this.newCheckIn.questionnaire.question2[3].value = null;
-                this.newCheckIn.questionnaire.question3[0].value = null;
-                this.newCheckIn.questionnaire.question4[0].value = null;
-                this.newCheckIn.questionnaire.question5[0].value1 = null;
-                this.newCheckIn.questionnaire.question5[0].value2 = null;
-                this.newCheckIn.questionnaire.question5[0].value3 = null;
-                this.newCheckIn.questionnaire.question5[1].value = null;
-                this.newCheckIn.questionnaire.comments.value = null;
+                this.newCheckIn.questionnaire.questions[0].parts[0].value[0] = null;
+                this.newCheckIn.questionnaire.questions[1].parts[0].value[0] = null;
+                this.newCheckIn.questionnaire.questions[1].parts[1].value[0] = null;
+                this.newCheckIn.questionnaire.questions[1].parts[2].value[0] = null;
+                this.newCheckIn.questionnaire.questions[1].parts[3].value[0] = null;
+                this.newCheckIn.questionnaire.questions[1].parts[4].value[0] = null;
+                this.newCheckIn.questionnaire.questions[2].parts[0].value[0] = null;
+                this.newCheckIn.questionnaire.questions[3].parts[0].value[0] = null;
+                this.newCheckIn.questionnaire.questions[4].parts[0].value[0] = null;
+                this.newCheckIn.questionnaire.questions[4].parts[0].value[1] = null;
+                this.newCheckIn.questionnaire.questions[4].parts[0].value[2] = null;
+                this.newCheckIn.questionnaire.questions[4].parts[1].value[0] = null;
+                this.newCheckIn.comments.value = null;
                 this.newCheckIn.status = null;
             },
             addNewCheckin() {
@@ -385,7 +413,7 @@
                 this.newCheckIn.date = new Date();
                 this.entity.checkIn.checkIns.push(this.newCheckIn);
                 this.entityCheckIn.checkIn = this.newCheckIn;
-                this.$root.apiPUTRequest("/entity", this.entityCheckIn, this.checkinCallback);
+                this.$root.apiPUTRequest("/entity", this.entityCheckIn, this.setLastCheckInData);
             },
             getEntity() {
                 this.$root.apiGETRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
@@ -394,8 +422,11 @@
                 return JSON.parse(JSON.stringify(object));
             },
             setLastCheckInData() {
-                this.lastCheckIn = this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length-1];
-                this.lastCheckInStatus.status = this.lastCheckIn.status;
+                console.log("set data");
+                if(this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length-1]) {
+                    this.lastCheckIn = this.duplicateData(this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length-1]);
+                    this.lastCheckInStatus.status = this.lastCheckIn.status;
+                }
 
                 switch(this.lastCheckInStatus.status) {
                     case "Spoke to owner. No follow-up needed.":

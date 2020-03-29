@@ -34,6 +34,34 @@ Vue.filter('phone', function (phone) {
       .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 });
 
+Vue.filter('numberToLetter', function (number) {
+  switch(number) {
+    case 0:
+      return "A";
+    case 1:
+      return "B";
+    case 2:
+      return "C";
+    case 3:
+      return "D";
+    case 4:
+      return "E";
+    case 5:
+      return "F";
+    case 6:
+      return "G";
+    case 7:
+      return "H";
+    case 8:
+      return "I";
+    case 9:
+      return "J";
+    case 10:
+      return "K";
+  }
+
+});
+
 Vue.filter('timestamp', function(input) {
   let now = new Date();
   let date = new Date(input);
@@ -43,10 +71,10 @@ Vue.filter('timestamp', function(input) {
   let isToday = (now.getDate() === date.getDate() &&
       now.getMonth() === date.getMonth() &&
       now.getFullYear() === date.getFullYear());
-  let isYesterday = (now.getDate() === date.getDate()-1 &&
+  let isYesterday = (now.getDate() === date.getDate()+1 &&
       now.getMonth() === date.getMonth() &&
       now.getFullYear() === date.getFullYear());
-  let dateOutput = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear() + ' ';
+  let dateOutput = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' at ';
   if(isToday) {
     dateOutput = "Today at "
   } else if(isYesterday) {
