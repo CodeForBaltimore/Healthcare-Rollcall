@@ -3,7 +3,7 @@
     <h1>Contact Information</h1>
     <b-row>
       <b-col>
-        <b-form @submit="submitForm" @submit.prevent="submit">
+        <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
             <input required v-model="contact.name" />
           </b-form-group>
