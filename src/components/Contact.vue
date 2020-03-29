@@ -14,7 +14,7 @@
             <input v-model="contact.email[0].address" />
           </b-form-group>
           <b-button type="submit" variant="primary">{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
-          <b-button type=button variant="outline-secondary" @click.prevent="onCancel" >Cancel</b-button>
+          <b-button type=button variant="outline-secondary" @click.prevent="returnToFacility" >Cancel</b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -60,10 +60,7 @@ export default {
     getContact(id) {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
     },
-    submitCallback() {
-      this.$router.push('/facility/' + this.$route.params.entityID);
-    },
-    onCancel() {
+    returnToFacility() {
       this.$router.push('/facility/' + this.$route.params.entityID);
     },
     submitForm() {
@@ -76,13 +73,13 @@ export default {
         this.$root.apiPUTRequest(
           "/contact",
           newContact,
-          this.submitCallback
+          this.returnToFacility
         );
       } else {
           this.$root.apiPOSTRequest(
           "/contact",
           newContact,
-          this.submitCallback
+          this.returnToFacility
         );
       }
     },
