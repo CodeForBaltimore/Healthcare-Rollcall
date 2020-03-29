@@ -33,7 +33,7 @@
         :show="this.dismissCountDown"
         dismissible
         fade
-        variant="warning"
+        :variant=this.type
         @dismiss-count-down="this.countDownChanged"
       >{{this.reset_alert}}</b-alert>
     </b-modal>
@@ -54,7 +54,8 @@ export default {
       },
       dismissSecs: 5,
       dismissCountDown: 0,
-      reset_alert: ""
+      reset_alert: "",
+      type:"warning"
     };
   },
   created() {
@@ -87,17 +88,21 @@ export default {
       if (this.input.reset_email !== "") {
         const response = postReset(this.input.reset_email);
         response
-          .then(() => {
-            this.showAlert("Password reset email sent!");
-          })
-          .catch(this.showAlert("Failed sending email"));
+          .then((data) => {
+            if(data.status == 200){
+              this.showAlert("Password reset email sent!", "success");
+            }else{
+              this.showAlert("Failed sending email", "warning")
+            }
+          }).catch(() => {this.showAlert("Failed sending email", "warning")});
       }
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-    showAlert(msg) {
+    showAlert(msg, type) {
       this.reset_alert = msg;
+      this.type = type;
       this.dismissCountDown = this.dismissSecs;
     }
   }
