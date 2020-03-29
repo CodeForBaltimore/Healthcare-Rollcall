@@ -13,17 +13,17 @@ import axios from "axios";
 
 Vue.use(BootstrapVue);
 Vue.use(VueCookies);
-Vue.use(VueJWT,{storage:'cookie'});
+Vue.use(VueJWT, { storage: 'cookie' });
 
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
-  if(Vue.$cookies.get('Health_Auth')) {
+  if (Vue.$cookies.get('Health_Auth')) {
     next();
-  } else if(to.name == 'reset' && !store.state.authenticated){
+  } else if (to.name == 'reset' && !store.state.authenticated) {
     next();
-  }else if (to.name !== 'login' && !store.state.authenticated) {
-    next({name: 'login'});
+  } else if (to.name !== 'login' && !store.state.authenticated) {
+    next({ name: 'login' });
   } else {
     next();
   }
@@ -99,14 +99,14 @@ new Vue({
     auth_token: "auth",
     auth_state: "authenticated"
   }),
-  data(){
+  data() {
     return {
       api: process.env.VUE_APP_BASE_API_URL,
       authenticated: false
     }
   },
   created: function () {
-    if(!this.authenticated && this.getTokenFromCookie()) {
+    if (!this.authenticated && this.getTokenFromCookie()) {
       this.authenticateUser(this.getTokenFromCookie());
     }
   },
@@ -118,11 +118,11 @@ new Vue({
       this.$emit("authenticated", true);
     },
     setAuthCookie(response) {
-      if(this.getTokenFromCookie() && this.getTokenFromCookie() !== response){
+      if (this.getTokenFromCookie() && this.getTokenFromCookie() !== response) {
         console.log("cookie looks different.");
         this.$cookies.remove('Health_Auth');
         this.$cookies.set('Health_Auth', response, '1D', null);
-      } else if(!this.getTokenFromCookie()) {
+      } else if (!this.getTokenFromCookie()) {
         console.log("no cookie detected. adding new cookie.");
         this.$cookies.set('Health_Auth', response, '1D', null);
       } else {
@@ -145,35 +145,51 @@ new Vue({
     apiGETRequest(endpoint, callback) {
       let self = this;
       axios
-          .get(self.api + endpoint, {
-            headers: {
-              'token': self.getSavedToken()
-            },
-          })
-          .then(function(response) {
-            callback(response.data);
-          })
-          .catch(function(err) {
-            console.log(err);
-            callback(false);
-          });
+        .get(self.api + endpoint, {
+          headers: {
+            'token': self.getSavedToken()
+          },
+        })
+        .then(function (response) {
+          callback(response.data);
+        })
+        .catch(function (err) {
+          console.log(err);
+          callback(false);
+        });
     },
     apiPUTRequest(endpoint, payload, callback) {
       let self = this;
       axios
-          .put(self.api + endpoint, payload, {
-            headers: {
-              'token': self.getSavedToken()
-            },
-          })
-          .then(function(response) {
-            callback(response);
-          })
-          .catch(function(err) {
-            console.log(err);
-            callback(false);
-          });
+        .put(self.api + endpoint, payload, {
+          headers: {
+            'token': self.getSavedToken()
+          },
+        })
+        .then(function (response) {
+          callback(response);
+        })
+        .catch(function (err) {
+          console.log(err);
+          callback(false);
+        });
     },
+    apiPOSTRequest(endpoint, payload, callback) {
+      let self = this;
+      axios
+        .post(self.api + endpoint, payload, {
+          headers: {
+            'token': self.getSavedToken()
+          },
+        })
+        .then(function (response) {
+          callback(response);
+        })
+        .catch(function (err) {
+          console.log(err);
+          callback(false);
+        });
+    }
   },
   router
 }).$mount('#app');
