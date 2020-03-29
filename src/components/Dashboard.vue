@@ -124,7 +124,7 @@
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         center: latLng(39.3, -76.62),
-        zoom: 11      
+        zoom: 11,      
       };
     },
     methods: {
