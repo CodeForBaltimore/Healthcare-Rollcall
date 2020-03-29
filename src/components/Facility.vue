@@ -73,7 +73,7 @@
                             </li>
                             <li v-if="!entity.phone && !entity.contacts[0].contact.phone.length > 0">Contact the facility using the contact information to the left.</li>
                             <li>Start the check-in by asking the 5 questions under &quot;New Check-in&quot;</li>
-                            <li>Once you are finished, click &quot;Submit&quot; at the bottom of the form</li>
+                            <li>Once you are finished, click &quot;Submit Check-In&quot; at the bottom of the form</li>
                             <li>Start the next provider</li>
                         </ol>
                         <b-card title="Previous Check-In" class="facility-check-in">
@@ -103,7 +103,8 @@
                             <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
 
                             <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
-                                <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
+                                <p>Begin a new check-in by answering the questions below.  Click "Submit Check-In" once you are done.</p>
+                                <strong>Please don't include any sensitive or personally identifiable information!</strong>
                                 <h5>Question 1</h5>
                                 <b-form-group id="check-in-input-question-1" v-bind:label="newCheckIn.questionnaire.questions[0].parts[0].label">
                                     <b-form-radio v-model="newCheckIn.questionnaire.questions[0].parts[0].value[0]" name="question-1-radio" value="Yes">Yes</b-form-radio>
