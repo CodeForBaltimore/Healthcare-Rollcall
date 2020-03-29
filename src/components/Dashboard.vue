@@ -1,88 +1,110 @@
 <template>
   <b-container fluid="md" id="dashboard">
     <b-row>
-      <b-col cols="12">
-        <h1>Provider Status Dashboard</h1>
-        <h4 class="text-muted">Status &amp; Check-in Starting Point</h4>
-        <p class="lead">Choose a Provider from the list below to begin Check-in. You can edit all provider info once inside their page.</p>
-        <!-- Dashboard Table -->
-        <b-row>
-          <b-col cols="4">
-            <b-form-group
-                    label="Filter"
-                    label-align="left"
-                    label-for="dashboard-table">
-              <b-input-group>
-                <b-form-input
-                        v-model="filter"
-                        type="search"
-                        id="dashboard-table"
-                        placeholder="Type to Search"
-                ></b-form-input>
-                <b-input-group-append>
-                  <b-button :disabled="!filter" @click="filter = ''" variant="outline-primary">Clear</b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <b-table
-          id="dashboard-table"
-          striped
-          hover
-          sticky-header
-          :filter="filter"
-          :filterIncludedFields="filterOn"
-          :sort-by.sync="sortBy"
-          :sort-desc.sync="sortDesc"
-          :sort-direction="sortDirection"
-          @filtered="onFiltered"
-          :items="entities"
-          :fields="[
-            {
-              key: 'name', stickyColumn: true, isRowHeader: true,
-              sortable: true
-            },
-            {
-              key: 'status',
-              sortable: true
-            },
-            {
-              key: 'updatedAt',
-              label: 'Updated',
-              sortable: true,
-              formatter: value => {
-                return this.$options.filters.timestamp(value);
-              }
-              // Variant applies to the whole column, including the header and footer
-              //variant: 'danger'
-            }
-          ]"
-        >
-          <template v-slot:cell(name)="data">
-            <router-link
-                    :to="{ name: 'facility', params: { entityID: data.item.id }}"
-            >{{ data.item.name }}</router-link>
-          </template>
-          <template v-slot:cell(status)="data">
-            <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
-            <span v-if="!data.item.checkIn">No Previous Check-in</span>
-          </template>
-        </b-table>
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          class="mt-4"
-        ></b-pagination>
-      </b-col>
+        <b-col cols="12">
+            <h1>Provider Status Dashboard</h1>
+            <h4 class="text-muted">Status &amp; Check-in Starting Point</h4>
+            <p class="lead">Choose a Provider from the list below to begin Check-in. You can edit all provider info once inside their page.</p>
+            <!-- Dashboard Table -->
+            <b-row>
+                <b-col cols="4">
+                    <b-form-group
+                        label="Filter"
+                        label-align="left"
+                        label-for="dashboard-table">
+                        <b-input-group>
+                            <b-form-input
+                                v-model="filter"
+                                type="search"
+                                id="dashboard-table"
+                                placeholder="Type to Search"
+                            ></b-form-input>
+                            <b-input-group-append>
+                                <b-button :disabled="!filter" @click="filter = ''" variant="outline-primary">Clear</b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-card>
+                <b-table
+                    id="dashboard-table"
+                    striped
+                    hover
+                    sticky-header
+                    :filter="filter"
+                    :filterIncludedFields="filterOn"
+                    :sort-by.sync="sortBy"
+                    :sort-desc.sync="sortDesc"
+                    :sort-direction="sortDirection"
+                    @filtered="onFiltered"
+                    :items="entities"
+                    :fields="[
+                        {
+                        key: 'name', stickyColumn: true, isRowHeader: true,
+                        sortable: true
+                        },
+                        {
+                        key: 'status',
+                        sortable: true
+                        },
+                        {
+                        key: 'updatedAt',
+                        label: 'Updated',
+                        sortable: true,
+                        formatter: value => {
+                            return this.$options.filters.timestamp(value);
+                        }
+                        // Variant applies to the whole column, including the header and footer
+                        //variant: 'danger'
+                        }
+                    ]"
+                >
+                    <template v-slot:cell(name)="data">
+                        <router-link
+                            :to="{ name: 'facility', params: { entityID: data.item.id }}"
+                        >{{ data.item.name }}</router-link>
+                    </template>
+                    <template v-slot:cell(status)="data">
+                        <span v-if="data.item.checkIn">{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
+                        <span v-if="!data.item.checkIn">No Previous Check-in</span>
+                    </template>
+                </b-table>
+                <b-pagination
+                    v-model="currentPage"
+                    :total-rows="rows"
+                    :per-page="perPage"
+                    class="mt-4"
+                ></b-pagination>
+            </b-card>
+            <b-card>
+                <div class="map-container">
+                    <l-map
+                        :zoom="zoom"
+                        :center="center"
+                        :attribution="attribution"
+                    >
+                        <l-tile-layer :url="url"></l-tile-layer>
+                        <l-marker :lat-lng="center"></l-marker>
+                    </l-map>
+                </div>
+            </b-card>
+        </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+  import { latLng } from "leaflet";
+  import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+
   export default {
     name: "Dashboard",
+    components: {
+        LMap,
+        LTileLayer,
+        LMarker
+    },
     data() {
       return {
         rows: 0,
@@ -98,7 +120,11 @@
             { key: 'name', sortable: true },
             { key: 'status', sortable: true },
             { key: 'updatedAt', sortable: true }
-        ]
+        ],
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        center: latLng(39.3, -76.62),
+        zoom: 11      
       };
     },
     methods: {
@@ -134,5 +160,9 @@
   }
   p.lead {
     margin: 30px 0 15px;
+  }
+  .map-container {
+    width: 100%;
+    height: 400px;
   }
 </style>
