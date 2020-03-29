@@ -3,7 +3,7 @@
     <h1>Contact Information</h1>
     <b-row>
       <b-col>
-        <b-form @submit="submitForm">
+        <b-form @submit="submitForm" @submit.prevent="submit">
           <b-form-group id="contact-name" label="Name">
             <input required v-model="contact.name" />
           </b-form-group>
@@ -15,7 +15,6 @@
           </b-form-group>
           <b-button type="submit" variant="primary">{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
         </b-form>
-        <p>{{ contact }}</p>
       </b-col>
     </b-row>
   </b-container>

@@ -1,68 +1,57 @@
 <template>
-  <b-container fluid="md" id="facility">
-    <h1>{{ entity.name }}</h1>
-    <b-row>
-      <b-col cols="12" md="4">
-        <b-card title="Contact Information">
-          <!-- Show Address if available -->
-          <h6 class="card-subtitle mb-2" v-if="entity.address">Address</h6>
-          <p v-if="entity.address">
-            <span
-              v-for="line in entity.address.street"
-              v-bind:key="line"
-              class="address-line"
-            >{{ line }}</span>
-            <span
-              v-if="entity.address.city && entity.address.state && entity.address.zip"
-              class="address-line"
-            >{{ entity.address.city }}, {{ entity.address.state }} {{ entity.address.zip }}</span>
-          </p>
+    <b-container fluid="md" id="facility">
+        <h1>{{ entity.name }}</h1>
+        <b-row>
+            <b-col cols="12" md="4">
+                <b-card title="Contact Information">
+                    <!-- Show Address if available -->
+                    <h6 class="card-subtitle mb-2" v-if="entity.address">Address</h6>
+                    <p v-if="entity.address">
+                        <span v-for="line in entity.address.street" v-bind:key="line" class="address-line">{{ line }}</span>
+                        <span v-if="entity.address.city && entity.address.state && entity.address.zip" class="address-line">
+                            {{ entity.address.city }}, {{ entity.address.state }} {{ entity.address.zip }}
+                        </span>
+                    </p>
 
-          <!-- Show Email Address if available -->
-          <h6 class="card-subtitle mb-2" v-if="entity.email">Email Addresses</h6>
-          <p v-if="entity.email" v-bind:class="{ primary: entity.email[0].isPrimary }">
-            <a v-bind:href="'mailto:' +  entity.email[0].address">{{ entity.email[0].address }}</a>
-          </p>
-          <ol v-if="entity.email">
-            <li
-              v-for="address in entity.email"
-              v-bind:key="address.address"
-              v-bind:class="{ primary: address.isPrimary }"
-            >
-              <a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a>
-            </li>
-          </ol>
+                    <!-- Show Email Address if available -->
+                    <h6 class="card-subtitle mb-2" v-if="entity.email">Email Addresses</h6>
+                    <p v-if="entity.email" v-bind:class="{ primary: entity.email[0].isPrimary }">
+                        <a v-bind:href="'mailto:' +  entity.email[0].address">{{ entity.email[0].address }}</a>
+                    </p>
+                    <ol v-if="entity.email">
+                        <li v-for="address in entity.email"
+                            v-bind:key="address.address"
+                            v-bind:class="{ primary: address.isPrimary }"><a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a></li>
+                    </ol>
 
-          <!-- Show Phone Numbers if available -->
-          <h6 class="card-subtitle mb-2" v-if="entity.phone">Phone Numbers</h6>
-          <p
-            v-if="entity.phone"
-            v-bind:class="{ primary: entity.phone[0].isPrimary }"
-          >{{ entity.phone[0].number | phone }}</p>
-          <ol v-if="entity.phone">
-            <li
-              v-for="number in entity.phone"
-              v-bind:key="number.number"
-              v-bind:class="{ primary: number.isPrimary }"
-            >{{ number.number | phone }}</li>
-          </ol>
+                    <!-- Show Phone Numbers if available -->
+                    <h6 class="card-subtitle mb-2" v-if="entity.phone">Phone Numbers</h6>
+                    <p v-if="entity.phone" v-bind:class="{ primary: entity.phone[0].isPrimary }">
+                        {{ entity.phone[0].number | phone }}
+                    </p>
+                    <ol v-if="entity.phone">
+                        <li v-for="number in entity.phone"
+                            v-bind:key="number.number"
+                            v-bind:class="{ primary: number.isPrimary }">{{ number.number | phone }}</li>
+                    </ol>
 
                     <!-- Show Contacts if available -->
                     <h6 class="card-subtitle mb-2" v-if="entity.contacts.length > 0">Contacts</h6>
                     <div v-if="entity.contacts.length === 1" class="contact">
                         <p><a v-bind:href="`/contact/${entity.id}/${entity.contacts[0].contact.id}`">{{ entity.contacts[0].contact.name }}</a></p>
-                        <p v-if="entity.contacts[0].contact.phone.length === 1">Phone: {{ entity.contacts[0].contact.phone[0].number | phone }}</p>
+                        <p v-if="entity.contacts[0].contact.phone.length === 1">Phone: <a v-bind:href="'tel:' + entity.contacts[0].contact.number.number">{{ entity.contacts[0].contact.phone[0].number | phone }}</a></p>
                         <p v-if="entity.contacts[0].contact.email.length === 1">Email: <a v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address">{{ entity.contacts[0].contact.email[0].address}}</a></p>
                     </div>
                     <ul v-if="entity.contacts && entity.contacts.length > 1">
                         <li v-for="contact in entity.contacts"
                             v-bind:key="contact.contact.id">
+                            <a v-bind:href="`/contact/${entity.id}/${contact.contact.id}`">{{ contact.contact.name }}</a>
                             <br />
                             Phone:
                             <ol v-if="contact.contact.phone">
                                 <li v-for="number in contact.contact.phone"
                                     v-bind:key="number.number"
-                                    v-bind:class="{ primary: number.isPrimary }">{{ number.number | phone }}</li>
+                                    v-bind:class="{ primary: number.isPrimary }"><a v-bind:href="'tel:' + number.number">{{ number.number | phone }}</a></li>
                             </ol>
                             Email:
                             <ol v-if="contact.contact.email">
@@ -72,6 +61,7 @@
                             </ol>
                         </li>
                     </ul>
+                    <b-button type="submit" v-bind:href="`/contact/${this.$route.params.entityID}`">Add Contact</b-button>
                 </b-card>
             </b-col>
             <b-col cols="12" md="8">
@@ -112,7 +102,7 @@
                                 <p>The form was successfully saved for {{ entity.name }}.</p>
                             </b-alert>
 
-              <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
+                            <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
 
                             <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
                                 <p>Begin a new check-in by answering the questions below.  Click "Submit" once you are done.</p>
@@ -427,14 +417,11 @@
                 this.entityCheckIn.checkIn = this.newCheckIn;
                 this.$root.apiPUTRequest("/entity", this.entityCheckIn, this.setLastCheckInData);
             },
-            {
-              label:
-                "Are they actively screening and monitoring for those who are sick for both those who are patients and employees? (looking for signs/symptoms of cough fever, shortness of breath or taking temperatures)",
-              value: null
+            getEntity() {
+                this.$root.apiGETRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
             },
-            {
-              label: "Has your location stopped having congregate meals?",
-              value: null
+            duplicateData(object){
+                return JSON.parse(JSON.stringify(object));
             },
             setLastCheckInData() {
                 console.log("set data");
@@ -467,129 +454,11 @@
                         break;
                 }
             }
-          ],
-          question5: [
-            {
-              label: "Note any issues or needs (i.e. PPE)",
-              value: null
-            }
-          ],
-          comments: {
-            label: "Any additional comments?",
-            value: null
-          }
+        },
+        mounted() {
+            this.getEntity();
         }
-      }
-    };
-  },
-  methods: {
-    updateFacilityData(obj) {
-      console.log(JSON.stringify(obj));
-      if (obj.checkIn === null) {
-        this.entity = this.duplicateData(obj);
-        this.entity.checkIn = {
-          checkIns: []
-        };
-        this.entityCheckIn = this.duplicateData(obj);
-        this.entityCheckIn.checkIn = [];
-      } else {
-        this.entity = this.duplicateData(obj);
-        this.entityCheckIn = this.duplicateData(obj);
-        this.entityCheckIn.checkIn = this.duplicateData(
-          this.entityCheckIn.checkIn.checkIns
-        );
-        this.setLastCheckInData();
-      }
-      if (obj.contacts.length == 0) {
-        let emptyContact = [
-          {
-            phone: [],
-            email: []
-          }
-        ];
-        this.entity.contacts = this.duplicateData(emptyContact);
-        this.entityCheckIn.contacts = this.duplicateData(emptyContact);
-      }
-      console.log(JSON.stringify(this.entity));
-    },
-    checkinCallback(response) {
-      console.log(response);
-      this.setLastCheckInData();
-    },
-    toggleForm() {
-      this.resetCheckin();
-      this.showForm = true;
-    },
-    resetCheckin() {
-      this.newCheckIn.questionnaire.question1[0].value = null;
-      this.newCheckIn.questionnaire.question2[0].value = null;
-      this.newCheckIn.questionnaire.question2[1].value = null;
-      this.newCheckIn.questionnaire.question2[2].value = null;
-      this.newCheckIn.questionnaire.question2[3].value = null;
-      this.newCheckIn.questionnaire.question3[0].value = null;
-      this.newCheckIn.questionnaire.question4[0].value = null;
-      this.newCheckIn.questionnaire.question5[0].value = null;
-      this.newCheckIn.questionnaire.comments.value = null;
-      this.newCheckIn.status = null;
-    },
-    addNewCheckin() {
-      this.showForm = false;
-      this.newCheckIn.date = new Date();
-      this.entity.checkIn.checkIns.push(this.newCheckIn);
-      this.entityCheckIn.checkIn = this.newCheckIn;
-      this.$root.apiPUTRequest(
-        "/entity",
-        this.entityCheckIn,
-        this.checkinCallback
-      );
-    },
-    getEntity() {
-      this.$root.apiGETRequest(
-        "/entity/" + this.$route.params.entityID,
-        this.updateFacilityData
-      );
-    },
-    duplicateData(object) {
-      return JSON.parse(JSON.stringify(object));
-    },
-    setLastCheckInData() {
-      this.lastCheckIn = this.entity.checkIn.checkIns[
-        this.entity.checkIn.checkIns.length - 1
-      ];
-      this.lastCheckInStatus.status = this.lastCheckIn.status;
-
-      switch (this.lastCheckInStatus.status) {
-        case "Safe":
-          this.lastCheckInStatus.state = "success";
-          break;
-        case "Monitoring":
-          this.lastCheckInStatus.state = "warning";
-          break;
-        case "Critical":
-          this.lastCheckInStatus.state = "danger";
-          break;
-      }
-    },
-    addNed() {
-      let self = this;
-      let payload = {
-        id: null,
-        EntityId: null
-      };
-      this.$root.apiGETRequest("/contact", function(response) {
-        console.log(response.results);
-        payload.id = response.results[0].id;
-        payload.EntityId = self.$route.params.entityID;
-        self.$root.apiPUTRequest("/contact", payload, function(response) {
-          console.log(response);
-        });
-      });
     }
-  },
-  mounted() {
-    this.getEntity();
-  }
-};
 </script>
 
 <style scoped>

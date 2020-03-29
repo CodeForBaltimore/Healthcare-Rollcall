@@ -176,7 +176,6 @@ new Vue({
     },
     apiPOSTRequest(endpoint, payload, callback) {
       let self = this;
-      console.log(self);
       axios
         .post(self.api + endpoint, payload, {
           headers: {
@@ -184,14 +183,12 @@ new Vue({
           },
         })
         .then(function (response) {
-          console.log(response);
           callback(response);
         })
         .catch(function (err) {
           console.log(err);
           callback(false);
         });
-      console.log('ended');
     }
   },
   router
