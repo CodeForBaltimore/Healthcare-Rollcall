@@ -79,7 +79,7 @@
               </p>
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
-              <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id">
+              <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id" class="contact">
                 <a
                   v-bind:href="`/contact/${entity.id}/${contact.contact.id}`"
                 >{{ contact.contact.name }}</a>
