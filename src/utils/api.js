@@ -28,7 +28,7 @@ export const updateUser = (email_token, email, password) => {
         },
         {
             headers: {
-                'email_token': email_token
+                'token': email_token
             }
         }
     ).then(response => response);
