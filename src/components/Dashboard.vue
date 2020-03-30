@@ -48,17 +48,7 @@
 
                     </l-map>
                 </div>
-            </b-card>  
-            <b-card>
-                <div>
-                    <ul>
-                        <li v-for="entity in entities" :key="entity.name">
-                            <p v-if="entity.checkIn">{{ entity.address.latlng }} + {{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
-                            <p v-if="!entity.checkIn">{{ entity.address.latlng }} + No Previous Check-in</p>
-                        </li>
-                    </ul>
-                </div>
-            </b-card>                       
+            </b-card>                      
             <b-card>
                 <b-table
                     id="dashboard-table"
