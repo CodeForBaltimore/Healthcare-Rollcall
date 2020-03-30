@@ -27,6 +27,29 @@
                 </b-col>
             </b-row>
             <b-card>
+                <div class="map-container">
+                    <l-map
+                        :zoom="zoom"
+                        :center="center"
+                        :attribution="attribution"
+                    >
+                        <l-tile-layer :url="url"></l-tile-layer>
+                        <l-marker v-for="entity in entities"
+                            :key="entity.name"
+                            :lat-lng="entity.address.latlng"></l-marker>
+                    </l-map>
+                </div>
+            </b-card>  
+            <b-card>
+                <div>
+                    <ul>
+                        <li v-for="entity in entities" :key="entity.name">
+                            {{ entity.address.latlng }}
+                        </li>
+                    </ul>
+                </div>
+            </b-card>                       
+            <b-card>
                 <b-table
                     id="dashboard-table"
                     striped
@@ -77,18 +100,6 @@
                     class="mt-4"
                 ></b-pagination>
             </b-card>
-            <b-card>
-                <div class="map-container">
-                    <l-map
-                        :zoom="zoom"
-                        :center="center"
-                        :attribution="attribution"
-                    >
-                        <l-tile-layer :url="url"></l-tile-layer>
-                        <l-marker :lat-lng="center"></l-marker>
-                    </l-map>
-                </div>
-            </b-card>
         </b-col>
     </b-row>
   </b-container>
@@ -124,13 +135,14 @@
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         center: latLng(39.3, -76.62),
-        zoom: 11,      
+        zoom: 11      
       };
     },
     methods: {
       updateEntities(obj) {
         this.entities = obj.results;
-        this.rows = this.entities.length;
+        this.rows = this.entities.length;        
+        console.log(obj.results[0].address.latlng);
       },
       onFiltered(filteredItems) {
         this.rows = filteredItems.length;
@@ -163,6 +175,6 @@
   }
   .map-container {
     width: 100%;
-    height: 400px;
+    height: 50vh;
   }
 </style>
