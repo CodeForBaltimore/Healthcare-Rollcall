@@ -40,8 +40,9 @@
                             <l-popup>
                                 <div>
                                     <p><strong>Facility: </strong>{{ entity.name }}</p>
-                                        <p v-if="entity.checkIn"><strong>Status: </strong>{{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
-                                        <p v-if="!entity.checkIn"><strong>Status: </strong>No Previous Check-in</p>
+                                    <p v-if="entity.checkIn"><strong>Status: </strong>{{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
+                                    <p v-if="!entity.checkIn"><strong>Status: </strong>No Previous Check-in</p>
+                                    <p><strong>Updated: </strong>{{ entity.updatedAt }}</p>
                                 </div>
                             </l-popup>
                         </l-marker>
