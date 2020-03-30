@@ -20,7 +20,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
 import axios from "axios";
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 Vue.use(BootstrapVue);
@@ -30,6 +30,7 @@ Vue.use(VueJWT, { storage: 'cookie' });
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
+Vue.component('l-popup', LPopup);
 
 Vue.config.productionTip = false;
 

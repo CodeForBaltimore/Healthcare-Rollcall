@@ -36,7 +36,16 @@
                         <l-tile-layer :url="url"></l-tile-layer>
                         <l-marker v-for="entity in entities"
                             :key="entity.name"
-                            :lat-lng="entity.address.latlng"></l-marker>
+                            :lat-lng="entity.address.latlng">
+                            <l-popup>
+                                <div>
+                                    <p><strong>Facility: </strong>{{ entity.name }}</p>
+                                        <p v-if="entity.checkIn"><strong>Status: </strong>{{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
+                                        <p v-if="!entity.checkIn"><strong>Status: </strong>No Previous Check-in</p>
+                                </div>
+                            </l-popup>
+                        </l-marker>
+
                     </l-map>
                 </div>
             </b-card>  
@@ -44,7 +53,8 @@
                 <div>
                     <ul>
                         <li v-for="entity in entities" :key="entity.name">
-                            {{ entity.address.latlng }}
+                            <p v-if="entity.checkIn">{{ entity.address.latlng }} + {{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
+                            <p v-if="!entity.checkIn">{{ entity.address.latlng }} + No Previous Check-in</p>
                         </li>
                     </ul>
                 </div>
@@ -107,14 +117,15 @@
 
 <script>
   import { latLng } from "leaflet";
-  import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+  import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 
   export default {
     name: "Dashboard",
     components: {
         LMap,
         LTileLayer,
-        LMarker
+        LMarker,
+        LPopup
     },
     data() {
       return {
@@ -142,7 +153,6 @@
       updateEntities(obj) {
         this.entities = obj.results;
         this.rows = this.entities.length;        
-        console.log(obj.results[0].address.latlng);
       },
       onFiltered(filteredItems) {
         this.rows = filteredItems.length;
