@@ -82,7 +82,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: null,
-      filterOn: [],
+      filterOn: ['name', 'status'],
       entities: null,
       sortBy: "updated",
       sortDesc: false,
@@ -108,9 +108,9 @@ export default {
             entity.checkIn.checkIns[entity.checkIn.checkIns.length - 1].status;
         }
       }
-      console.log(this.entities);
     },
     onFiltered(filteredItems) {
+      console.log(this);
       this.rows = filteredItems.length;
       this.currentPage = 1;
     }
