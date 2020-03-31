@@ -8,17 +8,17 @@
       </b-col>
       <b-col cols="12" md="6">
         <b-card title="Login">
-          <form class="login-container" v-on:submit.prevent>
+          <form class="login-container" v-on:submit.prevent="login">
             <label>
-              <b-form-input type="text" name="email" v-model="input.email" placeholder="Email" />
+              <b-form-input required type="text" name="email" v-model="input.email" placeholder="Email" />
             </label>
             <label>
-              <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
+              <b-form-input required type="password" name="password" v-model="input.password" placeholder="Password" />
             </label>
             <div>
               <a v-b-modal.reset-pass href="#">Forgot/Reset Password</a>
             </div>
-            <b-button type="submit" v-on:click="login()" variant="primary">Login</b-button>
+            <b-button type="submit" variant="primary">Login</b-button>
           </form>
         </b-card>
       </b-col>
