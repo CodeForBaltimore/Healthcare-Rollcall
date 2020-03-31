@@ -64,6 +64,7 @@
           tempObj.email = [{ address: null, isPrimary: true }];
         }
         this.contact = this.duplicateData(tempObj);
+        this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
       },
       getContact(id) {
         this.$root.apiGETRequest("/contact/" + id, this.updateContact);
