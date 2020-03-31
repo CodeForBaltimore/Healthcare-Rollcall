@@ -2,7 +2,7 @@
   <div id="app">
     <b-navbar variant="faded" type="dark" id="primary-nav">
       <b-container fluid="md">
-        <b-navbar-brand href="/">
+        <b-navbar-brand v-on:click="goToDashboard()" role="link" class="branding-link">
           <img alt="City of Baltimore Seal" src="./assets/balt-logo-white.png" class="seal"/>
           <img alt="Healthcare Roll Call" src="./assets/hcrc.svg" class="app-logo"/>
         </b-navbar-brand>
@@ -13,7 +13,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item v-on:click="goBack()" v-if="this.$root.auth_state && this.$router.currentRoute.name !== 'dashboard'">&larr; Go Back</b-nav-item>
+            <b-nav-item v-on:click="goToDashboard()" v-if="this.$root.auth_state && showDashboardLink()">&larr; Return to Dashboard</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="this.$root.auth_state">
             <b-nav-item-dropdown right>
@@ -59,7 +59,12 @@
         this.$router.go(-1);
       },
       goToDashboard() {
-        this.$router.push({ name: 'dashboard' });
+        if(this.$router.currentRoute.name !== "dashboard") {
+          this.$router.push({ name: 'dashboard' });
+        }
+      },
+      showDashboardLink() {
+        return !(new RegExp(['dashboard','contact'].join('|')).test(this.$router.currentRoute.name));
       }
     }
   };
@@ -137,5 +142,8 @@
   #footer {
     margin: 60px auto;
     text-align: center;
+  }
+  .branding-link {
+    cursor: pointer;
   }
 </style>
