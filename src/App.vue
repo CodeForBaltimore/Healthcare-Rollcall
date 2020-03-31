@@ -2,7 +2,7 @@
   <div id="app">
     <b-navbar variant="faded" type="dark" id="primary-nav">
       <b-container fluid="md">
-        <b-navbar-brand href="/">
+        <b-navbar-brand v-on:click="goToDashboard()" role="link" class="branding-link">
           <img alt="City of Baltimore Seal" src="./assets/balt-logo-white.png" class="seal"/>
           <img alt="Healthcare Roll Call" src="./assets/hcrc.svg" class="app-logo"/>
         </b-navbar-brand>
@@ -60,7 +60,9 @@
         this.$router.go(-1);
       },
       goToDashboard() {
-        this.$router.push({ name: 'dashboard' });
+        if(this.$router.currentRoute.name !== "dashboard") {
+          this.$router.push({ name: 'dashboard' });
+        }
       }
     }
   };
@@ -138,5 +140,8 @@
   #footer {
     margin: 60px auto;
     text-align: center;
+  }
+  .branding-link {
+    cursor: pointer;
   }
 </style>

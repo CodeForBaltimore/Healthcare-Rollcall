@@ -57,9 +57,9 @@
             <h6 class="card-subtitle mb-2" v-if="entity.contacts.length > 0">Contacts</h6>
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
-                <a
-                  v-bind:href="`/contact/${entity.id}/${entity.contacts[0].contact.id}`"
-                >{{ entity.contacts[0].contact.name }}</a>
+                <router-link
+                        :to="{ name: 'update-contact', params: { entityID: this.$route.params.entityID, contactID: entity.contacts[0].contact.id }}"
+                >{{ entity.contacts[0].contact.name }}</router-link>
               </p>
               <p
                 v-if="entity.contacts[0].contact.phone && entity.contacts[0].contact.phone.length === 1"
@@ -80,9 +80,9 @@
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id" class="contact">
-                <a
-                  v-bind:href="`/contact/${entity.id}/${contact.contact.id}`"
-                >{{ contact.contact.name }}</a>
+                <router-link
+                        :to="{ name: 'update-contact', params: { entityID: this.$route.params.entityID, contactID: contact.contact.id }}"
+                >{{ contact.contact.name }}</router-link>
                 <p v-if="contact.contact.phone && contact.contact.phone[0]">
                   Phone:
                   <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a> 
@@ -94,10 +94,7 @@
               </li>
             </ul>
           </div>
-          <b-button
-              type="submit"
-              v-bind:href="`/contact/${this.$route.params.entityID}`"
-            >Add Contact</b-button>
+          <b-button v-on:click="addContact()">Add Contact</b-button>
         </b-card>
       </b-col>
       <b-col cols="12" md="8">
@@ -281,9 +278,11 @@
                   v-bind:label="newCheckIn.questionnaire.questions[2].parts[0].label"
                   label-for="question-3"
                 >
-                  <p class="pi-alert" v-if="elementFocus === 'question3'">
-                    <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
-                    <strong>Remember:</strong> Do not include any personal information
+                  <p class="pi-alert" >
+                    <span v-if="elementFocus === 'question3'">
+                      <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
+                      <strong>Remember:</strong> Do not include any personal information
+                    </span>
                   </p>
                   <b-form-textarea
                     id="question-3"
@@ -300,9 +299,11 @@
                   v-bind:label="newCheckIn.questionnaire.questions[3].parts[0].label"
                   label-for="question-4"
                 >
-                  <p class="pi-alert" v-if="elementFocus === 'question4'">
-                    <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
-                    <strong>Remember:</strong> Do not include any personal information
+                  <p class="pi-alert" >
+                    <span v-if="elementFocus === 'question4'">
+                      <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
+                      <strong>Remember:</strong> Do not include any personal information
+                    </span>
                   </p>
                   <b-form-textarea
                     id="question-4"
@@ -341,9 +342,11 @@
                   v-bind:label="newCheckIn.questionnaire.questions[4].parts[1].label"
                   label-for="question-5"
                 >
-                  <p class="pi-alert" v-if="elementFocus === 'question5'">
-                    <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
-                    <strong>Remember:</strong> Do not include any personal information
+                  <p class="pi-alert" >
+                    <span v-if="elementFocus === 'question5'">
+                      <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
+                      <strong>Remember:</strong> Do not include any personal information
+                    </span>
                   </p>
                   <b-form-textarea
                     id="question-5"
@@ -360,9 +363,11 @@
                   v-bind:label="newCheckIn.comments.label"
                   label-for="comments"
                 >
-                  <p class="pi-alert" v-if="elementFocus === 'comments'">
-                    <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
-                    <strong>Remember:</strong> Do not include any personal information
+                  <p class="pi-alert" >
+                    <span v-if="elementFocus === 'comments'">
+                      <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
+                      <strong>Remember:</strong> Do not include any personal information
+                    </span>
                   </p>
                   <b-form-textarea
                     id="comments"
@@ -576,7 +581,7 @@ export default {
         );
         this.setLastCheckInData();
       }
-      if (!obj.contacts || obj.contacts.length == 0) {
+      if (!obj.contacts || obj.contacts.length === 0) {
         let emptyContact = {
           phone: [],
           email: []
@@ -660,6 +665,9 @@ export default {
           this.lastCheckInStatus.state = "danger";
           break;
       }
+    },
+    addContact() {
+      this.$router.push({ name: 'create-contact', params: { entityID: this.$route.params.entityID }});
     }
   },
   mounted() {
@@ -669,71 +677,76 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  text-align: left;
-  margin-bottom: 30px;
-}
-.card h6 {
-  font-weight: bold;
-}
-form h5 {
-  border-bottom: 2px solid #42484f;
-  padding-bottom: 8px;
-  margin: 16px 0;
-}
-form h6,
-.last-checkin h6 {
-  font-weight: bold;
-  background-color: #f1f1f1;
-  box-sizing: border-box;
-  padding: 8px;
-}
-.last-checkin p {
-  padding: 0 8px;
-}
-.card-body {
-  text-align: left;
-}
-p.return-link {
-  text-align: left;
-}
-.contact p {
-  margin: 0;
-}
-.facility-check-in {
-  margin-bottom: 24px;
-}
-.address-line {
-  display: block;
-}
-.alert {
-  margin-bottom: 0;
-}
-.alert h6 {
-  font-weight: bold;
-  margin-top: 4px;
-}
-p:last-child {
-  margin-bottom: 0;
-}
-.custom-control-label {
-  cursor: pointer;
-}
-button {
-  margin-right: 15px;
-}
-button.btn-primary {
-  padding-left: 30px;
-  padding-right: 30px;
-}
-.pi-alert {
-  font-size: 12px;
-  margin-top: 12px;
-}
-.pi-alert img {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  margin-top: -2px;
-}
+  h1 {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .card h6 {
+    font-weight: bold;
+  }
+  form h5 {
+    border-bottom: 2px solid #42484f;
+    padding-bottom: 8px;
+    margin: 16px 0;
+  }
+  form h6,
+  .last-checkin h6 {
+    font-weight: bold;
+    background-color: #f1f1f1;
+    box-sizing: border-box;
+    padding: 8px;
+  }
+  .last-checkin p {
+    padding: 0 8px;
+  }
+  .card-body {
+    text-align: left;
+  }
+  p.return-link {
+    text-align: left;
+  }
+  .contact p {
+    margin: 0;
+  }
+  .facility-check-in {
+    margin-bottom: 24px;
+  }
+  .address-line {
+    display: block;
+  }
+  .alert {
+    margin-bottom: 0;
+  }
+  .alert h6 {
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+  .custom-control-label {
+    cursor: pointer;
+  }
+  button {
+    margin-right: 15px;
+  }
+  button.btn-primary {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .pi-alert {
+    font-size: 12px;
+    margin-top: 0;
+    height: 18px;
+    margin-bottom:4px;
+  }
+  .pi-alert img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    margin-top: -2px;
+  }
+  label {
+    margin-bottom: 0;
+  }
 </style>
