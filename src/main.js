@@ -33,7 +33,7 @@ Vue.filter('phone', function (phone) {
   let phoneClean = ('' + phone).replace(/\D/g, '');
   let intlCode = (phoneClean.charAt(0) === "1" ? '+1 ' : false);
   let output = null;
-  if(phoneClean.length == 0){
+  if(phoneClean.length === 0){
     output = '';
   } else if(phoneClean.length > 0 && phoneClean.length <= 3) {
     output = '(' + phoneClean.substring(0, 3) + ')';
