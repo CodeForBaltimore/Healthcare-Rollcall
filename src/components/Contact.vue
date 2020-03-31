@@ -8,10 +8,10 @@
             <input required v-model="contact.name" />
           </b-form-group>
           <b-form-group id="contact-phone" label="Phone Number">
-            <input v-model="contact.phone[0].number" />
+            <input type="text" minlength="10" maxlength="11" v-model="contact.phone[0].number" />
           </b-form-group>
           <b-form-group id="contact-email" label="Email Address">
-            <input v-model="contact.email[0].address" />
+            <input type="email" v-model="contact.email[0].address" />
           </b-form-group>
           <b-button type="submit" variant="primary">{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
           <b-button type=button variant="outline-secondary" @click.prevent="returnToFacility" >Cancel</b-button>

@@ -154,7 +154,7 @@
 
               <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
 
-              <b-form @submit="addNewCheckin" @reset="resetCheckin" v-if="showForm">
+              <b-form @submit.prevent="addNewCheckin" @reset="resetCheckin" v-if="showForm">
                 <p>Begin a new check-in by answering the questions below. Click "Submit Check-In" once you are done.</p>
                 <h5>Question 1</h5>
                 <b-form-group
