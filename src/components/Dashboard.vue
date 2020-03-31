@@ -30,8 +30,6 @@
           striped
           hover
           sticky-header
-          :per-page="perPage"
-          :current-page="currentPage"
           :filter="filter"
           :filterIncludedFields="filterOn"
           :sort-by.sync="sortBy"
@@ -66,7 +64,10 @@
             >{{ data.item.name }}</router-link>
           </template>
           <template v-slot:cell(status)="data">
-            <span>{{ data.item.status ? data.item.status : 'No Previous Check-in' }}</span>
+            <span
+              v-if="data.item.checkIn"
+            >{{ data.item.checkIn.checkIns[data.item.checkIn.checkIns.length-1].status }}</span>
+            <span v-if="!data.item.checkIn">No Previous Check-in</span>
           </template>
         </b-table>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
@@ -84,7 +85,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: null,
-      filterOn: ['name', 'status'],
+      filterOn: [],
       entities: null,
       sortBy: "updated",
       sortDesc: false,
@@ -100,19 +101,8 @@ export default {
     updateEntities(obj) {
       this.entities = obj.results;
       this.rows = this.entities.length;
-      for (let entity of this.entities) {
-        if (
-          entity.checkIn &&
-          entity.checkIn.checkIns &&
-          entity.checkIn.checkIns.length > 0
-        ) {
-          entity.status =
-            entity.checkIn.checkIns[entity.checkIn.checkIns.length - 1].status;
-        }
-      }
     },
     onFiltered(filteredItems) {
-      console.log(this);
       this.rows = filteredItems.length;
       this.currentPage = 1;
     }
