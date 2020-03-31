@@ -378,7 +378,7 @@
                     rows="3"
                   ></b-form-textarea>
                 </b-form-group>
-                <h5>Call Outcome &amp;amp; Follow-up</h5>
+                <h5>Call Outcome &amp; Follow-up</h5>
                 <b-form-group
                   id="check-in-input-status"
                   label="Choose an outcome and indicate if a follow-up is needed"
