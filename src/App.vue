@@ -13,7 +13,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item v-on:click="goBack()" v-if="this.$root.auth_state && this.$router.currentRoute.name !== 'dashboard'">&larr; Go Back</b-nav-item>
+            <b-nav-item v-on:click="goBack()" v-if="this.$root.auth_state && !disableBackBtn.includes(this.$router.currentRoute.name)">&larr; Go Back</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="this.$root.auth_state">
             <b-nav-item-dropdown right>
@@ -41,7 +41,8 @@
     name: "App",
     data() {
       return {
-        user: ""
+        user: "",
+        disableBackBtn: ['dashboard', 'create-contact', 'update-contact']
       }
     },
     created() {
