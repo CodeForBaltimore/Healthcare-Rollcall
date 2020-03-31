@@ -42,7 +42,7 @@
     data() {
       return {
         user: "",
-        disableBackBtn: ['dashboard', 'create-contact', 'update-contact']
+        disableBackBtn: ['dashboard', 'create-contact', 'update-contact', 'facility']
       }
     },
     created() {
