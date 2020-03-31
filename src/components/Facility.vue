@@ -209,6 +209,7 @@
                     type="number"
                     v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
                     placeholder="0"
+                    min="0"
                   ></b-form-input>
                 </b-form-group>
                 <h6>Part C</h6>
