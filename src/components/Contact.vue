@@ -74,8 +74,8 @@
     methods: {
       updateContact(obj) {
         let tempObj = obj;
-        if (!tempObj.phone || tempObj.phone.length === 0) {
-          tempObj.phone = [{ phone: null, isPrimary: true }];
+        if (tempObj.phone || tempObj.phone.length === 0) {
+          tempObj.phone = [{ address: null, isPrimary: true }];
         }
         if (!tempObj.email || tempObj.email.length === 0) {
           tempObj.email = [{ address: null, isPrimary: true }];
@@ -96,10 +96,16 @@
         this.phoneValid = this.contact.phone[0].number.length > 10;
         this.emailValid = (this.contact.email[0].address.includes("@") && this.contact.email[0].address.includes("."));
         this.validationRun = true;
-        if(this.phoneValid && this.emailValid) {
+        if((this.phoneValid && this.emailValid) ||
+                (this.contact.phone[0].number === "1" && this.emailValid) ||
+                (this.contact.email[0].address === "" && this.phoneValid)) {
           let newContact = this.duplicateData(this.contact);
-          newContact.phone = newContact.phone.filter(phone => !!phone.number);
-          newContact.phone = newContact.phone.length > 0 ? newContact.phone : null;
+          if(this.contact.phone[0].number === "1") {
+            newContact.phone = [];
+          } else {
+            newContact.phone = newContact.phone.filter(phone => !!phone.number);
+            newContact.phone = newContact.phone.length > 0 ? newContact.phone : null;
+          }
           newContact.email = newContact.email.filter(email => !!email.address);
           newContact.email = newContact.email.length > 0 ? newContact.email : null;
           if (this.$route.params.contactID) {
