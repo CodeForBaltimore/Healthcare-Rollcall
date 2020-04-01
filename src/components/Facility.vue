@@ -58,7 +58,7 @@
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: this.$route.params.entityID, contactID: entity.contacts[0].contact.id }}"
+                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].contact.id }}"
                 >{{ entity.contacts[0].contact.name }}</router-link>
               </p>
               <p
@@ -81,7 +81,7 @@
             <ul v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id" class="contact">
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: this.$route.params.entityID, contactID: contact.contact.id }}"
+                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.contact.id }}"
                 >{{ contact.contact.name }}</router-link>
                 <p v-if="contact.contact.phone && contact.contact.phone[0]">
                   Phone:
