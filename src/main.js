@@ -47,8 +47,6 @@ Vue.filter('phone', function (phone) {
     output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10) + ' ext: ' + phoneClean.substring(10);
   }
 
-  console.log(phoneClean.length);
-
   return '+1 ' + output
 });
 
