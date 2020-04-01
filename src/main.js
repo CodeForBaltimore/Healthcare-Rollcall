@@ -43,13 +43,8 @@ Vue.filter('phone', function (phone) {
     output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6);
   } else if (phoneClean.length >= 7 && phoneClean.length <= 10) {
     output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10);
-<<<<<<< HEAD
-  } else if (intlCode && phoneClean.length > 10) {
-    output = intlCode + '(' + phoneClean.substring(1, 4) + ') ' + phoneClean.substring(4, 7) + '-' + phoneClean.substring(6, 10);
-=======
   } else if(phoneClean.length > 10) {
     output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10) + ' ext: ' + phoneClean.substring(10);
->>>>>>> 266f45019310a9f17d34e71a6233c5516c0ee224
   }
 
   console.log(phoneClean.length);
