@@ -13,7 +13,7 @@
             <b-form-group label="Filter" label-align="left" label-for="dashboard-table">
               <b-input-group>
                 <b-form-input
-                  v-model="filter"
+                  v-model="filter.keyword"
                   type="search"
                   id="dashboard-table"
                   placeholder="Type to Search"
@@ -21,6 +21,13 @@
                 <b-input-group-append>
                   <b-button :disabled="!filter" @click="filter = ''" variant="outline-primary">Clear</b-button>
                 </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+          <b-col cols="4">
+            <b-form-group label="Status" label-align="left" label-for="dashboard-table">
+              <b-input-group>
+                <b-form-select v-model="filter.status" :options="statusOptions"></b-form-select>
               </b-input-group>
             </b-form-group>
           </b-col>
@@ -32,13 +39,13 @@
           sticky-header
           :per-page="perPage"
           :current-page="currentPage"
-          :filter="filter"
-          :filterIncludedFields="filterOn"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
           :sort-direction="sortDirection"
           @filtered="onFiltered"
           :items="entities"
+          :filter="filter"
+          :filter-function="filterRow"
           :fields="[
             {
               key: 'name', stickyColumn: true, isRowHeader: true,
@@ -66,7 +73,7 @@
             >{{ data.item.name }}</router-link>
           </template>
           <template v-slot:cell(status)="data">
-            <span>{{ data.item.status ? data.item.status : 'No Previous Check-in' }}</span>
+            <span>{{ data.item.status }}</span>
           </template>
         </b-table>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
@@ -83,8 +90,12 @@ export default {
       rows: 0,
       perPage: 10,
       currentPage: 1,
-      filter: null,
-      filterOn: ['name', 'status'],
+      filter: {
+        keyword: null,
+        status: null
+      },
+      filterOn: ["name"],
+      statusOptions: [],
       entities: null,
       sortBy: "updated",
       sortDesc: false,
@@ -108,15 +119,31 @@ export default {
         ) {
           entity.status =
             entity.checkIn.checkIns[entity.checkIn.checkIns.length - 1].status;
+        } else {
+          entity.status = "No Previous Check-in";
         }
       }
     },
     onFiltered(filteredItems) {
       this.rows = filteredItems.length;
       this.currentPage = 1;
+    },
+    filterRow(row, filter) {
+      let match = !filter.status || row.status === this.filter.status;
+      return match && filter.keyword
+        ? this.filterOn.reduce(
+            (match, field) =>
+              match ||
+              row[field].toLowerCase().match(filter.keyword.toLowerCase()),
+            false
+          ) : match;
     }
   },
   mounted() {
+    let options = this.$root.getStatuses().map(status => {
+      return { value: status, text: status };
+    });
+    this.statusOptions = [{ value: null, text: "All" }, ...options];
     this.$root.apiGETRequest("/entity", this.updateEntities);
   }
 };
