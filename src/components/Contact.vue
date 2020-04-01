@@ -9,32 +9,39 @@
           </b-form-group>
           <b-form-group id="contact-phone" label="Phone Number">
             <b-form-input
-                    type="tel"
-                    ref="contactPhone"
-                    v-model="numberFormatted"
-                    @keydown.native.prevent="formatTelInput($event)"
-                    @keydown.delete.prevent="formatTelBackspace($event)"
-                    minlength="17"
-                    :state="phoneValid"
-                    aria-describedby="phone-input-live-feedback"
+              type="tel"
+              ref="contactPhone"
+              v-model="numberFormatted"
+              @keydown.native.prevent="formatTelInput($event)"
+              @keydown.delete.prevent="formatTelBackspace($event)"
+              minlength="17"
+              :state="phoneValid"
+              aria-describedby="phone-input-live-feedback"
             />
-            <b-form-invalid-feedback id="phone-input-live-feedback">
-              Please enter a valid phone number.
-            </b-form-invalid-feedback>
+            <b-form-invalid-feedback
+              id="phone-input-live-feedback"
+            >Please enter a valid phone number.</b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="contact-email" label="Email Address">
             <b-form-input
-                    type="email"
-                    v-model="contact.email[0].address"
-                    :state="emailValid"
-                    aria-describedby="email-input-live-feedback"
+              type="email"
+              v-model="contact.email[0].address"
+              :state="emailValid"
+              aria-describedby="email-input-live-feedback"
             />
-            <b-form-invalid-feedback id="email-input-live-feedback">
-              Please enter a valid email address.
-            </b-form-invalid-feedback>
+            <b-form-invalid-feedback
+              id="email-input-live-feedback"
+            >Please enter a valid email address.</b-form-invalid-feedback>
           </b-form-group>
-          <b-button type="submit" variant="primary">{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
-          <b-button type="cancel" variant="outline-secondary" @click.prevent="returnToFacility" >Cancel</b-button>
+          <b-button
+            type="submit"
+            variant="primary"
+          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
+          <b-button
+            type="cancel"
+            variant="outline-secondary"
+            @click.prevent="returnToFacility"
+          >Cancel</b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -42,154 +49,180 @@
 </template>
 
 <script>
-
-  export default {
-    name: "Contact",
-    data() {
-      return {
-        contact: {
-          id: null,
-          UserId: null,
-          EntityId: this.$route.params.entityID,
-          name: null,
-          phone: [
-            {
-              number: null,
-              isPrimary: true
-            }
-          ],
-          email: [
-            {
-              address: null,
-              isPrimary: true
-            }
-          ]
-        },
-        numberFormatted: "",
-        phoneValid: null,
-        emailValid: null,
-        validationRun: false
+export default {
+  name: "Contact",
+  data() {
+    return {
+      contact: {
+        id: null,
+        UserId: null,
+        EntityId: this.$route.params.entityID,
+        name: null,
+        phone: [
+          {
+            number: null,
+            isPrimary: true
+          }
+        ],
+        email: [
+          {
+            address: null,
+            isPrimary: true
+          }
+        ]
+      },
+      numberFormatted: "",
+      phoneValid: null,
+      emailValid: null,
+      validationRun: false
+    };
+  },
+  methods: {
+    updateContact(obj) {
+      let tempObj = obj;
+      if (tempObj.phone) {
+        tempObj.phone = [{ address: null, isPrimary: true }];
       }
-    },
-    methods: {
-      updateContact(obj) {
-        let tempObj = obj;
-        if (tempObj.phone || tempObj.phone.length === 0) {
-          tempObj.phone = [{ address: null, isPrimary: true }];
-        }
-        if (!tempObj.email || tempObj.email.length === 0) {
-          tempObj.email = [{ address: null, isPrimary: true }];
-        }
-        this.contact = this.duplicateData(tempObj);
-        if(this.contact.phone[0].number.length <= 10 && this.contact.phone[0].number.charAt(0) !== "1") {
+      if (!tempObj.email) {
+        tempObj.email = [{ address: null, isPrimary: true }];
+      }
+      this.contact = this.duplicateData(tempObj);
+      if (this.contact.phone) {
+        if (
+          this.contact.phone[0].number.length <= 10 &&
+          this.contact.phone[0].number.charAt(0) !== "1"
+        ) {
           this.contact.phone[0].number = "1" + this.contact.phone[0].number;
         }
-        this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
-      },
-      getContact(id) {
-        this.$root.apiGETRequest("/contact/" + id, this.updateContact);
-      },
-      returnToFacility() {
-        this.$router.push({ name: 'facility', params: { entityID: this.$route.params.entityID }});
-      },
-      submitForm() {
-        this.phoneValid = this.contact.phone[0].number.length > 10;
-        this.emailValid = (this.contact.email[0].address.includes("@") && this.contact.email[0].address.includes("."));
-        this.validationRun = true;
-        if((this.phoneValid && this.emailValid) ||
-                (this.contact.phone[0].number === "1" && this.emailValid) ||
-                (this.contact.email[0].address === "" && this.phoneValid)) {
-          let newContact = this.duplicateData(this.contact);
-          if(this.contact.phone[0].number === "1") {
-            newContact.phone = [];
-          } else {
-            newContact.phone = newContact.phone.filter(phone => !!phone.number);
-            newContact.phone = newContact.phone.length > 0 ? newContact.phone : null;
-          }
-          newContact.email = newContact.email.filter(email => !!email.address);
-          newContact.email = newContact.email.length > 0 ? newContact.email : null;
-          if (this.$route.params.contactID) {
-            this.$root.apiPUTRequest(
-                    "/contact",
-                    newContact,
-                    this.returnToFacility
-            );
-          } else {
-            this.$root.apiPOSTRequest(
-                    "/contact",
-                    newContact,
-                    this.returnToFacility
-            );
-          }
-        }
-      },
-      duplicateData(object) {
-        return JSON.parse(JSON.stringify(object));
-      },
-      formatTelInput(event) {
-        if(new RegExp(['1','2','3','4','5','6','7','8','9','0'].join('|')).test(event.key)) {
-          if(this.contact.phone[0].number == null) {
-            this.contact.phone[0].number = "1";
-          }
-          if(this.contact.phone[0].number.charAt(0) === '1') {
-            this.contact.phone[0].number += event.key;
-            this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
-          }
+        this.numberFormatted = this.$options.filters.phone(
+          this.contact.phone[0].number
+        );
+      }
+    },
+    getContact(id) {
+      this.$root.apiGETRequest("/contact/" + id, this.updateContact);
+    },
+    returnToFacility() {
+      this.$router.push({
+        name: "facility",
+        params: { entityID: this.$route.params.entityID }
+      });
+    },
+    submitForm() {
+      this.phoneValid = this.contact.phone[0].number.length > 10;
+      this.emailValid =
+        this.contact.email[0].address.includes("@") &&
+        this.contact.email[0].address.includes(".");
+      this.validationRun = true;
+      if (
+        (this.phoneValid && this.emailValid) ||
+        (this.contact.phone[0].number === "1" && this.emailValid) ||
+        (this.contact.email[0].address === "" && this.phoneValid)
+      ) {
+        let newContact = this.duplicateData(this.contact);
+        if (this.contact.phone[0].number === "1") {
+          newContact.phone = [];
         } else {
-          event.preventDefault();
+          newContact.phone = newContact.phone.filter(phone => !!phone.number);
+          newContact.phone =
+            newContact.phone.length > 0 ? newContact.phone : null;
         }
-      },
-      formatTelBackspace(event) {
-        event.preventDefault();
-        if(this.contact.phone[0].number > 1) {
-          this.contact.phone[0].number = this.contact.phone[0].number.slice(0, -1);
-          this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
+        newContact.email = newContact.email.filter(email => !!email.address);
+        newContact.email =
+          newContact.email.length > 0 ? newContact.email : null;
+        if (this.$route.params.contactID) {
+          this.$root.apiPUTRequest(
+            "/contact",
+            newContact,
+            this.returnToFacility
+          );
+        } else {
+          this.$root.apiPOSTRequest(
+            "/contact",
+            newContact,
+            this.returnToFacility
+          );
         }
       }
     },
-    mounted() {
-      if (this.$route.params.contactID) {
-        this.getContact(this.$route.params.contactID);
+    duplicateData(object) {
+      return JSON.parse(JSON.stringify(object));
+    },
+    formatTelInput(event) {
+      if (
+        new RegExp(
+          ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].join("|")
+        ).test(event.key)
+      ) {
+        if (this.contact.phone[0].number == null) {
+          this.contact.phone[0].number = "1";
+        }
+        if (this.contact.phone[0].number.charAt(0) === "1") {
+          this.contact.phone[0].number += event.key;
+          this.numberFormatted = this.$options.filters.phone(
+            this.contact.phone[0].number
+          );
+        }
+      } else {
+        event.preventDefault();
+      }
+    },
+    formatTelBackspace(event) {
+      event.preventDefault();
+      if (this.contact.phone[0].number > 1) {
+        this.contact.phone[0].number = this.contact.phone[0].number.slice(
+          0,
+          -1
+        );
+        this.numberFormatted = this.$options.filters.phone(
+          this.contact.phone[0].number
+        );
       }
     }
-  };
+  },
+  mounted() {
+    if (this.$route.params.contactID) {
+      this.getContact(this.$route.params.contactID);
+    }
+  }
+};
 </script>
 
 <style scoped>
-  h1 {
-    text-align: left;
-  }
-  form h5 {
-    border-bottom: 2px solid #42484f;
-    padding-bottom: 8px;
-    margin: 16px 0;
-  }
-  form h6 {
-    font-weight: bold;
-    background-color: #f1f1f1;
-    box-sizing: border-box;
-    padding: 8px;
-  }
-  .card-body {
-    text-align: left;
-  }
-  p.return-link {
-    text-align: left;
-  }
-  .facility-check-in {
-    margin-bottom: 24px;
-  }
-  .address-line {
-    display: block;
-  }
-  .alert {
-    margin-bottom: 0;
-  }
-  .alert h6 {
-    font-weight: bold;
-    margin-top: 4px;
-  }
-  p:last-child {
-    margin-bottom: 0;
-  }
+h1 {
+  text-align: left;
+}
+form h5 {
+  border-bottom: 2px solid #42484f;
+  padding-bottom: 8px;
+  margin: 16px 0;
+}
+form h6 {
+  font-weight: bold;
+  background-color: #f1f1f1;
+  box-sizing: border-box;
+  padding: 8px;
+}
+.card-body {
+  text-align: left;
+}
+p.return-link {
+  text-align: left;
+}
+.facility-check-in {
+  margin-bottom: 24px;
+}
+.address-line {
+  display: block;
+}
+.alert {
+  margin-bottom: 0;
+}
+.alert h6 {
+  font-weight: bold;
+  margin-top: 4px;
+}
+p:last-child {
+  margin-bottom: 0;
+}
 </style>
