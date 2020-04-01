@@ -13,7 +13,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item v-on:click="goBack()" v-if="this.$root.auth_state && !disableBackBtn.includes(this.$router.currentRoute.name)">&larr; Go Back</b-nav-item>
+            <b-nav-item v-on:click="goToDashboard()" v-if="this.$root.auth_state && showDashboardLink()">&larr; Return to Dashboard</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="this.$root.auth_state">
             <b-nav-item-dropdown right>
@@ -63,6 +63,9 @@
         if(this.$router.currentRoute.name !== "dashboard") {
           this.$router.push({ name: 'dashboard' });
         }
+      },
+      showDashboardLink() {
+        return !(new RegExp(['dashboard','contact'].join('|')).test(this.$router.currentRoute.name));
       }
     }
   };
