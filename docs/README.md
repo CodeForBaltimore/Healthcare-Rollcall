@@ -1,3 +1,25 @@
+<!-- TOC -->
+
+- [Tech Spec](#tech-spec)
+    - [Overview](#overview)
+    - [Scenarios](#scenarios)
+        - [Flexible check-in process](#flexible-check-in-process)
+        - [Up to date info](#up-to-date-info)
+        - [City dashboard](#city-dashboard)
+    - [Non Goals](#non-goals)
+    - [Minimum Viable Product](#minimum-viable-product)
+    - [Components](#components)
+        - [Contact Management System](#contact-management-system)
+            - [Server Technologies](#server-technologies)
+            - [Database](#database)
+    - [Roadmap](#roadmap)
+        - [Research](#research)
+        - [Development](#development)
+        - [Implementation](#implementation)
+    - [Contact Info](#contact-info)
+
+<!-- /TOC -->
+
 # Tech Spec
 
 *_Healthcare Rollcall_* is an open-source project designed to be used by the City of Baltimore to supplement its existing emergency response plan. The application will be an API-first project to ensure maximum extendibility and flexibility..

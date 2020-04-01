@@ -41,7 +41,7 @@ Add the following to a file named `.env` in your project directory:
 ```shell
 VUE_APP_BASE_API_URL=<your API url>
 ```
-Where <your API url> would be http://localhost:PORT if you're running the backend locally, by default PORT is 3000.
+Where <your API url> would be http://localhost:3000 if you're running the backend locally, by default PORT is 3000.
 
 ## Docker and docker-compose
 To use the backend of this project in an easy way, a `docker-compose` file has been included for convenience. To run this you must add a few entries to your `.env` file.
@@ -49,6 +49,7 @@ To use the backend of this project in an easy way, a `docker-compose` file has b
 DATABASE_URL=postgres://user:pass@example.com:5432/dbname
 DATABASE_USER=<your username>
 DATABASE_PASSWORD=<your password>
+DATABASE_SCHEMA=<your schema>
 ```
 The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgres://username:password@host:port/database_name`
 
@@ -64,6 +65,7 @@ NODE_ENV=development
 DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
 DATABASE_USER=postgres
 DATABASE_PASSWORD=postgres
+DATABASE_SCHEMA=public
 JWT_KEY=abc123
 BYPASS_LOGIN=true
 ```

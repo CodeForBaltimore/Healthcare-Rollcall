@@ -41,7 +41,7 @@
     name: "App",
     data() {
       return {
-        user: "",
+        // user: "",
         disableBackBtn: ['dashboard', 'create-contact', 'update-contact', 'facility']
       }
     },
