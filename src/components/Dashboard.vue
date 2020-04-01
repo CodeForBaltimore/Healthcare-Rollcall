@@ -19,7 +19,11 @@
                   placeholder="Type to Search"
                 ></b-form-input>
                 <b-input-group-append>
-                  <b-button :disabled="!filter" @click="filter = ''" variant="outline-primary">Clear</b-button>
+                  <b-button
+                    :disabled="!filter.keyword"
+                    @click="filter.keyword = ''"
+                    variant="outline-primary"
+                  >Clear</b-button>
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
@@ -136,12 +140,13 @@ export default {
               match ||
               row[field].toLowerCase().match(filter.keyword.toLowerCase()),
             false
-          ) : match;
+          )
+        : match;
     }
   },
   mounted() {
     let options = this.$root.getStatuses().map(status => {
-      return { value: status, text: status };
+      return { value: status, text: status, disabled: false };
     });
     this.statusOptions = [{ value: null, text: "All" }, ...options];
     this.$root.apiGETRequest("/entity", this.updateEntities);
