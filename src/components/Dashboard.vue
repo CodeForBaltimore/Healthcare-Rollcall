@@ -45,6 +45,10 @@
               sortable: true
             },
             {
+              key: 'type', stickyColumn: true, isRowHeader: true,
+              sortable: true
+            },
+            {
               key: 'status',
               sortable: true
             },
@@ -64,6 +68,9 @@
             <router-link
               :to="{ name: 'facility', params: { entityID: data.item.id }}"
             >{{ data.item.name }}</router-link>
+          </template>
+          <template v-slot:cell(type)="data">
+            {{ data.item.type }}
           </template>
           <template v-slot:cell(status)="data">
             <span>{{ data.item.status ? data.item.status : 'No Previous Check-in' }}</span>
