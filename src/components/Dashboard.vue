@@ -40,7 +40,7 @@
           id="dashboard-table"
           striped
           hover
-          sticky-header
+          
           :per-page="perPage"
           :current-page="currentPage"
           :sort-by.sync="sortBy"
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       rows: 0,
-      perPage: 10,
+      perPage: 25,
       currentPage: 1,
       filter: {
         keyword: null,
