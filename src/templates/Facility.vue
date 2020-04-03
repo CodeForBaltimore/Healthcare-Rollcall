@@ -85,7 +85,7 @@
                 >{{ contact.contact.name }}</router-link>
                 <p v-if="contact.contact.phone && contact.contact.phone[0]">
                   Phone:
-                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a> 
+                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a>
                 </p>
                 <p v-if="contact.contact.email && contact.contact.email[0]">
                     Email:
@@ -144,7 +144,17 @@
         <b-row>
           <b-col>
             <b-card title="New Check-In" class="facility-check-in">
-              <covid-form v-bind:entity="entity"/>
+              <covid-form
+                      v-if="formAvailability.covidForm.includes(entity.type)"
+                      v-bind:entity.sync="entity"
+                      v-bind:entity-check-in.sync="entityCheckIn"
+                      @submitted="setLastCheckInData($event)"/>
+
+              <!-- If No Forms match the Entity Type -->
+              <b-alert show variant="warning" v-if="!formAvailability.covidForm.includes(entity.type)">
+                <h6 class="alert-heading">No Forms Available</h6>
+                <p>There are no forms available for this type of facility.</p>
+              </b-alert>
             </b-card>
           </b-col>
         </b-row>
@@ -155,7 +165,7 @@
       id="checkin-detail-modal"
       size="lg"
       v-bind:title="entity.name + ' Previous Check-In'"
-      @hidden="setLastCheckInData"
+      @hidden="resetCheckInData"
     >
       <div v-if="lastCheckIn.comments.value !== ''">
         <h5>Check-In Comments</h5>
@@ -192,6 +202,21 @@ export default {
       entity: {
         name: "Loading..."
       },
+      entityCheckIn: {
+        name: null
+      },
+      lastCheckInStatus: {
+        state: "dark",
+        status: "Unknown"
+      },
+      formAvailability: {
+        covidForm: [
+          "Assisted Living Facility",
+          "Senior Housing",
+          "Test"
+        ]
+      },
+      formMatched: false,
       lastCheckIn: null
     };
   },
@@ -222,6 +247,19 @@ export default {
         this.entityCheckIn.contacts.push(this.duplicateData(emptyContact));
       }
     },
+    formAvailable(type = null, form = null) {
+      if(type in this.formAvailability && !this.formMatched) {
+        if(this.formAvailability[type].includes(form)) {
+          console.log("match found");
+          this.formMatched = true;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
     getEntity() {
       this.$root.apiGETRequest(
         "/entity/" + this.$route.params.entityID,
@@ -231,7 +269,14 @@ export default {
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));
     },
-    setLastCheckInData() {
+    resetCheckInData() {
+      // This prevents an event from being passed from the modal
+      this.setLastCheckInData();
+    },
+    setLastCheckInData(data = undefined) {
+      if(data) {
+        this.entity.checkIn.checkIns.push(data);
+      }
       if (
         this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length - 1]
       ) {
@@ -317,5 +362,8 @@ export default {
   button.btn-primary {
     padding-left: 30px;
     padding-right: 30px;
+  }
+  .facility-check-in {
+    margin-bottom: 24px;
   }
 </style>

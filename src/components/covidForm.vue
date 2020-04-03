@@ -1,12 +1,6 @@
 <template>
     <div>
-        <b-alert show variant="success" v-if="!showForm">
-            <h6 class="alert-heading">Check-In Complete</h6>
-            <p>The form was successfully saved for {{ entity.name }}.</p>
-        </b-alert>
-
-        <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
-        <h2>{{entity.name}}</h2>
+        <h6>{{ formName }}</h6>
         <b-form @submit.prevent="addNewCheckin" @reset="resetCheckin" v-if="showForm">
             <p>Begin a new check-in by answering the questions below. Click "Submit Check-In" once you are done.</p>
             <h5>Question 1</h5>
@@ -287,23 +281,23 @@
             <b-button type="submit" variant="primary">Submit Check-In</b-button>
             <b-button type="reset" variant="outline-secondary">Reset</b-button>
         </b-form>
+
+        <b-alert show variant="success" v-if="!showForm">
+            <h6 class="alert-heading">Check-In Complete</h6>
+            <p>The form was successfully saved for {{ entity.name }}.</p>
+        </b-alert>
+        <b-button v-if="!showForm" v-on:click="toggleForm">Submit Another</b-button>
     </div>
 </template>
 
 <script>
     export default {
         name: "covidForm",
-        props: ['entity'],
+        props: ['entity', 'entityCheckIn'],
         data() {
             return {
+                formName: "COVID-19 Response",
                 elementFocus: null,
-                lastCheckInStatus: {
-                    state: "dark",
-                    status: "Unknown"
-                },
-                entityCheckIn: {
-                    name: null
-                },
                 newCheckIn: {
                     status: null,
                     date: null,
@@ -401,15 +395,20 @@
                 this.newCheckIn.status = null;
             },
             addNewCheckin() {
+                let self = this;
                 this.showForm = false;
                 this.newCheckIn.date = new Date();
-                this.entity.checkIn.checkIns.push(this.newCheckIn);
                 this.entityCheckIn.checkIn = this.newCheckIn;
                 this.$root.apiPUTRequest(
                     "/entity",
                     this.entityCheckIn,
-                    this.setLastCheckInData
+                    function() {
+                        self.updateParent();
+                    }
                 );
+            },
+            updateParent() {
+                this.$emit('submitted',this.newCheckIn);
             },
             toggleForm() {
                 this.resetCheckin();
@@ -433,9 +432,6 @@
         box-sizing: border-box;
         padding: 8px;
     }
-    .facility-check-in {
-        margin-bottom: 24px;
-    }
     .pi-alert {
         font-size: 12px;
         margin-top: 0;
@@ -457,5 +453,8 @@
     button.btn-primary {
         padding-left: 30px;
         padding-right: 30px;
+    }
+    .card h6 {
+        font-weight: bold;
     }
 </style>
