@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LoginComponent from "./components/Login.vue"
-import DashboardComponent from "./components/Dashboard.vue"
-import FacilityComponent from "./components/Facility.vue"
-import PasswordResetComponent from "./components/PasswordReset.vue"
-import ContactComponent from "./components/Contact.vue"
+import LoginComponent from "./templates/Login.vue"
+import DashboardComponent from "./templates/Dashboard.vue"
+import FacilityComponent from "./templates/Facility.vue"
+import PasswordResetComponent from "./templates/PasswordReset.vue"
+import ContactComponent from "./templates/Contact.vue"
 
 Vue.use(Router);
 
