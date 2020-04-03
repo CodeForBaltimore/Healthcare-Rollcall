@@ -78,7 +78,7 @@
                 >{{ entity.contacts[0].contact.email[0].address}}</a>
               </p>
             </div>
-            <ul v-if="entity.contacts && entity.contacts.length > 1">
+            <ol v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id" class="contact">
                 <router-link
                         :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.contact.id }}"
@@ -92,7 +92,7 @@
                     <a v-bind:href="'mailto:' +  contact.contact.email[0].address">{{ contact.contact.email[0].address }}</a>
                 </p>
               </li>
-            </ul>
+            </ol>
           </div>
           <b-button v-on:click="addContact()">Add Contact</b-button>
         </b-card>
