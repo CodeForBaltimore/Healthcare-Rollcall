@@ -12,7 +12,7 @@
               type="tel"
               ref="contactPhone"
               v-model="numberFormatted"
-              @keydown.native.prevent="formatTelInput($event)"
+              @keydown.exact="formatTelInput($event)"
               @keydown.delete.prevent="formatTelBackspace($event)"
               minlength="17"
               :state="phoneValid"
@@ -80,22 +80,22 @@ export default {
   methods: {
     updateContact(obj) {
       let tempObj = obj;
-      if (tempObj.phone) {
-        tempObj.phone = [{ address: null, isPrimary: true }];
+      if (!tempObj.phone) {
+        tempObj.phone = [{ number: null, isPrimary: true }];
       }
       if (!tempObj.email) {
         tempObj.email = [{ address: null, isPrimary: true }];
       }
-      this.contact = this.duplicateData(tempObj);
+      this.contact = tempObj;
       if (this.contact.phone) {
         if (
-          this.contact.phone[0].number.length <= 10 &&
-          this.contact.phone[0].number.charAt(0) !== "1"
+            this.contact.phone[0].number.length < 11 ||
+            this.contact.phone[0].number.charAt(0) !== "1"
         ) {
           this.contact.phone[0].number = "1" + this.contact.phone[0].number;
         }
         this.numberFormatted = this.$options.filters.phone(
-          this.contact.phone[0].number
+                this.contact.phone[0].number
         );
       }
     },
@@ -154,6 +154,7 @@ export default {
           ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].join("|")
         ).test(event.key)
       ) {
+        event.preventDefault();
         if (this.contact.phone[0].number == null) {
           this.contact.phone[0].number = "1";
         }
@@ -163,7 +164,7 @@ export default {
             this.contact.phone[0].number
           );
         }
-      } else {
+      } else if(event.key !== "Tab") {
         event.preventDefault();
       }
     },
