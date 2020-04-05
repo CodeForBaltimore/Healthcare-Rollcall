@@ -155,6 +155,12 @@ export default {
         ).test(event.key)
       ) {
         event.preventDefault();
+        if (this.contact.phone[0] === undefined) {
+          this.contact.phone[0] = {
+            number: null,
+            isPrimary: true
+          }
+        }
         if (this.contact.phone[0].number == null) {
           this.contact.phone[0].number = "1";
         }
@@ -168,8 +174,7 @@ export default {
         event.preventDefault();
       }
     },
-    formatTelBackspace(event) {
-      event.preventDefault();
+    formatTelBackspace() {
       if (this.contact.phone[0].number > 1) {
         this.contact.phone[0].number = this.contact.phone[0].number.slice(
           0,
