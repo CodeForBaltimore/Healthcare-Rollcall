@@ -60,7 +60,7 @@ export default {
         name: null,
         phone: [
           {
-            number: "",
+            number: "1",
             isPrimary: true
           }
         ],
@@ -185,6 +185,10 @@ export default {
   mounted() {
     if (this.$route.params.contactID) {
       this.getContact(this.$route.params.contactID);
+    } else {
+      this.numberFormatted = this.$options.filters.phone(
+              this.contact.phone[0].number
+      );
     }
   }
 };
