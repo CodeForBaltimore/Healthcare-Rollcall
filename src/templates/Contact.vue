@@ -79,25 +79,26 @@ export default {
   },
   methods: {
     updateContact(obj) {
-      let tempObj = obj;
-      if (!tempObj.phone) {
-        tempObj.phone = [{ number: null, isPrimary: true }];
+      if (obj.phone[0] === undefined) {
+        obj.phone.push({ number: "", isPrimary: true });
       }
-      if (!tempObj.email) {
-        tempObj.email = [{ address: null, isPrimary: true }];
+      if (obj.email[0] === undefined) {
+        obj.email.push({ address: "", isPrimary: true });
       }
-      this.contact = tempObj;
-      if (this.contact.phone) {
+      this.contact = obj;
+
+      if (this.contact.phone[0] === undefined || this.contact.phone[0].number ===  "") {
         if (
             this.contact.phone[0].number.length < 11 ||
             this.contact.phone[0].number.charAt(0) !== "1"
         ) {
           this.contact.phone[0].number = "1" + this.contact.phone[0].number;
         }
-        this.numberFormatted = this.$options.filters.phone(
-                this.contact.phone[0].number
-        );
       }
+
+      this.numberFormatted = this.$options.filters.phone(
+              this.contact.phone[0].number
+      );
     },
     getContact(id) {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);

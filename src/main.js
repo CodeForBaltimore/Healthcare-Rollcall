@@ -171,7 +171,6 @@ new Vue({
         })
         .catch(function (err) {
           console.log(err);
-          callback(false);
         });
     },
     apiPUTRequest(endpoint, payload, callback) {
@@ -187,7 +186,6 @@ new Vue({
         })
         .catch(function (err) {
           console.log(err);
-          callback(false);
         });
     },
     apiPOSTRequest(endpoint, payload, callback) {
