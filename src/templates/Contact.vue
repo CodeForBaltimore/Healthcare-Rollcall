@@ -79,10 +79,12 @@ export default {
   },
   methods: {
     updateContact(obj) {
-      if (obj.phone[0] === undefined || obj.phone[0] === null) {
+      if (!obj.phone || obj.phone[0] === undefined || obj.phone[0] === null) {
+        obj.phone = [];
         obj.phone.push({ number: "", isPrimary: true });
       }
-      if (obj.email[0] === undefined || obj.email[0] === null) {
+      if (!obj.email || obj.email[0] === undefined || obj.email[0] === null) {
+        obj.email = [];
         obj.email.push({ address: "", isPrimary: true });
       }
       this.contact = obj;
