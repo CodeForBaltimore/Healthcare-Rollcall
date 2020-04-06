@@ -60,13 +60,13 @@ export default {
         name: null,
         phone: [
           {
-            number: null,
+            number: "1",
             isPrimary: true
           }
         ],
         email: [
           {
-            address: null,
+            address: "",
             isPrimary: true
           }
         ]
@@ -79,10 +79,12 @@ export default {
   },
   methods: {
     updateContact(obj) {
-      if (obj.phone[0] === undefined) {
+      if (!obj.phone || obj.phone[0] === undefined || obj.phone[0] === null) {
+        obj.phone = [];
         obj.phone.push({ number: "", isPrimary: true });
       }
-      if (obj.email[0] === undefined) {
+      if (!obj.email || obj.email[0] === undefined || obj.email[0] === null) {
+        obj.email = [];
         obj.email.push({ address: "", isPrimary: true });
       }
       this.contact = obj;
@@ -185,6 +187,10 @@ export default {
   mounted() {
     if (this.$route.params.contactID) {
       this.getContact(this.$route.params.contactID);
+    } else {
+      this.numberFormatted = this.$options.filters.phone(
+              this.contact.phone[0].number
+      );
     }
   }
 };
