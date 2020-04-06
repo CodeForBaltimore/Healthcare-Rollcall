@@ -60,13 +60,13 @@ export default {
         name: null,
         phone: [
           {
-            number: null,
+            number: "",
             isPrimary: true
           }
         ],
         email: [
           {
-            address: null,
+            address: "",
             isPrimary: true
           }
         ]
