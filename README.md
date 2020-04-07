@@ -1,8 +1,13 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
 
+# Healthcare Rollcall
+
+In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) needs to be able to verify the status of all healthcare providers in the city. 
+
 <!-- TOC -->
 
 - [Healthcare Rollcall](#healthcare-rollcall)
+    - [What is this?](#what-is-this)
     - [Documentation](#documentation)
 - [Project setup](#project-setup)
     - [Docker and docker-compose](#docker-and-docker-compose)
@@ -17,9 +22,8 @@
 
 <!-- /TOC -->
 
-# Healthcare Rollcall
-
-In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) is required to verify the electrical power status of all healthcare providers in the city. This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track providers responses to a questionnaire.  This questionnaire can be specific to a single disaster, or can be more general.  Examples:
+## What is this?
+This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track providers responses to a questionnaire.  This questionnaire can be specific to a single disaster, or can be more general.  Examples:
 
 * Widespread power blackout
 * Epidemic or Pandemic response (COVID-19)

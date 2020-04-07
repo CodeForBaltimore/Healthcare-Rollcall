@@ -1,0 +1,64 @@
+publiccodeYmlVersion: "0.2"
+
+name: Healthcare-Rollcall
+url: "https://github.com/CodeForBaltimore/Healthcare-Rollcall.git"
+landingUrl: "https://github.com/CodeForBaltimore/Healthcare-Rollcall"
+softwareVersion: "1.0.0"   
+releaseDate: "2020-04-06"
+platforms:
+  - web
+
+categories:
+  - emergency-response 
+  - healthcare
+
+developmentStatus: development
+
+softwareType: "standalone/web"
+
+description:
+  en:
+    localisedName: bmore-resonsive
+    genericName: API
+    shortDescription: >
+          A contact-management website to be used by the City of Baltimore to supplement its existing emergency response plan.
+
+    longDescription: >
+          In the event of a disaster a municipality or state may 
+          have need to check in on the status of all healthcare 
+          providers, or other types of entities, within in the 
+          jurisdiction. This system will provide methods for 
+          healthcare providers and entities to check-in during 
+          disasters, and update their contact information during 
+          non-emergency periods.
+    documentation: "https://github.com/CodeForBaltimore/Healthcare-Rollcall/tree/master/docs"
+    videos: "https://www.youtube.com/watch?v=y74QDRHFa4o&list=PL5-IuD-j5bbmWgJ8rrvmtycNtkfUgbGlH"
+
+    features:
+       - User management
+       - Contact management
+       - Entity management
+       - Entity check-in management
+
+legal:
+  license: Apache-2.0
+  repoOwner: "Code for Baltimore"
+
+maintenance:
+  type: "community"
+
+  contacts:
+    - name: Jason Anton
+      email: jason@codeforbaltimore.org
+      affiliation: Code for Baltimore
+
+localisation:
+  localisationReady: yes
+  availableLanguages:
+    - en
+
+dependsOn:
+  open:
+    - name: Bmore-Responsive
+      version: "1.0.2"
+      optional: no

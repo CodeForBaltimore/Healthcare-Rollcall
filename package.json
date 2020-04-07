@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,12 +9,15 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-runtime": "6.26.0",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.7.0",
     "core-js": "^3.4.3",
     "dotenv": "8.2.0",
+    "helmet": "3.22.0",
     "vue": "^2.6.10",
     "vue-cookies": "1.7.0",
+    "vue-helmet": "1.1.5",
     "vuejs-jwt": "1.1.0",
     "vuex": "^3.1.3"
   },
