@@ -5,8 +5,8 @@
         <h1>Welcome to Healthcare Roll Call</h1>
         <h4 class="text-muted">Check-in for Healthcare Providers</h4>
         <p class="lead"><strong>Healthcare Roll Call</strong> allows municipalities to keep track of the status of local healthcare providers connectivity and emergency-related needs.  The <strong>Healthcare Roll Call</strong> collects and consolidates all emergency information in one database, allowing outreach coordinators to easily track provider status.</p>
-        <h5>Tutorial</h5>
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ3Um0pjz8HmUj44qOJ8x0r-P7NUR1kNAYmOCkry8KXcwScoQjmrJ1EMuSVIEsnJOW0GeKXZtN7uAjM/embed?start=true&loop=true&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="max-width:100%; margin-top: 30px;"></iframe>
+        <h5>30 Second Tutorial</h5>
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ3Um0pjz8HmUj44qOJ8x0r-P7NUR1kNAYmOCkry8KXcwScoQjmrJ1EMuSVIEsnJOW0GeKXZtN7uAjM/embed?start=true&loop=true&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="max-width:100%;"></iframe>
       </b-col>
       <b-col cols="12" md="6">
         <b-card title="Login">
