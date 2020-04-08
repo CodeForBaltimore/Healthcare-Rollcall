@@ -19,12 +19,6 @@
       "contributions": [
         "code",
         "doc",
-        "eventOrganizing",
-        "ideas",
-        "infra",
-        "maintenance",
-        "projectManagement",
-        "review",
         "security"
       ]
     },
@@ -95,7 +89,6 @@
       "profile": "https://markadk.in/s",
       "contributions": [
         "code",
-        "content",
         "doc",
         "design"
       ]
@@ -116,12 +109,26 @@
       "profile": "http://jasonbixon.netlify.com",
       "contributions": [
         "code",
-        "doc",
         "design",
-        "ideas",
-        "infra",
-        "question",
-        "review"
+        "infra"
+      ]
+    },
+    {
+      "login": "snyk-bot",
+      "name": "Snyk bot",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19733683?v=4",
+      "profile": "https://snyk.io",
+      "contributions": [
+        "security"
+      ]
+    },
+    {
+      "login": "dependabot[bot]",
+      "name": "Dependabot",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/27347476?v=4",
+      "profile": "https://dependabot.com",
+      "contributions": [
+        "security"
       ]
     },
     {
