@@ -36,6 +36,16 @@
         "code",
         "review"
       ]
+    },
+    {
+      "login": "helro154",
+      "name": "Harry Respass",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5619637?v=4",
+      "profile": "http://www.restechsys.com",
+      "contributions": [
+        "code",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7

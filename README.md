@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Healthcare Rollcall
@@ -141,6 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://www.jasonanton.com"><img src="https://avatars0.githubusercontent.com/u/6391564?v=4" width="100px;" alt=""/><br /><sub><b>Jason Anton</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=revjtanton" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=revjtanton" title="Documentation">📖</a> <a href="#eventOrganizing-revjtanton" title="Event Organizing">📋</a> <a href="#ideas-revjtanton" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-revjtanton" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-revjtanton" title="Maintenance">🚧</a> <a href="#projectManagement-revjtanton" title="Project Management">📆</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/pulls?q=is%3Apr+reviewed-by%3Arevjtanton" title="Reviewed Pull Requests">👀</a> <a href="#security-revjtanton" title="Security">🛡️</a></td>
     <td align="center"><a href="https://ao10.github.io"><img src="https://avatars3.githubusercontent.com/u/14120224?v=4" width="100px;" alt=""/><br /><sub><b>Ati Ok</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=ao10" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/pulls?q=is%3Apr+reviewed-by%3Aao10" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="http://www.restechsys.com"><img src="https://avatars2.githubusercontent.com/u/5619637?v=4" width="100px;" alt=""/><br /><sub><b>Harry Respass</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=helro154" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/pulls?q=is%3Apr+reviewed-by%3Ahelro154" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
