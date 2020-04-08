@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Healthcare Rollcall
 
@@ -12,6 +15,7 @@ In the event of a disaster, Baltimore City and the Baltimore City Health Departm
 - [Project setup](#project-setup)
     - [Docker and docker-compose](#docker-and-docker-compose)
         - [Full .env example](#full-env-example)
+        - [Keeping your API up to date](#keeping-your-api-up-to-date)
     - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
     - [Compiles and minifies for production](#compiles-and-minifies-for-production)
     - [Lints and fixes files](#lints-and-fixes-files)
@@ -59,7 +63,7 @@ The `DATABASE_URL` is not a very clear var name, and the string is broken down a
 
 An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
 
-You would then run the docker-compose setup with `docker-compose up -d` to run the Db & API in detached mode and then `npm run serve` to run the frontend.
+You would then run the docker-compose setup with `docker-compose up -d` to run the DB & API in detached mode and then `npm run serve` to run the frontend.
 
 ### Full .env example
 Here is a full example of default values for our `.env` file. You should be able to copy/paste this directly and it will work locally, however we ***STRONGLY*** encourage you to use custom values.
@@ -72,6 +76,16 @@ DATABASE_PASSWORD=postgres
 DATABASE_SCHEMA=public
 JWT_KEY=abc123
 BYPASS_LOGIN=true
+```
+
+### Keeping your API up to date
+By default the backend solution will pull the latest image from Dockerhub. If you wish to keep this up to date you should run:
+```
+docker pull codeforbaltimore/bmore-responsive
+```
+You can also specify a tagged release:
+```
+docker pull codeforbaltimore/bmore-responsive:1.0.2
 ```
 
 ## Compiles and hot-reloads for development
@@ -112,8 +126,25 @@ What does someone need to do to test their work? Have you included a specific te
 
 We are also building a back-end API to feed and manage data for this project. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Bmore-Responsive
 
-We will be including multi-repo build processes with the back-end that will reference this project.
-
 <p align="center">
     <img src="docs/img/CfB.png" width="400">
 </p>
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://www.jasonanton.com"><img src="https://avatars0.githubusercontent.com/u/6391564?v=4" width="100px;" alt=""/><br /><sub><b>Jason Anton</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=revjtanton" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=revjtanton" title="Documentation">📖</a> <a href="#eventOrganizing-revjtanton" title="Event Organizing">📋</a> <a href="#ideas-revjtanton" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-revjtanton" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-revjtanton" title="Maintenance">🚧</a> <a href="#projectManagement-revjtanton" title="Project Management">📆</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/pulls?q=is%3Apr+reviewed-by%3Arevjtanton" title="Reviewed Pull Requests">👀</a> <a href="#security-revjtanton" title="Security">🛡️</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
