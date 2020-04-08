@@ -123,6 +123,15 @@
         "question",
         "review"
       ]
+    },
+    {
+      "login": "uxstephanie",
+      "name": "Stephanie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/47190328?v=4",
+      "profile": "http://stephanie.marketing",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7
