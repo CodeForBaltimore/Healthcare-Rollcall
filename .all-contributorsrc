@@ -26,6 +26,16 @@
         "review",
         "security"
       ]
+    },
+    {
+      "login": "ao10",
+      "name": "Ati Ok",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14120224?v=4",
+      "profile": "https://ao10.github.io",
+      "contributions": [
+        "code",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
