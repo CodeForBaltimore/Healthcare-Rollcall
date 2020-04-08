@@ -46,6 +46,16 @@
         "code",
         "review"
       ]
+    },
+    {
+      "login": "cmavelis",
+      "name": "Cameron Avelis",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16199008?v=4",
+      "profile": "https://github.com/cmavelis",
+      "contributions": [
+        "code",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
