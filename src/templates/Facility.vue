@@ -212,6 +212,7 @@ export default {
       formAvailability: {
         covidForm: [
           "Assisted Living Facility",
+          "Nursing Homes",
           "Senior Housing",
           "Test"
         ]
