@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Healthcare Rollcall
@@ -150,6 +150,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://markadk.in/s"><img src="https://avatars0.githubusercontent.com/u/6365836?v=4" width="100px;" alt=""/><br /><sub><b>Mark Adkins</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=funkybunch" title="Code">💻</a> <a href="#content-funkybunch" title="Content">🖋</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=funkybunch" title="Documentation">📖</a> <a href="#design-funkybunch" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/charlesw2004"><img src="https://avatars0.githubusercontent.com/u/30778546?v=4" width="100px;" alt=""/><br /><sub><b>Wilner Charles</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=charlesw2004" title="Code">💻</a></td>
+    <td align="center"><a href="http://jasonbixon.netlify.com"><img src="https://avatars3.githubusercontent.com/u/32110237?v=4" width="100px;" alt=""/><br /><sub><b>Jason Bixon</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=jbixon13" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=jbixon13" title="Documentation">📖</a> <a href="#design-jbixon13" title="Design">🎨</a> <a href="#ideas-jbixon13" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-jbixon13" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#question-jbixon13" title="Answering Questions">💬</a> <a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/pulls?q=is%3Apr+reviewed-by%3Ajbixon13" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 

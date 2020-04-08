@@ -107,6 +107,21 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jbixon13",
+      "name": "Jason Bixon",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32110237?v=4",
+      "profile": "http://jasonbixon.netlify.com",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "infra",
+        "question",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
