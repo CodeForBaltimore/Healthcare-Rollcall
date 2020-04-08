@@ -1,0 +1,18 @@
+{
+    "status": "Production",
+    "thumbnailUrl": "https://codeforbaltimore.org/icon.png",
+    "geography": "Greater Baltimore, MD",
+    "politicalEntity": "Baltimore City Health Department",
+    "type": "API",
+    "needs": [
+            {"need": "Node Dev"},
+            {"need": "Sequelize Dev"},
+            {"need": "serverless Dev"},
+            {"need": "Terraform Dev"},
+            {"need": "Typescript Dev"}
+    ],
+    "categories": [
+            {"category": "Emergency Response"},
+            {"category": "Healthcare"}
+    ]
+}

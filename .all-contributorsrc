@@ -1,0 +1,138 @@
+{
+  "projectName": "Healthcare-Rollcall",
+  "projectOwner": "CodeForBaltimore",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "contributorsSortAlphabetically": true,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "revjtanton",
+      "name": "Jason Anton",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6391564?v=4",
+      "profile": "http://www.jasonanton.com",
+      "contributions": [
+        "code",
+        "doc",
+        "eventOrganizing",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "review",
+        "security"
+      ]
+    },
+    {
+      "login": "ao10",
+      "name": "Ati Ok",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14120224?v=4",
+      "profile": "https://ao10.github.io",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "helro154",
+      "name": "Harry Respass",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5619637?v=4",
+      "profile": "http://www.restechsys.com",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "cmavelis",
+      "name": "Cameron Avelis",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16199008?v=4",
+      "profile": "https://github.com/cmavelis",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "joffutt4",
+      "name": "joffutt4",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10181869?v=4",
+      "profile": "https://github.com/joffutt4",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "joffutt-bellese",
+      "name": "joffutt-bellese",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/61434152?v=4",
+      "profile": "https://github.com/joffutt-bellese",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "MGardner02",
+      "name": "MGardner02",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/35646560?v=4",
+      "profile": "https://github.com/MGardner02",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "funkybunch",
+      "name": "Mark Adkins",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6365836?v=4",
+      "profile": "https://markadk.in/s",
+      "contributions": [
+        "code",
+        "content",
+        "doc",
+        "design"
+      ]
+    },
+    {
+      "login": "charlesw2004",
+      "name": "Wilner Charles",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/30778546?v=4",
+      "profile": "https://github.com/charlesw2004",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jbixon13",
+      "name": "Jason Bixon",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32110237?v=4",
+      "profile": "http://jasonbixon.netlify.com",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "infra",
+        "question",
+        "review"
+      ]
+    },
+    {
+      "login": "uxstephanie",
+      "name": "Stephanie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/47190328?v=4",
+      "profile": "http://stephanie.marketing",
+      "contributions": [
+        "content"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

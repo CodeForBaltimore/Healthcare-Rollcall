@@ -2,6 +2,23 @@
 
 Code for Baltimore projects should be built with the intention of deploying on [Heroku](https://heroku.com). For details on Heroku Best Practices see their [developer documentation](https://devcenter.heroku.com/articles/node-best-practices).
 
+<!-- TOC -->
+
+- [Best Practices](#best-practices)
+    - [Project Management](#project-management)
+        - [Projects](#projects)
+        - [Issues and Milestones](#issues-and-milestones)
+        - [Tagging Issues](#tagging-issues)
+    - [Code Quality Standards](#code-quality-standards)
+        - [Style Guides](#style-guides)
+    - [Static Code Analysis](#static-code-analysis)
+        - [SonarQube scanning](#sonarqube-scanning)
+    - [Git and Branching](#git-and-branching)
+        - [Branch Names](#branch-names)
+        - [Merging and Pull Requests](#merging-and-pull-requests)
+
+<!-- /TOC -->
+
 ## Project Management
 
 We are using Github Issues to track outstanding issues and work for projects.

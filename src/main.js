@@ -5,6 +5,7 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue';
 import VueCookies from 'vue-cookies';
 import VueJWT from 'vuejs-jwt';
+import VueHelmet from 'vue-helmet';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { mapState } from "vuex";
@@ -13,6 +14,7 @@ import axios from "axios";
 
 Vue.use(BootstrapVue);
 Vue.use(VueCookies);
+Vue.use(VueHelmet);
 Vue.use(VueJWT, { storage: 'cookie' });
 
 Vue.config.productionTip = false;
