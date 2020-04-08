@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "uxstephanie",
+      "name": "Stephanie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/47190328?v=4",
+      "profile": "http://stephanie.marketing",
+      "contributions": [
+        "content"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Healthcare-Rollcall",
+  "projectOwner": "CodeForBaltimore",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
