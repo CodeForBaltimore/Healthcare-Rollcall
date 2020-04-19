@@ -36,6 +36,29 @@
             </b-form-group>
           </b-col>
         </b-row>
+        <b-card>
+            <div class="map-container">
+                <l-map
+                  :zoom="zoom"
+                  :center="center"
+                  :attribution="attribution"
+                >
+                    <l-tile-layer :url="url"></l-tile-layer>
+                    <l-marker v-for="entity in entities"
+                      :key="entity.name"
+                      :lat-lng="entity.address.latlng">
+                      <l-popup>
+                          <div>
+                            <p><strong>Facility: </strong>{{ entity.name }}</p>
+                            <p v-if="entity.checkIn"><strong>Status: </strong>{{ entity.checkIn.checkIns[entity.checkIn.checkIns.length-1].status }}</p>
+                            <p v-if="!entity.checkIn"><strong>Status: </strong>No Previous Check-in</p>
+                            <p><strong>Updated: </strong>{{ entity.updatedAt }}</p>
+                          </div>
+                      </l-popup>
+                    </l-marker>
+                </l-map>
+            </div>
+        </b-card>
         <b-table
           id="dashboard-table"
           striped
@@ -94,8 +117,17 @@
 </template>
 
 <script>
+import { latLng } from "leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
+
 export default {
   name: "Dashboard",
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LPopup
+  },
   data() {
     return {
       rows: 0,
@@ -115,7 +147,11 @@ export default {
         { key: "name", sortable: true },
         { key: "status", sortable: true },
         { key: "updatedAt", sortable: true }
-      ]
+      ],
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      center: latLng(39.3, -76.62),
+      zoom: 11 
     };
   },
   methods: {
@@ -180,5 +216,9 @@ ul.pagination > li {
 }
 p.lead {
   margin: 30px 0 15px;
+}
+.map-container {
+  width: 100%;
+  height: 50vh;
 }
 </style>
