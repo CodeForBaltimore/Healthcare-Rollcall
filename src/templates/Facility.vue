@@ -233,10 +233,12 @@ export default {
       } else {
         this.entity = this.duplicateData(obj);
         this.entityCheckIn = this.duplicateData(obj);
-        this.entityCheckIn.checkIn = this.duplicateData(
-          this.entityCheckIn.checkIn.checkIns
-        );
-        this.setLastCheckInData();
+        if (this.entityCheckIn.checkIn != null) {
+          this.entityCheckIn.checkIn = this.duplicateData(
+            this.entityCheckIn.checkIn.checkIns
+          );
+          this.setLastCheckInData();
+        }
       }
       if (!obj.contacts || obj.contacts.length === 0) {
         let emptyContact = {
