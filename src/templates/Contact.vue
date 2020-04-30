@@ -56,7 +56,6 @@ export default {
       contact: {
         id: null,
         UserId: null,
-        EntityId: this.$route.params.entityID,
         name: null,
         phone: [
           {
@@ -133,6 +132,7 @@ export default {
         newContact.email = newContact.email.filter(email => !!email.address);
         newContact.email =
           newContact.email.length > 0 ? newContact.email : null;
+        newContact.entities = [{"id":this.$route.params.entityID}]
         if (this.$route.params.contactID) {
           this.$root.apiPUTRequest(
             "/contact",

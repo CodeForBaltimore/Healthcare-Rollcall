@@ -58,38 +58,38 @@
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].contact.id }}"
-                >{{ entity.contacts[0].contact.name }}</router-link>
+                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].id }}"
+                >{{ entity.contacts[0].name }}</router-link>
               </p>
               <p
-                v-if="entity.contacts[0].contact.phone && entity.contacts[0].contact.phone.length === 1"
+                v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1"
               >
                 Phone:
                 <a
-                  v-bind:href="'tel:' + entity.contacts[0].contact.phone[0].number"
-                >{{ entity.contacts[0].contact.phone[0].number | phone }}</a>
+                  v-bind:href="'tel:' + entity.contacts[0].phone[0].number"
+                >{{ entity.contacts[0].phone[0].number | phone }}</a>
               </p>
               <p
-                v-if="entity.contacts[0].contact.email && entity.contacts[0].contact.email.length === 1"
+                v-if="entity.contacts[0].email && entity.contacts[0].email.length === 1"
               >
                 Email:
                 <a
-                  v-bind:href="'mailto:' + entity.contacts[0].contact.email[0].address"
-                >{{ entity.contacts[0].contact.email[0].address}}</a>
+                  v-bind:href="'mailto:' + entity.contacts[0].email[0].address"
+                >{{ entity.contacts[0].email[0].address}}</a>
               </p>
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
-              <li v-for="contact in entity.contacts" v-bind:key="contact.contact.id" class="contact">
+              <li v-for="contact in entity.contacts" v-bind:key="contact.id" class="contact">
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.contact.id }}"
-                >{{ contact.contact.name }}</router-link>
-                <p v-if="contact.contact.phone && contact.contact.phone[0]">
+                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.id }}"
+                >{{ contact.name }}</router-link>
+                <p v-if="contact.phone && contact.phone[0]">
                   Phone:
-                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a>
+                  <a v-bind:href="'tel:' + contact.phone[0].number">{{ contact.phone[0].number | phone }}</a>
                 </p>
-                <p v-if="contact.contact.email && contact.contact.email[0]">
+                <p v-if="contact.email && contact.email[0]">
                     Email:
-                    <a v-bind:href="'mailto:' +  contact.contact.email[0].address">{{ contact.contact.email[0].address }}</a>
+                    <a v-bind:href="'mailto:' +  contact.email[0].address">{{ contact.email[0].address }}</a>
                 </p>
               </li>
             </ul>
@@ -103,12 +103,12 @@
             <h2>Begin New Check-In</h2>
             <ol>
               <li
-                v-if="entity.phone || (entity.contacts && entity.contacts[0] && entity.contacts[0].contact.phone && entity.contacts[0].contact.phone[0])"
+                v-if="entity.phone || (entity.contacts && entity.contacts[0] && entity.contacts[0].phone && entity.contacts[0].phone[0])"
               >
                 Call the phone number
                 <span
-                  v-if="entity.contacts[0].contact.phone[0].number"
-                >{{ entity.contacts[0].contact.phone[0].number | phone }}</span>
+                  v-if="entity.contacts[0].phone[0].number"
+                >{{ entity.contacts[0].phone[0].number | phone }}</span>
                 <span v-else>{{ entity.phone[0].number | phone }}</span>
               </li>
               <li v-else>Contact the facility using the contact information to the left.</li>
