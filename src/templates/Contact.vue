@@ -33,6 +33,9 @@
               id="email-input-live-feedback"
             >Please enter a valid email address.</b-form-invalid-feedback>
           </b-form-group>
+          <b-form-group id="contact-notes" label="Notes">
+            <b-form-input type="text" v-model="contact.attributes.notes"/>
+          </b-form-group>
           <b-button
             type="submit"
             variant="primary"
@@ -68,7 +71,10 @@ export default {
             address: "",
             isPrimary: true
           }
-        ]
+        ],
+        attributes: {
+          notes: ""
+        },
       },
       numberFormatted: "",
       phoneValid: null,
@@ -98,8 +104,12 @@ export default {
       }
 
       this.numberFormatted = this.$options.filters.phone(
-              this.contact.phone[0].number
+        this.contact.phone[0].number
       );
+
+      if (this.contact.attributes === null) {
+        this.contact.attributes = {"notes":""};
+      }
     },
     getContact(id) {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
@@ -133,6 +143,9 @@ export default {
         newContact.email =
           newContact.email.length > 0 ? newContact.email : null;
         newContact.entities = [{"id":this.$route.params.entityID}]
+        if (this.contact.attributes === {"notes":""}) {
+          newContact.attributes = null;
+        }
         if (this.$route.params.contactID) {
           this.$root.apiPUTRequest(
             "/contact",
