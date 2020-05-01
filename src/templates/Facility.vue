@@ -77,6 +77,11 @@
                   v-bind:href="'mailto:' + entity.contacts[0].email[0].address"
                 >{{ entity.contacts[0].email[0].address}}</a>
               </p>
+              <p
+                v-if="entity.contacts[0].attributes !== null && entity.contacts[0].attributes.notes"
+              >
+                Notes: <i>{{ entity.contacts[0].attributes.notes }}</i>
+              </p>
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.id" class="contact">
@@ -90,6 +95,11 @@
                 <p v-if="contact.email && contact.email[0]">
                     Email:
                     <a v-bind:href="'mailto:' +  contact.email[0].address">{{ contact.email[0].address }}</a>
+                </p>
+                <p
+                v-if="contact.attributes !== null && contact.attributes.notes"
+                >
+                  Notes: <i>{{ contact.attributes.notes }}</i>
                 </p>
               </li>
             </ul>
