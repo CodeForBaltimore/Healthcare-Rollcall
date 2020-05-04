@@ -1,6 +1,7 @@
 <template>
   <b-container fluid="md" id="contact">
     <h1>Contact Information</h1>
+
     <b-row v-if="!$route.params.contactID">
       <b-col cols="6">
         <h4>Link existing contact</h4>
@@ -29,7 +30,7 @@
 
     <b-row>
       <b-col cols="6">
-        <h4>Create new contact</h4>
+        <h4>{{ this.$route.params.contactID ? 'Update existing contact' : 'Create new contact' }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
             <b-form-input type="text" required v-model="contact.name" />
@@ -75,6 +76,19 @@
         </b-form>
       </b-col>
     </b-row>
+    <br>
+
+    <b-row v-if="$route.params.contactID">
+      <b-col cols="6">
+        <h4>Other Options</h4>
+          <b-button
+            type="submit"
+            variant="primary"
+            @click.prevent="unlinkContact"
+          >Unlink Contact</b-button>
+      </b-col>
+    </b-row>
+
   </b-container>
 </template>
 
@@ -213,6 +227,18 @@ export default {
         body,
         this.returnToFacility
       );
+    },
+    unlinkContact() {
+      let body = {
+        contacts: [
+          {id: this.$route.params.contactID}
+        ]
+      };
+      this.$root.apiDELRequest(
+        "/entity/link/" + this.$route.params.entityID,
+        body,
+        this.returnToFacility
+      )
     },
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));
