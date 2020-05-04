@@ -86,6 +86,11 @@
             variant="primary"
             @click.prevent="unlinkContact"
           >Unlink Contact</b-button>
+            <b-button
+            type="submit"
+            variant="primary"
+            @click.prevent="deleteContact"
+          >Delete Contact</b-button>
       </b-col>
     </b-row>
 
@@ -229,6 +234,10 @@ export default {
       );
     },
     unlinkContact() {
+      let unlinkConfirm = confirm("Confirm unlinking of contact " + this.$route.params.contactID + "?")
+      if (!unlinkConfirm) {
+        return
+      }
       let body = {
         contacts: [
           {id: this.$route.params.contactID}
@@ -237,6 +246,17 @@ export default {
       this.$root.apiDELRequest(
         "/entity/link/" + this.$route.params.entityID,
         body,
+        this.returnToFacility
+      )
+    },
+    deleteContact() {
+      let deleteConfirm = confirm("Confirm delete of contact " + this.$route.params.contactID + "?")
+      if (!deleteConfirm) {
+        return
+      }
+      this.$root.apiDELRequest(
+        "/contact/" + this.$route.params.contactID,
+        {},
         this.returnToFacility
       )
     },
