@@ -66,7 +66,15 @@
         }
       },
       showDashboardLink() {
-        return !(new RegExp(['dashboard','contact'].join('|')).test(this.$router.currentRoute.name));
+        switch(this.$router.currentRoute.name) {
+          case "dashboard":
+            return false;
+          case "update-contact":
+            return false;
+          case "create-contact":
+            return false;
+        }
+        return true;
       },
       goToContacts() {
         if(this.$router.currentRoute.name !== "get-all-contacts") {

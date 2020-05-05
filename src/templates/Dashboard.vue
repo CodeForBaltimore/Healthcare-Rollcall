@@ -10,7 +10,7 @@
         <!-- Dashboard Table -->
         <b-row>
           <b-col cols="4">
-            <b-form-group label="Filter" label-align="left" label-for="dashboard-table">
+            <b-form-group label="Filter" label-align="left">
               <b-input-group>
                 <b-form-input
                   v-model="filter.keyword"

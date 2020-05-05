@@ -6,6 +6,7 @@ import FacilityComponent from "./templates/Facility.vue"
 import PasswordResetComponent from "./templates/PasswordReset.vue"
 import ContactComponent from "./templates/Contact.vue"
 import ContactListComponent from "./templates/ContactList.vue"
+import ContactSingleComponent from "./templates/ContactSingle.vue"
 
 Vue.use(Router);
 
@@ -50,9 +51,14 @@ export default new Router({
             component: ContactComponent
         },
         {
-            path: "/contacts/",
+            path: "/contacts",
             name: 'get-all-contacts',
             component: ContactListComponent
+        },
+        {
+            path: "/contacts/:contactID",
+            name: 'get-single-contact',
+            component: ContactSingleComponent
         },
         {
             path: '*',
