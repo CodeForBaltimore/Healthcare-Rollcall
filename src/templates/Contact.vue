@@ -243,8 +243,8 @@ export default {
           {id: this.$route.params.contactID}
         ]
       };
-      this.$root.apiDELRequest(
-        "/entity/link/" + this.$route.params.entityID,
+      this.$root.apiPOSTRequest(
+        "/entity/unlink/" + this.$route.params.entityID,
         body,
         this.returnToFacility
       )
