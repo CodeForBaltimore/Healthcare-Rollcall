@@ -5,6 +5,7 @@ import DashboardComponent from "./templates/Dashboard.vue"
 import FacilityComponent from "./templates/Facility.vue"
 import PasswordResetComponent from "./templates/PasswordReset.vue"
 import ContactComponent from "./templates/Contact.vue"
+import ContactListComponent from "./templates/ContactList.vue"
 
 Vue.use(Router);
 
@@ -47,6 +48,11 @@ export default new Router({
             path: "/contact/:entityID/:contactID",
             name: 'update-contact',
             component: ContactComponent
+        },
+        {
+            path: "/contacts/",
+            name: 'get-all-contacts',
+            component: ContactListComponent
         },
         {
             path: '*',

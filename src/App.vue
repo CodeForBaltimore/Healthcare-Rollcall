@@ -16,6 +16,13 @@
             <b-nav-item v-on:click="goToDashboard()" v-if="this.$root.auth_state && showDashboardLink()">&larr; Return to Dashboard</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto" v-if="this.$root.auth_state">
+              <b-nav-item-dropdown right>
+              <!-- Using 'button-content' slot -->
+              <template v-slot:button-content>
+                Management
+              </template>
+              <b-dropdown-item v-on:click="goToContacts()">Contacts</b-dropdown-item>
+            </b-nav-item-dropdown>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>
@@ -60,6 +67,11 @@
       },
       showDashboardLink() {
         return !(new RegExp(['dashboard','contact'].join('|')).test(this.$router.currentRoute.name));
+      },
+      goToContacts() {
+        if(this.$router.currentRoute.name !== "get-all-contacts") {
+          this.$router.push({ name: 'get-all-contacts' });
+        }
       }
     }
   };
