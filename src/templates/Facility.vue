@@ -62,6 +62,11 @@
                 >{{ entity.contacts[0].name }}</router-link>
               </p>
               <p
+                v-if="entity.contacts[0].entityContacts !== null && entity.contacts[0].entityContacts.relationshipTitle"
+              >
+                Role: <i>{{ entity.contacts[0].entityContacts.relationshipTitle }}</i>
+              </p>
+              <p
                 v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1"
               >
                 Phone:
@@ -88,6 +93,11 @@
                 <router-link
                         :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.id }}"
                 >{{ contact.name }}</router-link>
+              <p
+                v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle"
+              >
+                Role: <i>{{ contact.entityContacts.relationshipTitle }}</i>
+              </p>
                 <p v-if="contact.phone && contact.phone[0]">
                   Phone:
                   <a v-bind:href="'tel:' + contact.phone[0].number">{{ contact.phone[0].number | phone }}</a>
@@ -222,9 +232,8 @@ export default {
       formAvailability: {
         covidForm: [
           "Assisted Living Facility",
-          "Nursing Homes",
-          "Senior Housing",
-          "Test"
+          "Mixed Housing",
+          "Senior Housing"
         ]
       },
       formMatched: false,
