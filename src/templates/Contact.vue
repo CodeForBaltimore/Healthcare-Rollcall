@@ -166,9 +166,15 @@ export default {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
     },
     populateContactsDropdown(obj) {
+      let emailDisplayed;
       this.allContacts = obj.results;
       for (let contact_ of this.allContacts) {
-        this.contactSelectList.push({ text: contact_.name + ", " + contact_.email[0].address, value: contact_.id });
+        if (!contact_.email) {
+          emailDisplayed = "<email unknown>";
+        } else {
+          emailDisplayed = contact_.email[0].address;
+        }
+        this.contactSelectList.push({ text: contact_.name + ", " + emailDisplayed, value: contact_.id });
       }
     },
     getAllContacts() {
