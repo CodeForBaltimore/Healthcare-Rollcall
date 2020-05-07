@@ -1,8 +1,36 @@
 <template>
   <b-container fluid="md" id="contact">
     <h1>Contact Information</h1>
+
+    <b-row v-if="!$route.params.contactID">
+      <b-col cols="6">
+        <h4>Link existing contact</h4>
+        <b-form @submit.prevent="submitExistingContact">
+          <b-form-group label="Select existing contact" label-align="left">
+            <b-input-group>
+              <b-form-select required v-model="selectedContact.id" :options="contactSelectList"></b-form-select>
+            </b-input-group>
+          </b-form-group>
+        <b-form-group id="relationship-title" label="Relationship to Facility">
+          <b-form-input type="text" required v-model="selectedContact.relationshipTitle" />
+        </b-form-group>
+          <b-button
+            type="submit"
+            variant="primary"
+          >Link Contact</b-button>
+          <b-button
+            type="cancel"
+            variant="outline-secondary"
+            @click.prevent="returnToFacility"
+          >Cancel</b-button>
+        </b-form>
+      </b-col>
+    </b-row>
+    <br>
+
     <b-row>
-      <b-col cols="4">
+      <b-col cols="6">
+        <h4>{{ this.$route.params.contactID ? 'Update existing contact' : 'Create new contact' }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
             <b-form-input type="text" required v-model="contact.name" />
@@ -48,6 +76,24 @@
         </b-form>
       </b-col>
     </b-row>
+    <br>
+
+    <b-row v-if="$route.params.contactID">
+      <b-col cols="6">
+        <h4>Other Options</h4>
+          <b-button
+            type="submit"
+            variant="primary"
+            @click.prevent="unlinkContact"
+          >Unlink Contact</b-button>
+            <b-button
+            type="submit"
+            variant="primary"
+            @click.prevent="deleteContact"
+          >Delete Contact</b-button>
+      </b-col>
+    </b-row>
+
   </b-container>
 </template>
 
@@ -79,7 +125,12 @@ export default {
       numberFormatted: "",
       phoneValid: null,
       emailValid: null,
-      validationRun: false
+      validationRun: false,
+      selectedContact: {
+        id: null,
+        relationshipTitle: "default",
+      },
+      contactSelectList: []
     };
   },
   methods: {
@@ -113,6 +164,15 @@ export default {
     },
     getContact(id) {
       this.$root.apiGETRequest("/contact/" + id, this.updateContact);
+    },
+    populateContactsDropdown(obj) {
+      this.allContacts = obj.results;
+      for (let contact_ of this.allContacts) {
+        this.contactSelectList.push({ text: contact_.name + ", " + contact_.email[0].address, value: contact_.id });
+      }
+    },
+    getAllContacts() {
+      this.$root.apiGETRequest("/contact/", this.populateContactsDropdown)
     },
     returnToFacility() {
       this.$router.push({
@@ -161,6 +221,45 @@ export default {
         }
       }
     },
+    submitExistingContact() {
+      let body = {
+        contacts: [
+          {id: this.selectedContact.id, title: this.selectedContact.relationshipTitle}
+        ]
+      };
+      this.$root.apiPOSTRequest(
+        "/entity/link/" + this.$route.params.entityID,
+        body,
+        this.returnToFacility
+      );
+    },
+    unlinkContact() {
+      let unlinkConfirm = confirm("Confirm unlinking of contact " + this.$route.params.contactID + "?")
+      if (!unlinkConfirm) {
+        return
+      }
+      let body = {
+        contacts: [
+          {id: this.$route.params.contactID}
+        ]
+      };
+      this.$root.apiPOSTRequest(
+        "/entity/unlink/" + this.$route.params.entityID,
+        body,
+        this.returnToFacility
+      )
+    },
+    deleteContact() {
+      let deleteConfirm = confirm("Confirm delete of contact " + this.$route.params.contactID + "?")
+      if (!deleteConfirm) {
+        return
+      }
+      this.$root.apiDELRequest(
+        "/contact/" + this.$route.params.contactID,
+        {},
+        this.returnToFacility
+      )
+    },
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));
     },
@@ -201,8 +300,9 @@ export default {
     if (this.$route.params.contactID) {
       this.getContact(this.$route.params.contactID);
     } else {
+      this.getAllContacts();
       this.numberFormatted = this.$options.filters.phone(
-              this.contact.phone[0].number
+        this.contact.phone[0].number
       );
     }
   }
