@@ -139,7 +139,17 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "c-w-allen",
+      "name": "c-w-allen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/64177457?v=4",
+      "profile": "https://github.com/c-w-allen",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
