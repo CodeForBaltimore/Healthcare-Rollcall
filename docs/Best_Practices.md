@@ -45,7 +45,12 @@ Regardless of Language:
 - Provide meaningful code comments
 - All commits must include a useful commit message
 
-### Style Guides
+### UI Style Guide
+
+All user interface components should follow the established [Healthcare Rollcall Style Guide](Healthcare_Rollcall_Style_Guide.pdf).
+
+
+### Code Style Guides
 
 Consistent style guidelines for each language should be used. Where possible, openly published standards by authorities providing or using the language will be used.
 
