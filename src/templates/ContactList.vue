@@ -70,7 +70,7 @@
         >
           <template v-slot:cell(name)="data">
             <router-link
-              :to="{ name: 'contacts', params: { contactID: data.item.id }}"
+              :to="{ name: 'get-single-contact', params: { contactID: data.item.id }}"
             >{{ data.item.name }}</router-link>
           </template>
         </b-table>
