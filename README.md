@@ -154,6 +154,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://stephanie.marketing"><img src="https://avatars2.githubusercontent.com/u/47190328?v=4" width="100px;" alt=""/><br /><sub><b>Stephanie</b></sub></a><br /><a href="#content-uxstephanie" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=c-w-allen" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/blakenan-bellese"><img src="https://avatars1.githubusercontent.com/u/61432973?v=4" width="100px;" alt=""/><br /><sub><b>blakenan-bellese</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=blakenan-bellese" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
