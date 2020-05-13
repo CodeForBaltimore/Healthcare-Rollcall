@@ -7,9 +7,16 @@
         <h4>Link existing contact</h4>
         <b-form @submit.prevent="submitExistingContact">
           <b-form-group label="Select existing contact" label-align="left">
-            <b-input-group>
+            <!-- <b-input-group>
               <b-form-select required v-model="selectedContact.id" :options="contactSelectList"></b-form-select>
-            </b-input-group>
+            </b-input-group> -->
+            <Dropdown
+                :options="contactSelectList"
+                :disabled="false"
+                name="zipcode"
+                :maxItem="10"
+                placeholder="Please select an option">
+            </Dropdown>
           </b-form-group>
         <b-form-group id="relationship-title" label="Relationship to Facility">
           <b-form-input type="text" required v-model="selectedContact.relationshipTitle" />
@@ -174,7 +181,7 @@ export default {
         } else {
           emailDisplayed = contact_.email[0].address;
         }
-        this.contactSelectList.push({ text: contact_.name + ", " + emailDisplayed, value: contact_.id });
+        this.contactSelectList.push({ name: contact_.name + ", " + emailDisplayed, id: contact_.id });
       }
     },
     getAllContacts() {

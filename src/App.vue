@@ -141,4 +141,10 @@
   .branding-link {
     cursor: pointer;
   }
+
+  select {
+    color: #5c3d50;
+  }
+
+  
 </style>
