@@ -11,13 +11,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
 import axios from "axios";
-import Dropdown from 'vue-simple-search-dropdown';
+import Multiselect from 'vue-multiselect';
 
 Vue.use(BootstrapVue);
 Vue.use(VueCookies);
 Vue.use(VueHelmet);
 Vue.use(VueJWT, { storage: 'cookie' });
-Vue.component("Dropdown", Dropdown)
+Vue.component("Search-select", Multiselect)
 
 Vue.config.productionTip = false;
 

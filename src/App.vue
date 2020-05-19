@@ -85,6 +85,8 @@
   };
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style>
   #app {
     font-family: "Open Sans", OpenSans, Open-Sans, Helvetica, Arial, sans-serif;
@@ -162,9 +164,54 @@
     cursor: pointer;
   }
 
-  select {
-    color: #5c3d50;
+  .multiselect__tags {
+    min-height: 40px;
+    display: block;
+    padding: 8px 40px 0 8px;
+    border-radius: 5px;
+    border: 1px solid #CED4DA;
+    background: #fff;
+    font-size: 14px;
   }
 
+  .multiselect__option--highlight {
+    background: #42484f;
+    outline: none;
+    color: white;
+  }
+
+  .multiselect__option--highlight {
+    background: #42484f;
+    outline: none;
+    color: white;
+  }
+  .multiselect__option--highlight:after {
+    content: attr(data-select);
+    background: #42484f;
+    color: white;
+  }
+  .multiselect__option--selected {
+    background: #f3f3f3;
+    color: #35495e;
+    font-weight: bold;
+  }
+  .multiselect__option--selected:after {
+    content: attr(data-selected);
+    color: silver;
+  }
+  .multiselect__option--selected.multiselect__option--highlight {
+    background: #ff6a6a;
+    color: #fff;
+  }
+  .multiselect__option--selected.multiselect__option--highlight:after {
+    background: #ff6a6a;
+    content: attr(data-deselect);
+    color: #fff;
+  }
+  .multiselect--disabled .multiselect__current,
+  .multiselect--disabled .multiselect__select {
+    background: #ededed;
+    color: #a6a6a6;
+  }
   
 </style>
