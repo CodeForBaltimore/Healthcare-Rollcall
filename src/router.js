@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import CheckInRedirect from "./templates/CheckInRedirect.vue"
 import LoginComponent from "./templates/Login.vue"
 import DashboardComponent from "./templates/Dashboard.vue"
 import FacilityComponent from "./templates/Facility.vue"
@@ -58,6 +59,11 @@ export default new Router({
             path: "/contact/single/:contactID",
             name: 'get-single-contact',
             component: ContactComponent
+        },
+        {
+            path: "/checkin/:entityId",
+            name: 'checkin',
+            component: CheckInRedirect
         },
         {
             path: '*',

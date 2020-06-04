@@ -26,9 +26,11 @@ router.beforeEach((to, from, next) => {
     next();
   } else if (to.name === 'reset' && !store.state.authenticated) {
     next();
-  } else if (to.name !== 'login' && !store.state.authenticated) {
+  } else if (to.name === 'checkin' && !store.state.authenticated) {
+    next();
+  }  else if (to.name !== 'login' && !store.state.authenticated) {
     next({ name: 'login' });
-  } else {
+  }else {
     next();
   }
 });
@@ -133,6 +135,7 @@ new Vue({
   methods: {
     ...mapActions(["unsetAuth", "authenticate"]),
     authenticateUser(response) {
+      console.log('hi')
       this.setAuthCookie(response);
       this.authenticate(response);
       this.$emit("authenticated", true);
