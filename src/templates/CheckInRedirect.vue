@@ -10,7 +10,12 @@
         </p>
       </b-col>
       <b-col cols="12" md="6">
-        <h3>Loading<span class="one">.</span><span class="two">.</span><span class="three">.</span></h3>
+        <h3>
+          Loading
+          <span class="one">.</span>
+          <span class="two">.</span>
+          <span class="three">.</span>
+        </h3>
       </b-col>
     </b-row>
   </b-container>
@@ -31,7 +36,9 @@ export default {
     // }
     if (this.$route.query.token !== undefined) {
       this.$root.authenticateUser(this.$route.query.token);
-      this.$router.replace({ path: `/facility/${this.$route.params.entityId}`})
+      this.$router.replace({
+        path: `/facility/${this.$route.params.entityId}`
+      });
     }
   }
 };
@@ -77,39 +84,50 @@ h1 {
   font-size: 36px !important;
 }
 .one {
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.0s;
-    animation: dot 1.3s infinite;
-    animation-delay: 0.0s;
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0s;
 }
 
 .two {
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.2s;
-      animation: dot 1.3s infinite;
-      animation-delay: 0.2s;
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.2s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0.2s;
 }
 
 .three {
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.3s;
-     animation: dot 1.3s infinite;
-     animation-delay: 0.3s;
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.3s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0.3s;
 }
 
 @-webkit-keyframes dot {
-      0% { opacity: 0; }
-     50% { opacity: 0; }
-    100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes dot {
-      0% { opacity: 0; }
-     50% { opacity: 0; }
-    100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-
 </style>

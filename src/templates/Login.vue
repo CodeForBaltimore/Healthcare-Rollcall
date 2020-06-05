@@ -4,18 +4,42 @@
       <b-col cols="12" md="6">
         <h1>Welcome to Healthcare Roll Call</h1>
         <h4 class="text-muted">Check-in for Healthcare Providers</h4>
-        <p class="lead"><strong>Healthcare Roll Call</strong> allows municipalities to keep track of the status of local healthcare providers connectivity and emergency-related needs.  The <strong>Healthcare Roll Call</strong> collects and consolidates all emergency information in one database, allowing outreach coordinators to easily track provider status.</p>
+        <p class="lead">
+          <strong>Healthcare Roll Call</strong> allows municipalities to keep track of the status of local healthcare providers connectivity and emergency-related needs. The
+          <strong>Healthcare Roll Call</strong> collects and consolidates all emergency information in one database, allowing outreach coordinators to easily track provider status.
+        </p>
         <h5>30 Second Tutorial</h5>
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ3Um0pjz8HmUj44qOJ8x0r-P7NUR1kNAYmOCkry8KXcwScoQjmrJ1EMuSVIEsnJOW0GeKXZtN7uAjM/embed?start=true&loop=true&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="max-width:100%;"></iframe>
+        <iframe
+          src="https://docs.google.com/presentation/d/e/2PACX-1vQ3Um0pjz8HmUj44qOJ8x0r-P7NUR1kNAYmOCkry8KXcwScoQjmrJ1EMuSVIEsnJOW0GeKXZtN7uAjM/embed?start=true&loop=true&delayms=3000"
+          frameborder="0"
+          width="480"
+          height="299"
+          allowfullscreen="true"
+          mozallowfullscreen="true"
+          webkitallowfullscreen="true"
+          style="max-width:100%;"
+        ></iframe>
       </b-col>
       <b-col cols="12" md="6">
         <b-card title="Login">
           <form class="login-container" v-on:submit.prevent="login">
             <label>
-              <b-form-input required type="text" name="email" v-model="input.email" placeholder="Email" />
+              <b-form-input
+                required
+                type="text"
+                name="email"
+                v-model="input.email"
+                placeholder="Email"
+              />
             </label>
             <label>
-              <b-form-input required type="password" name="password" v-model="input.password" placeholder="Password" />
+              <b-form-input
+                required
+                type="password"
+                name="password"
+                v-model="input.password"
+                placeholder="Password"
+              />
             </label>
             <div>
               <a v-b-modal.reset-pass href="#">Forgot/Reset Password</a>
@@ -35,7 +59,7 @@
         :show="this.dismissCountDown"
         dismissible
         fade
-        :variant=this.type
+        :variant="this.type"
         @dismiss-count-down="this.countDownChanged"
       >{{this.reset_alert}}</b-alert>
     </b-modal>
@@ -57,7 +81,7 @@ export default {
       dismissSecs: 5,
       dismissCountDown: 0,
       reset_alert: "",
-      type:"warning"
+      type: "warning"
     };
   },
   created() {
@@ -90,13 +114,16 @@ export default {
       if (this.input.reset_email !== "") {
         const response = postReset(this.input.reset_email);
         response
-          .then((data) => {
-            if(data.status == 200){
+          .then(data => {
+            if (data.status == 200) {
               this.showAlert("Password reset email sent!", "success");
-            }else{
-              this.showAlert("Failed sending email", "warning")
+            } else {
+              this.showAlert("Failed sending email", "warning");
             }
-          }).catch(() => {this.showAlert("Failed sending email", "warning")});
+          })
+          .catch(() => {
+            this.showAlert("Failed sending email", "warning");
+          });
       }
     },
     countDownChanged(dismissCountDown) {
@@ -112,41 +139,42 @@ export default {
 </script>
 
 <style scoped>
-  #login {
-    background-color: #ffffff;
-    margin: auto;
-    padding: 20px;
-  }
-  .login-container {
-    margin: auto;
-    margin-bottom: 1rem;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  #login .login-container {
-    text-align: left;
-    margin: 0;
-    margin-top: 15px;
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+#login {
+  background-color: #ffffff;
+  margin: auto;
+  padding: 20px;
+}
+.login-container {
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#login .login-container {
+  text-align: left;
+  margin: 0;
+  margin-top: 15px;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .login-container button {
-    margin-top:15px;
-    min-width: 40%;
-  }
+.login-container button {
+  margin-top: 15px;
+  min-width: 40%;
+}
 
-  #login label, #login label input {
-    width: 100% !important;
-  }
+#login label,
+#login label input {
+  width: 100% !important;
+}
 
-  .login-container > input {
-    margin-bottom: 10px;
-  }
-  h1 {
-    font-size: 36px !important;
-  }
+.login-container > input {
+  margin-bottom: 10px;
+}
+h1 {
+  font-size: 36px !important;
+}
 </style>

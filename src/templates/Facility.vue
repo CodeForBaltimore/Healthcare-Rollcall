@@ -2,7 +2,7 @@
   <b-container fluid="md" id="facility">
     <h1>{{ entity.name }}</h1>
     <b-row>
-      <b-col cols="12" md="4">
+      <b-col cols="12" md="4" v-if="showDetails">
         <b-card title="Contact Information">
           <!-- Show Address if available -->
           <div v-if="entity.address" class="mb-2">
@@ -58,25 +58,22 @@
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].id }}"
+                  :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].id }}"
                 >{{ entity.contacts[0].name }}</router-link>
               </p>
               <p
                 v-if="entity.contacts[0].entityContacts !== null && entity.contacts[0].entityContacts.relationshipTitle"
               >
-                Role: <i>{{ entity.contacts[0].entityContacts.relationshipTitle }}</i>
+                Role:
+                <i>{{ entity.contacts[0].entityContacts.relationshipTitle }}</i>
               </p>
-              <p
-                v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1"
-              >
+              <p v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1">
                 Phone:
                 <a
                   v-bind:href="'tel:' + entity.contacts[0].phone[0].number"
                 >{{ entity.contacts[0].phone[0].number | phone }}</a>
               </p>
-              <p
-                v-if="entity.contacts[0].email && entity.contacts[0].email.length === 1"
-              >
+              <p v-if="entity.contacts[0].email && entity.contacts[0].email.length === 1">
                 Email:
                 <a
                   v-bind:href="'mailto:' + entity.contacts[0].email[0].address"
@@ -85,31 +82,36 @@
               <p
                 v-if="entity.contacts[0].attributes !== null && entity.contacts[0].attributes.notes"
               >
-                Notes: <i>{{ entity.contacts[0].attributes.notes }}</i>
+                Notes:
+                <i>{{ entity.contacts[0].attributes.notes }}</i>
               </p>
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.id" class="contact">
                 <router-link
-                        :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.id }}"
+                  :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.id }}"
                 >{{ contact.name }}</router-link>
-              <p
-                v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle"
-              >
-                Role: <i>{{ contact.entityContacts.relationshipTitle }}</i>
-              </p>
+                <p
+                  v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle"
+                >
+                  Role:
+                  <i>{{ contact.entityContacts.relationshipTitle }}</i>
+                </p>
                 <p v-if="contact.phone && contact.phone[0]">
                   Phone:
-                  <a v-bind:href="'tel:' + contact.phone[0].number">{{ contact.phone[0].number | phone }}</a>
+                  <a
+                    v-bind:href="'tel:' + contact.phone[0].number"
+                  >{{ contact.phone[0].number | phone }}</a>
                 </p>
                 <p v-if="contact.email && contact.email[0]">
-                    Email:
-                    <a v-bind:href="'mailto:' +  contact.email[0].address">{{ contact.email[0].address }}</a>
+                  Email:
+                  <a
+                    v-bind:href="'mailto:' +  contact.email[0].address"
+                  >{{ contact.email[0].address }}</a>
                 </p>
-                <p
-                v-if="contact.attributes !== null && contact.attributes.notes"
-                >
-                  Notes: <i>{{ contact.attributes.notes }}</i>
+                <p v-if="contact.attributes !== null && contact.attributes.notes">
+                  Notes:
+                  <i>{{ contact.attributes.notes }}</i>
                 </p>
               </li>
             </ul>
@@ -165,13 +167,18 @@
           <b-col>
             <b-card title="New Check-In" class="facility-check-in">
               <covid-form
-                      v-if="formAvailability.covidForm.includes(entity.type)"
-                      v-bind:entity.sync="entity"
-                      v-bind:entity-check-in.sync="entityCheckIn"
-                      @submitted="setLastCheckInData($event)"/>
+                v-if="formAvailability.covidForm.includes(entity.type)"
+                v-bind:entity.sync="entity"
+                v-bind:entity-check-in.sync="entityCheckIn"
+                @submitted="setLastCheckInData($event)"
+              />
 
               <!-- If No Forms match the Entity Type -->
-              <b-alert show variant="warning" v-if="!formAvailability.covidForm.includes(entity.type)">
+              <b-alert
+                show
+                variant="warning"
+                v-if="!formAvailability.covidForm.includes(entity.type)"
+              >
                 <h6 class="alert-heading">No Forms Available</h6>
                 <p>There are no forms available for this type of facility.</p>
               </b-alert>
@@ -208,8 +215,8 @@
 </template>
 
 <script>
-  import questionReadout from "../components/questionReadout";
-  import covidForm from "../components/covidForm";
+import questionReadout from "../components/questionReadout";
+import covidForm from "../components/covidForm";
 
 export default {
   name: "Facility",
@@ -218,6 +225,9 @@ export default {
     covidForm
   },
   data() {
+    console.log(this.$jwt.decode(this.$root.auth_token).type);
+    const showDetails =
+      this.$jwt.decode(this.$root.auth_token).type === "user" ? true : false;
     return {
       entity: {
         name: "Loading..."
@@ -237,7 +247,8 @@ export default {
         ]
       },
       formMatched: false,
-      lastCheckIn: null
+      lastCheckIn: null,
+      showDetails
     };
   },
   methods: {
@@ -270,8 +281,8 @@ export default {
       }
     },
     formAvailable(type = null, form = null) {
-      if(type in this.formAvailability && !this.formMatched) {
-        if(this.formAvailability[type].includes(form)) {
+      if (type in this.formAvailability && !this.formMatched) {
+        if (this.formAvailability[type].includes(form)) {
           console.log("match found");
           this.formMatched = true;
           return true;
@@ -295,8 +306,12 @@ export default {
       // This prevents an event from being passed from the modal
       this.setLastCheckInData();
     },
+    logout() {
+      this.$root.destroySession();
+      this.$router.push({ name: "login" });
+    },
     setLastCheckInData(data = undefined) {
-      if(data) {
+      if (data) {
         this.entity.checkIn.checkIns.push(data);
       }
       if (
@@ -331,9 +346,14 @@ export default {
           this.lastCheckInStatus.state = "danger";
           break;
       }
+
+      // if (!this.showDetails) this.logout();
     },
     addContact() {
-      this.$router.push({ name: 'create-contact', params: { entityID: this.$route.params.entityID }});
+      this.$router.push({
+        name: "create-contact",
+        params: { entityID: this.$route.params.entityID }
+      });
     }
   },
   created() {
@@ -343,49 +363,49 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-    text-align: left;
-    margin-bottom: 30px;
-  }
-  .card h6 {
-    font-weight: bold;
-  }
-  .last-checkin p {
-    padding: 0 8px;
-  }
-  .card-body {
-    text-align: left;
-  }
-  p.return-link {
-    text-align: left;
-  }
-  .contact p {
-    margin: 0;
-  }
-  .address-line {
-    display: block;
-  }
-  .alert {
-    margin-bottom: 0;
-  }
-  .alert h6 {
-    font-weight: bold;
-    margin-top: 4px;
-  }
-  p:last-child {
-    margin-bottom: 0;
-  }
-  .custom-control-label {
-    cursor: pointer;
-  }
-  button {
-    margin-right: 15px;
-  }
-  button.btn-primary {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-  .facility-check-in {
-    margin-bottom: 24px;
-  }
+h1 {
+  text-align: left;
+  margin-bottom: 30px;
+}
+.card h6 {
+  font-weight: bold;
+}
+.last-checkin p {
+  padding: 0 8px;
+}
+.card-body {
+  text-align: left;
+}
+p.return-link {
+  text-align: left;
+}
+.contact p {
+  margin: 0;
+}
+.address-line {
+  display: block;
+}
+.alert {
+  margin-bottom: 0;
+}
+.alert h6 {
+  font-weight: bold;
+  margin-top: 4px;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+.custom-control-label {
+  cursor: pointer;
+}
+button {
+  margin-right: 15px;
+}
+button.btn-primary {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.facility-check-in {
+  margin-bottom: 24px;
+}
 </style>
