@@ -113,6 +113,7 @@ export default {
     resetPass() {
       if (this.input.reset_email !== "") {
         const response = postReset(this.input.reset_email);
+        this.showAlert("Sending...")
         response
           .then(data => {
             if (data.status == 200) {

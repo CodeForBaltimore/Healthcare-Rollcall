@@ -47,6 +47,7 @@ export default {
     resetPass() {
       if (this.input.email != "" && this.input.password !== "") {
         const response = updateUser(this.$route.params.token, this.input.email, this.input.password);
+        this.showAlert("Sending...")
         response
           .then((data) => {
               if(data.status == 200){
