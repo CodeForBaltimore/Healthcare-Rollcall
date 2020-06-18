@@ -53,7 +53,6 @@ export default {
   data() {
     const navBar = this.$root.getNavBarStatus();
     const user = (this.$root.auth_token) ? this.$jwt.decode(this.$root.auth_token).email : false;
-    console.log(this.$root.auth_token)
     return {
       user,
       navBar,

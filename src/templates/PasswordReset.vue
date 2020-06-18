@@ -1,10 +1,14 @@
 <template>
   <div id="reset">
     <h1>Password Reset</h1>
+    <p>Your password must be at least 8 characters long and contain the following:</p>
+    <ul>
+      <li>at least one upper-case letter</li>
+      <li>at least one lower-case letter</li>
+      <li>at least one special character</li>
+      <li>at least one number</li>
+    </ul>
     <form class="reset-container" v-on:submit.prevent>
-      <label>
-        <p> {{ input.email }}</p>
-      </label>
       <label>
         <input type="password" name="password" v-model="input.password" placeholder="Password" />
       </label>

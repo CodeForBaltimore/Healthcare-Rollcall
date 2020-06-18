@@ -118,6 +118,15 @@
           </div>
           <b-button v-on:click="addContact()">Add Contact</b-button>
         </b-card>
+        <br />
+        <b-card title="Quick Check-In">
+              <quick-form
+                v-if="formAvailability.covidForm.includes(entity.type)"
+                v-bind:entity.sync="entity"
+                v-bind:entity-check-in.sync="entityCheckIn"
+                @submitted="setLastCheckInData($event)"
+              />
+        </b-card>
       </b-col>
       <b-col cols="12" md="8">
         <b-row>
@@ -158,14 +167,21 @@
                   <strong>Time of last check-in:</strong>
                   {{ lastCheckIn.date | timestamp }}
                 </p>
-                <b-button v-b-modal.checkin-detail-modal>Review previous checkin</b-button>
+                <b-button v-b-modal.checkin-detail-modal>Review check-in</b-button>
+                <p>Defaults to the most recent check-in. To view older check-ins please select one from the list below then click the review button</p>
+                <h6>Previous check-in's</h6>
+                <b-table striped hover :items="entity.checkIn.checkIns" :fields="historyFields">
+                  <template v-slot:cell(date)="data">
+                    <b-button @click="setHistoricalData(data.item)">{{formatDate(data.item.date)}}</b-button>
+                  </template>
+                </b-table>
               </div>
             </b-card>
-          </b-col>
+          </b-col>-
         </b-row>
         <b-row>
           <b-col>
-            <b-card title="New Check-In" class="facility-check-in">
+            <b-card class="facility-check-in">
               <covid-form
                 v-if="formAvailability.covidForm.includes(entity.type)"
                 v-bind:entity.sync="entity"
@@ -217,18 +233,30 @@
 <script>
 import questionReadout from "../components/questionReadout";
 import covidForm from "../components/covidForm";
+import quickForm from "../components/quickForm";
 
 export default {
   name: "Facility",
   components: {
     questionReadout,
-    covidForm
+    covidForm,
+    quickForm
   },
   data() {
-    console.log(this.$jwt.decode(this.$root.auth_token).type);
     const showDetails =
       this.$jwt.decode(this.$root.auth_token).type === "user" ? true : false;
     return {
+      historyFields: [
+        {
+          key: "status",
+          sortable: true
+        },
+        {
+          key: "date",
+          sortable: true,
+          formatter: this.formatDate
+        }
+      ],
       entity: {
         name: "Loading..."
       },
@@ -248,10 +276,55 @@ export default {
       },
       formMatched: false,
       lastCheckIn: null,
+      history: null,
       showDetails
     };
   },
   methods: {
+    setHistoricalData(data) {
+        this.lastCheckIn = this.duplicateData(
+          data
+        );
+        this.lastCheckInStatus.status = data.lastCheckIn.status;
+
+      switch (data.status) {
+        case "Spoke to owner. No follow-up needed.":
+          this.lastCheckInStatus.state = "success";
+          break;
+        case "Spoke to someone besides owner. No follow-up needed.":
+          this.lastCheckInStatus.state = "success";
+          break;
+        case "Spoke to owner. Follow-up needed.":
+          this.lastCheckInStatus.state = "warning";
+          break;
+        case "Spoke to someone besides owner. Follow-up needed.":
+          this.lastCheckInStatus.state = "warning";
+          break;
+        case "Called. No answer. Left a message.":
+          this.lastCheckInStatus.state = "danger";
+          break;
+        case "Called. No answer. Did not leave a message.":
+          this.lastCheckInStatus.state = "danger";
+          break;
+        case "Wrong number":
+          this.lastCheckInStatus.state = "danger";
+          break;
+      }
+    },
+    formatDate(d) {
+      const date = new Date(d);
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "America/New_York"
+      };
+      const formatted = new Intl.DateTimeFormat("en-US", options).format(date);
+      return formatted
+    },
     updateFacilityData(obj) {
       if (obj.checkIn === null) {
         this.entity = this.duplicateData(obj);
@@ -283,7 +356,6 @@ export default {
     formAvailable(type = null, form = null) {
       if (type in this.formAvailability && !this.formMatched) {
         if (this.formAvailability[type].includes(form)) {
-          console.log("match found");
           this.formMatched = true;
           return true;
         } else {
@@ -310,15 +382,19 @@ export default {
       this.$root.destroySession();
       this.$router.push({ name: "login" });
     },
-    setLastCheckInData(data = undefined) {
+    setLastCheckInData(data = undefined, pos = undefined) {
+      console.log(this.entity.checkIn.checkIns);
       if (data) {
         this.entity.checkIn.checkIns.push(data);
       }
       if (
-        this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length - 1]
+        this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length - 1] ||
+        pos !== undefined
       ) {
+        const postition =
+          pos !== undefined ? pos : this.entity.checkIn.checkIns.length - 1;
         this.lastCheckIn = this.duplicateData(
-          this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length - 1]
+          this.entity.checkIn.checkIns[postition]
         );
         this.lastCheckInStatus.status = this.lastCheckIn.status;
       }
@@ -346,8 +422,6 @@ export default {
           this.lastCheckInStatus.state = "danger";
           break;
       }
-
-      // if (!this.showDetails) this.logout();
     },
     addContact() {
       this.$router.push({
