@@ -415,10 +415,12 @@ export default {
       this.$root.apiPUTRequest("/entity", this.entityCheckIn, function() {
         self.updateParent();
       });
-      const token = this.$jwt.decode(this.$root.auth_token)
-      if (token.type === 'contact') {
-        this.$root.destroySession();
-        this.$router.push({ name: "login" });
+      const token = this.$jwt.decode(this.$root.auth_token);
+      if (token.type === "contact") {
+        setTimeout(() => {
+          this.$root.destroySession();
+          this.$router.push({ name: "login" });
+        }, 5000);
       }
     },
     updateParent() {
