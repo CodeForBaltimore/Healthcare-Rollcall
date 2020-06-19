@@ -12,7 +12,7 @@ export const postLogin = (email, password) => {
 };
 
 export const postReset = (email) => {
-    const fullUrl = new URL('/user/reset/'+email, process.env.VUE_APP_BASE_API_URL);
+    const fullUrl = new URL('/user/reset/' + email, process.env.VUE_APP_BASE_API_URL);
     return axios.post(fullUrl.toString(),
         {
             email
