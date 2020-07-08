@@ -160,6 +160,10 @@ h1 {
   margin-top: 0;
 }
 
+#dashboard-table a {
+  color: #006EE3 !important;
+}
+
 p.lead {
   font-size: 18px;
   font-weight: unset;
