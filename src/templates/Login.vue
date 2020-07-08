@@ -45,6 +45,13 @@
               <a v-b-modal.reset-pass href="#">Forgot/Reset Password</a>
             </div>
             <b-button type="submit" variant="primary">Login</b-button>
+            <b-alert
+              :show="this.dismissLoginCountDown"
+              dismissible
+              fade
+              :variant="this.type"
+              @dismiss-login-count-down="this.countDownChanged"
+            >{{this.login_alert}}</b-alert>
           </form>
         </b-card>
       </b-col>
@@ -80,7 +87,9 @@ export default {
       },
       dismissSecs: 5,
       dismissCountDown: 0,
+      dismissLoginCountDown: 0,
       reset_alert: "",
+      login_alert: "",
       type: "warning"
     };
   },
@@ -102,7 +111,10 @@ export default {
             this.$router.replace({ name: "dashboard" });
           } else {
             // eslint-disable-next-line no-console
-            console.log("The email and / or password is incorrect");
+            this.showAlert(
+              "The email and / or password is incorrect",
+              "warning"
+            );
           }
         });
       } else {
@@ -113,7 +125,7 @@ export default {
     resetPass() {
       if (this.input.reset_email !== "") {
         const response = postReset(this.input.reset_email);
-        this.showAlert("Sending...")
+        this.showAlert("Sending...");
         response
           .then(data => {
             if (data.status == 200) {
@@ -130,10 +142,15 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-    showAlert(msg, type) {
+    showAlert(msg, type, alertType = null) {
+      if (alertType !== null) {
       this.reset_alert = msg;
-      this.type = type;
       this.dismissCountDown = this.dismissSecs;
+      } else {
+        this.login_alert = msg;
+      this.dismissLoginCountDown = this.dismissSecs;
+      }
+      this.type = type;
     }
   }
 };

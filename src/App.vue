@@ -15,10 +15,10 @@
           <b-navbar-nav>
             <b-nav-item
               v-on:click="goToDashboard()"
-              v-if="navBar && showDashboardLink()"
+              v-if="checkNavBar && showDashboardLink()"
             >&larr; Return to Dashboard</b-nav-item>
           </b-navbar-nav>
-          <b-navbar-nav class="ml-auto" v-if="navBar">
+          <b-navbar-nav class="ml-auto" v-if="checkNavBar">
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>Management</template>
@@ -39,7 +39,10 @@
       <br />
       <strong>
         Proudly Designed &amp; Developed by
-        <a href="https://codeforbaltimore.org/" target="_blank">Code for Baltimore</a>
+        <a
+          href="https://codeforbaltimore.org/"
+          target="_blank"
+        >Code for Baltimore</a>
       </strong>
       <br />A local chapter of
       <a href="https://www.codeforamerica.org/" target="_blank">Code for America</a>
@@ -52,7 +55,9 @@ export default {
   name: "App",
   data() {
     const navBar = this.$root.getNavBarStatus();
-    const user = (this.$root.auth_token) ? this.$jwt.decode(this.$root.auth_token).email : false;
+    const user = this.$root.auth_token
+      ? this.$jwt.decode(this.$root.auth_token).email
+      : false;
     return {
       user,
       navBar,
@@ -92,6 +97,15 @@ export default {
       if (this.$router.currentRoute.name !== "get-all-contacts") {
         this.$router.push({ name: "get-all-contacts" });
       }
+    },
+    updateUser() {
+      if (this.$root.auth_token) this.user = this.$jwt.decode(this.$root.auth_token).email
+    }
+  },
+  computed: {
+    checkNavBar() {
+      this.updateUser()
+      return this.$root.getNavBarStatus();
     }
   }
 };
