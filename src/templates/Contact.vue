@@ -9,6 +9,7 @@
           <b-form-group label="Select existing contact" label-align="left">
             <Search-select
               v-model="selectedContact" 
+              :autocomplete="false"
               :options="contactSelectList" 
               :close-on-select="true" 
               :clear-on-select="true"
