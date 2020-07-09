@@ -16,7 +16,7 @@
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
     "dotenv": "8.2.0",
-    "helmet": "3.22.1",
+    "helmet": "3.23.0",
     "vue": "^2.6.10",
     "vue-cookies": "1.7.0",
     "vue-helmet": "1.1.5",
