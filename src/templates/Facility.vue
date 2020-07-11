@@ -1,9 +1,12 @@
 <template>
   <b-container fluid="md" id="facility">
-    <h1>{{ entity.name }}</h1>
+    <div id="facility-header">
+      <h1>{{ entity.name }}</h1>
+      <sub>{{ entity.type }}</sub>
+    </div>
     <b-row>
       <b-col cols="12" md="4" v-if="showDetails">
-        <b-card title="Contact Information">
+        <b-card title="Facility Information">
           <!-- Show Address if available -->
           <div v-if="entity.address" class="mb-2">
             <h6 class="card-subtitle mb2">Address</h6>
@@ -19,42 +22,18 @@
               >{{ entity.address.city }}, {{ entity.address.state }} {{ entity.address.zip }}</span>
             </p>
           </div>
-          <!-- Show Email Address if available -->
-          <div v-if="entity.email" class="mb-2">
-            <h6 class="card-subtitle mb-2">Email Addresses</h6>
-            <p v-bind:class="{ primary: entity.email[0].isPrimary }">
-              <a v-bind:href="'mailto:' +  entity.email[0].address">{{ entity.email[0].address }}</a>
-            </p>
-            <ol v-if="entity.email">
-              <li
-                v-for="address in entity.email"
-                v-bind:key="address.address"
-                v-bind:class="{ primary: address.isPrimary }"
-              >
-                <a v-bind:href="'mailto:' +  address.address">{{ address.address }}</a>
-              </li>
-            </ol>
+          <div v-if="entity.attributes" class="mb-2">
+            <div v-if="entity.attributes.notes">
+              <h6 class="card-subtitle mb2">Notes</h6>
+              <p>{{ entity.attributes.notes }}</p>
+            </div>
           </div>
-
-          <!-- Show Phone Numbers if available -->
-          <div v-if="entity.phone" class="mb-2">
-            <h6 class="card-subtitle mb2">Phone Numbers</h6>
-            <p
-              v-if="entity.phone"
-              v-bind:class="{ primary: entity.phone[0].isPrimary }"
-            >{{ entity.phone[0].number | phone }}</p>
-            <ol v-if="entity.phone">
-              <li
-                v-for="number in entity.phone"
-                v-bind:key="number.number"
-                v-bind:class="{ primary: number.isPrimary }"
-              >{{ number.number | phone }}</li>
-            </ol>
-          </div>
-
+          <b-button v-on:click="editFacility()">Edit Facility</b-button>
+        </b-card>
+        <br />
+        <b-card title="Contact Information">
           <!-- Show Contacts if available -->
           <div v-if="entity.contacts && entity.contacts.length > 0" class="mb2">
-            <h6 class="card-subtitle mb-2" v-if="entity.contacts.length > 0">Contacts</h6>
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
                 <router-link
@@ -116,16 +95,17 @@
               </li>
             </ul>
           </div>
+          <br />
           <b-button v-on:click="addContact()">Add Contact</b-button>
         </b-card>
         <br />
         <b-card title="Quick Check-In">
-              <quick-form
-                v-if="formAvailability.covidForm.includes(entity.type)"
-                v-bind:entity.sync="entity"
-                v-bind:entity-check-in.sync="entityCheckIn"
-                @submitted="setLastCheckInData($event)"
-              />
+          <quick-form
+            v-if="formAvailability.covidForm.includes(entity.type)"
+            v-bind:entity.sync="entity"
+            v-bind:entity-check-in.sync="entityCheckIn"
+            @submitted="setLastCheckInData($event)"
+          />
         </b-card>
       </b-col>
       <b-col cols="12" md="8">
@@ -243,8 +223,11 @@ export default {
     quickForm
   },
   data() {
+    const validRoles = ["admin", "user"];
     const showDetails =
-      this.$jwt.decode(this.$root.auth_token).type === "user" ? true : false;
+      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1
+        ? true
+        : false;
     return {
       historyFields: [
         {
@@ -271,7 +254,8 @@ export default {
         covidForm: [
           "Assisted Living Facility",
           "Mixed Housing",
-          "Senior Housing"
+          "Senior Housing",
+          "Test"
         ]
       },
       formMatched: false,
@@ -282,10 +266,8 @@ export default {
   },
   methods: {
     setHistoricalData(data) {
-        this.lastCheckIn = this.duplicateData(
-          data
-        );
-        this.lastCheckInStatus.status = data.lastCheckIn.status;
+      this.lastCheckIn = this.duplicateData(data);
+      this.lastCheckInStatus.status = data.status;
 
       switch (data.status) {
         case "Spoke to owner. No follow-up needed.":
@@ -323,7 +305,7 @@ export default {
         timeZone: "America/New_York"
       };
       const formatted = new Intl.DateTimeFormat("en-US", options).format(date);
-      return formatted
+      return formatted;
     },
     updateFacilityData(obj) {
       if (obj.checkIn === null) {
@@ -383,7 +365,6 @@ export default {
       this.$router.push({ name: "login" });
     },
     setLastCheckInData(data = undefined, pos = undefined) {
-      console.log(this.entity.checkIn.checkIns);
       if (data) {
         this.entity.checkIn.checkIns.push(data);
       }
@@ -428,6 +409,12 @@ export default {
         name: "create-contact",
         params: { entityID: this.$route.params.entityID }
       });
+    },
+    editFacility() {
+      this.$router.push({
+        name: "facility-edit",
+        params: { entityID: this.$route.params.entityID }
+      });
     }
   },
   created() {
@@ -439,7 +426,7 @@ export default {
 <style scoped>
 h1 {
   text-align: left;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 .card h6 {
   font-weight: bold;
@@ -481,5 +468,9 @@ button.btn-primary {
 }
 .facility-check-in {
   margin-bottom: 24px;
+}
+
+.facility-header {
+  margin-bottom: 25px;
 }
 </style>

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall)
+[![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall) [![Netlify Status](https://api.netlify.com/api/v1/badges/83fb49cb-61e1-4c21-8893-03e17e75d972/deploy-status)](https://app.netlify.com/sites/healthcare-rollcall/deploys)
 
 # Healthcare Rollcall
 
@@ -7,20 +7,20 @@ In the event of a disaster, Baltimore City and the Baltimore City Health Departm
 <!-- TOC -->
 
 - [Healthcare Rollcall](#healthcare-rollcall)
-    - [What is this?](#what-is-this)
-    - [Documentation](#documentation)
+  - [What is this?](#what-is-this)
+  - [Documentation](#documentation)
 - [Project setup](#project-setup)
-    - [Docker and docker-compose](#docker-and-docker-compose)
-        - [Full .env example](#full-env-example)
-        - [Keeping your API up to date](#keeping-your-api-up-to-date)
-    - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
-    - [Compiles and minifies for production](#compiles-and-minifies-for-production)
-    - [Lints and fixes files](#lints-and-fixes-files)
-    - [Customize configuration](#customize-configuration)
+  - [Docker and docker-compose](#docker-and-docker-compose)
+    - [Full .env example](#full-env-example)
+    - [Keeping your API up to date](#keeping-your-api-up-to-date)
+  - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
+  - [Compiles and minifies for production](#compiles-and-minifies-for-production)
+  - [Lints and fixes files](#lints-and-fixes-files)
+  - [Customize configuration](#customize-configuration)
 - [Using this product](#using-this-product)
-    - [Testing](#testing)
+  - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
-    - [Contributors ✨](#contributors-)
+  - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 

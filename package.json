@@ -19,6 +19,7 @@
     "helmet": "3.23.0",
     "vue": "^2.6.10",
     "vue-cookies": "1.7.0",
+    "vue-country-region-select": "2.0.14",
     "vue-helmet": "1.1.5",
     "vue-multiselect": "^2.1.6",
     "vuejs-jwt": "1.1.0",

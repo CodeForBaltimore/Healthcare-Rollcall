@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
 import CheckInRedirect from "./templates/CheckInRedirect.vue"
-import LoginComponent from "./templates/Login.vue"
-import DashboardComponent from "./templates/Dashboard.vue"
-import FacilityComponent from "./templates/Facility.vue"
-import PasswordResetComponent from "./templates/PasswordReset.vue"
 import ContactComponent from "./templates/Contact.vue"
 import ContactListComponent from "./templates/ContactList.vue"
+import DashboardComponent from "./templates/Dashboard.vue"
+import FacilityComponent from "./templates/Facility.vue"
+import FacilityEditComponent from "./templates/FacilityEdit.vue"
+import LoginComponent from "./templates/Login.vue"
+import PasswordResetComponent from "./templates/PasswordReset.vue"
+import Router from 'vue-router'
+import Vue from 'vue'
 
 Vue.use(Router);
 
@@ -30,10 +31,19 @@ export default new Router({
             component: DashboardComponent
         },
         {
-            // Add new route with entity ID
             path: '/facility/:entityID',
             name: 'facility',
             component: FacilityComponent
+        },
+        {
+            path: '/facility/edit/:entityID',
+            name: 'facility-edit',
+            component: FacilityEditComponent
+        },
+        {
+            path: '/facility/add',
+            name: 'facility-add',
+            component: FacilityEditComponent
         },
         {
             path: "/reset/:token",

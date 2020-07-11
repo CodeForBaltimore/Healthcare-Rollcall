@@ -35,12 +35,14 @@
               </b-input-group>
             </b-form-group>
           </b-col>
+          <div v-if="showAdmin" >
+            <b-button v-on:click="editFacility()">Create Facility</b-button>
+          </div>
         </b-row>
         <b-table
           id="dashboard-table"
           striped
           hover
-          
           :per-page="perPage"
           :current-page="currentPage"
           :sort-by.sync="sortBy"
@@ -80,9 +82,7 @@
               :to="{ name: 'facility', params: { entityID: data.item.id }}"
             >{{ data.item.name }}</router-link>
           </template>
-          <template v-slot:cell(type)="data">
-            {{ data.item.type }}
-          </template>
+          <template v-slot:cell(type)="data">{{ data.item.type }}</template>
           <template v-slot:cell(status)="data">
             <span>{{ data.item.status }}</span>
           </template>
@@ -97,6 +97,8 @@
 export default {
   name: "Dashboard",
   data() {
+    const showAdmin =
+      this.$jwt.decode(this.$root.auth_token).type === "admin" ? true : false
     return {
       rows: 0,
       perPage: 25,
@@ -107,6 +109,7 @@ export default {
       },
       filterOn: ["name"],
       statusOptions: [],
+      showAdmin,
       entities: null,
       sortBy: "updated",
       sortDesc: false,
@@ -116,12 +119,12 @@ export default {
         { key: "status", sortable: true },
         { key: "updatedAt", sortable: true }
       ]
-    };
+    }
   },
   methods: {
     updateEntities(obj) {
-      this.entities = obj.results;
-      this.rows = this.entities.length;
+      this.entities = obj.results
+      this.rows = this.entities.length
       for (let entity of this.entities) {
         if (
           entity.checkIn &&
@@ -129,18 +132,18 @@ export default {
           entity.checkIn.checkIns.length > 0
         ) {
           entity.status =
-            entity.checkIn.checkIns[entity.checkIn.checkIns.length - 1].status;
+            entity.checkIn.checkIns[entity.checkIn.checkIns.length - 1].status
         } else {
-          entity.status = "No Previous Check-in";
+          entity.status = "No Previous Check-in"
         }
       }
     },
     onFiltered(filteredItems) {
-      this.rows = filteredItems.length;
-      this.currentPage = 1;
+      this.rows = filteredItems.length
+      this.currentPage = 1
     },
     filterRow(row, filter) {
-      let match = !filter.status || row.status === this.filter.status;
+      let match = !filter.status || row.status === this.filter.status
       return match && filter.keyword
         ? this.filterOn.reduce(
             (match, field) =>
@@ -148,17 +151,22 @@ export default {
               row[field].toLowerCase().match(filter.keyword.toLowerCase()),
             false
           )
-        : match;
+        : match
+    },
+    editFacility() {
+      this.$router.push({
+        name: "facility-add"
+      })
     }
   },
   mounted() {
     let options = this.$root.getStatuses().map(status => {
-      return { value: status, text: status, disabled: false };
-    });
-    this.statusOptions = [{ value: null, text: "All" }, ...options];
-    this.$root.apiGETRequest("/entity", this.updateEntities);
+      return { value: status, text: status, disabled: false }
+    })
+    this.statusOptions = [{ value: null, text: "All" }, ...options]
+    this.$root.apiGETRequest("/entity", this.updateEntities)
   }
-};
+}
 </script>
 
 <style>
