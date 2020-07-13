@@ -36,7 +36,7 @@
             </b-form-group>
           </b-col>
           <div v-if="showAdmin" >
-            <b-button v-on:click="editFacility()">Create Facility</b-button>
+            <b-button v-on:click="addFacility()">Create Facility</b-button>
           </div>
         </b-row>
         <b-table
@@ -153,7 +153,7 @@ export default {
           )
         : match
     },
-    editFacility() {
+    addFacility() {
       this.$router.push({
         name: "facility-add"
       })

@@ -254,8 +254,7 @@ export default {
         covidForm: [
           "Assisted Living Facility",
           "Mixed Housing",
-          "Senior Housing",
-          "Test"
+          "Senior Housing"
         ]
       },
       formMatched: false,

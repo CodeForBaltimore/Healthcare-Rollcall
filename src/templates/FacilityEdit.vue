@@ -86,7 +86,6 @@ export default {
         typeSelected: null,
         typeOptions: [
           { value: null, text: "Select facility type" },
-          { value: "Test", text: "Test" },
           {
             value: "Assisted Living Facility",
             text: "Assisted Living Facility"
