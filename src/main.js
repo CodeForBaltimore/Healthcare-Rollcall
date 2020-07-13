@@ -1,118 +1,120 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
 import store from './store'
-import BootstrapVue from 'bootstrap-vue';
-import VueCookies from 'vue-cookies';
-import VueJWT from 'vuejs-jwt';
-import VueHelmet from 'vue-helmet';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-import { mapState } from "vuex";
-import { mapActions } from "vuex";
-import axios from "axios";
-import Multiselect from 'vue-multiselect';
+import BootstrapVue from 'bootstrap-vue'
+import VueCookies from 'vue-cookies'
+import vueCountryRegionSelect from 'vue-country-region-select'
+import VueJWT from 'vuejs-jwt'
+import VueHelmet from 'vue-helmet'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { mapState } from "vuex"
+import { mapActions } from "vuex"
+import axios from "axios"
+import Multiselect from 'vue-multiselect'
 
-Vue.use(BootstrapVue);
-Vue.use(VueCookies);
-Vue.use(VueHelmet);
-Vue.use(VueJWT, { storage: 'cookie' });
+Vue.use(BootstrapVue)
+Vue.use(VueCookies)
+Vue.use(VueHelmet)
+Vue.use(vueCountryRegionSelect)
+Vue.use(VueJWT, { storage: 'cookie' })
 Vue.component("Search-select", Multiselect)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   if (Vue.$cookies.get('Health_Auth')) {
-    next();
+    next()
   } else if (to.name === 'reset' && !store.state.authenticated) {
-    next();
+    next()
   } else if (to.name === 'checkin' && !store.state.authenticated) {
-    next();
+    next()
   } else if (to.name !== 'login' && !store.state.authenticated) {
-    next({ name: 'login' });
+    next({ name: 'login' })
   } else {
-    next();
+    next()
   }
-});
+})
 
 Vue.filter('phone', function (phone) {
-  let phoneClean = ('' + phone).replace(/\D/g, '');
+  let phoneClean = ('' + phone).replace(/\D/g, '')
   if (phoneClean.charAt(0) === "1") {
-    phoneClean = phoneClean.slice(1);
+    phoneClean = phoneClean.slice(1)
   }
-  let output = null;
+  let output = null
   if (phoneClean.length === 0) {
-    output = '';
+    output = ''
   } else if (phoneClean.length > 0 && phoneClean.length <= 3) {
-    output = '(' + phoneClean.substring(0, 3) + ')';
+    output = '(' + phoneClean.substring(0, 3) + ')'
   } else if (phoneClean.length >= 4 && phoneClean.length <= 6) {
-    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6);
+    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6)
   } else if (phoneClean.length >= 7 && phoneClean.length <= 10) {
-    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10);
+    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10)
   } else if (phoneClean.length > 10) {
-    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10) + ' ext: ' + phoneClean.substring(10);
+    output = '(' + phoneClean.substring(0, 3) + ') ' + phoneClean.substring(3, 6) + '-' + phoneClean.substring(6, 10) + ' ext: ' + phoneClean.substring(10)
   }
 
   return '+1 ' + output
-});
+})
 
 Vue.filter('numberToLetter', function (number) {
   switch (number) {
     case 0:
-      return "A";
+      return "A"
     case 1:
-      return "B";
+      return "B"
     case 2:
-      return "C";
+      return "C"
     case 3:
-      return "D";
+      return "D"
     case 4:
-      return "E";
+      return "E"
     case 5:
-      return "F";
+      return "F"
     case 6:
-      return "G";
+      return "G"
     case 7:
-      return "H";
+      return "H"
     case 8:
-      return "I";
+      return "I"
     case 9:
-      return "J";
+      return "J"
     case 10:
-      return "K";
+      return "K"
   }
 
-});
+})
 
 Vue.filter('timestamp', function (input) {
-  let now = new Date();
-  let date = new Date(input);
-  let ampm = date.getHours() >= 12 ? 'pm' : 'am';
-  let hours = date.getHours() % 12;
-  let formattedHours = hours ? hours : 12;
+  let now = new Date()
+  let date = new Date(input)
+  let ampm = date.getHours() >= 12 ? 'pm' : 'am'
+  let hours = date.getHours() % 12
+  let formattedHours = hours ? hours : 12
   let isToday = (now.getDate() === date.getDate() &&
     now.getMonth() === date.getMonth() &&
-    now.getFullYear() === date.getFullYear());
+    now.getFullYear() === date.getFullYear())
   let isYesterday = (now.getDate() === date.getDate() + 1 &&
     now.getMonth() === date.getMonth() &&
-    now.getFullYear() === date.getFullYear());
-  let dateOutput = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' at ';
+    now.getFullYear() === date.getFullYear())
+  let dateOutput = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' at '
   if (isToday) {
     dateOutput = "Today at "
   } else if (isYesterday) {
     dateOutput = "Yesterday at "
   }
   return dateOutput + formattedHours + ':' +
-    (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + ampm;
-});
+    (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + ampm
+})
 
 Vue.filter('nullToNone', function (value) {
   if (value == null) {
-    return "None";
+    return "None"
   } else {
-    return value;
+    return value
   }
-});
+})
 
 new Vue({
   store,
@@ -129,46 +131,47 @@ new Vue({
   },
   created: function () {
     if (!this.authenticated && this.getTokenFromCookie()) {
-      this.authenticateUser(this.getTokenFromCookie());
+      this.authenticateUser(this.getTokenFromCookie())
     }
   },
   methods: {
     ...mapActions(["unsetAuth", "authenticate"]),
     authenticateUser(response) {
-      this.setAuthCookie(response);
-      this.authenticate(response);
-      this.$emit("authenticated", true);
+      this.setAuthCookie(response)
+      this.authenticate(response)
+      this.$emit("authenticated", true)
     },
     setAuthCookie(response) {
       if (this.getTokenFromCookie() && this.getTokenFromCookie() !== response) {
         // Cookies are different - Replacing cookie
-        this.$cookies.remove('Health_Auth');
-        this.$cookies.set('Health_Auth', response, '1D', null);
+        this.$cookies.remove('Health_Auth')
+        this.$cookies.set('Health_Auth', response, '1D', null)
       } else if (!this.getTokenFromCookie()) {
         // No existing cookie - Adding cookie
-        this.$cookies.set('Health_Auth', response, '1D', null);
+        this.$cookies.set('Health_Auth', response, '1D', null)
       } else {
         // Cookies are the same - do nothing
       }
     },
     getNavBarStatus() {
-      return this.$root.auth_state && this.$jwt.decode(this.$root.auth_token).type === 'user';
+      const userTypes = ['user', 'admin']
+      return this.$root.auth_state &&  userTypes.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1
     },
     getAuthenticationStatus() {
-      return this.auth_state;
+      return this.auth_state
     },
     getSavedToken() {
-      return this.auth_token;
+      return this.auth_token
     },
     getTokenFromCookie() {
-      return this.$cookies.get('Health_Auth');
+      return this.$cookies.get('Health_Auth')
     },
     destroySession() {
-      this.unsetAuth();
-      this.$cookies.remove('Health_Auth');
+      this.unsetAuth()
+      this.$cookies.remove('Health_Auth')
     },
     apiGETRequest(endpoint, callback) {
-      let self = this;
+      let self = this
       axios
         .get(self.api + endpoint, {
           headers: {
@@ -176,14 +179,14 @@ new Vue({
           },
         })
         .then(function (response) {
-          callback(response.data);
+          callback(response.data)
         })
         .catch(function (err) {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
     apiPUTRequest(endpoint, payload, callback) {
-      let self = this;
+      let self = this
       axios
         .put(self.api + endpoint, payload, {
           headers: {
@@ -191,14 +194,14 @@ new Vue({
           },
         })
         .then(function (response) {
-          callback(response);
+          callback(response)
         })
         .catch(function (err) {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
     apiPOSTRequest(endpoint, payload, callback) {
-      let self = this;
+      let self = this
       axios
         .post(self.api + endpoint, payload, {
           headers: {
@@ -206,30 +209,29 @@ new Vue({
           },
         })
         .then(function (response) {
-          callback(response);
+          callback(response)
         })
         .catch(function (err) {
-          console.log(err);
-          callback(false);
-        });
+          console.log(err)
+          callback(false)
+        })
     },
-    apiDELRequest(endpoint, payload, callback) {
-      let self = this;
+    apiDELRequest(endpoint, callback) {
+      let self = this
       // requirement for axios
-      payload = { 'data': payload };
       axios
-        .delete(self.api + endpoint, payload, {
+        .delete(self.api + endpoint, {
           headers: {
             'token': self.getSavedToken()
           },
         })
         .then(function (response) {
-          callback(response);
+          callback(response)
         })
         .catch(function (err) {
-          console.log(err);
-          callback(false);
-        });
+          console.log(err)
+          callback(false)
+        })
     },
     getStatuses() {
       return [
@@ -241,8 +243,8 @@ new Vue({
         "Called. No Answer. Did not leave a message.",
         "Wrong number",
         "No Previous Check-in"
-      ];
+      ]
     }
   },
   router
-}).$mount('#app');
+}).$mount('#app')

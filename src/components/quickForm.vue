@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h5>{{ formName }}</h5>
     <b-form @submit.prevent="addNewCheckin" v-if="showForm">
       <h5>Comments</h5>
       <b-form-group
