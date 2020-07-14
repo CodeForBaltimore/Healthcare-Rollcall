@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall) [![Netlify Status](https://api.netlify.com/api/v1/badges/83fb49cb-61e1-4c21-8893-03e17e75d972/deploy-status)](https://app.netlify.com/sites/healthcare-rollcall/deploys)
+[![Build Status](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Healthcare-Rollcall) [![Netlify Status](https://api.netlify.com/api/v1/badges/83fb49cb-61e1-4c21-8893-03e17e75d972/deploy-status)](https://app.netlify.com/sites/healthcare-rollcall/deploys) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/CodeForBaltimore/Healthcare-Rollcall.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CodeForBaltimore/Healthcare-Rollcall/context:javascript)
 
 # Healthcare Rollcall
 
