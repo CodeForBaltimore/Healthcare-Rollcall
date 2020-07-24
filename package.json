@@ -23,7 +23,7 @@
     "vue-helmet": "1.1.5",
     "vue-multiselect": "^2.1.6",
     "vuejs-jwt": "1.1.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.3",
