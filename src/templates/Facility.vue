@@ -422,7 +422,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   text-align: left;
   margin-bottom: 0px;
@@ -469,7 +469,7 @@ button.btn-primary {
   margin-bottom: 24px;
 }
 
-.facility-header {
+#facility-header {
   margin-bottom: 25px;
 }
 </style>
