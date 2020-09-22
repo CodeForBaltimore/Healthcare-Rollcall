@@ -422,7 +422,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   text-align: left;
   margin-bottom: 0px;

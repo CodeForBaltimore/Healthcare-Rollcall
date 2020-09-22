@@ -35,8 +35,8 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <div v-if="showAdmin" >
-            <b-button v-on:click="addFacility()">Create Facility</b-button>
+          <div v-if="showAdmin" cols="4" class="center">
+            <b-button v-on:click="addFacility()" id="create-facility--btn">Create Facility</b-button>
           </div>
         </b-row>
         <b-table
@@ -169,7 +169,9 @@ export default {
 }
 </script>
 
-<style>
+
+
+<style lang="scss">
 h1,
 h3 {
   text-align: left;
@@ -189,4 +191,15 @@ ul.pagination > li {
 p.lead {
   margin: 30px 0 15px;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* <---- NEW    */
+}
+
+#create-facility--btn {
+  margin-top: 1rem;
+}
+
 </style>

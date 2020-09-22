@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #login {
   background-color: #ffffff;
   margin: auto;
