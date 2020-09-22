@@ -469,7 +469,7 @@ button.btn-primary {
   margin-bottom: 24px;
 }
 
-.facility-header {
+#facility-header {
   margin-bottom: 25px;
 }
 </style>
