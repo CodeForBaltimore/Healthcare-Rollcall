@@ -195,7 +195,7 @@ p.lead {
 .center {
   display: flex;
   justify-content: center;
-  align-items: center;   /* <---- NEW    */
+  align-items: center;
 }
 
 #create-facility--btn {
