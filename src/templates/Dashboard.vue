@@ -37,10 +37,9 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col cols="4" class="align--right" id="facility--btn--container">
+          <b-col cols="4" class="align--right mt-3">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
-            <b-button v-if="showAdmin || showUser" v-b-modal.email-modal>Email Facilities</b-button>
-            <b-button v-on:click="addFacility()" id="create-facility--btn">Create Facility</b-button>
+            <b-button v-if="showAdmin || showUser" class="ml-2" v-b-modal.email-modal>Email Facilities</b-button>
           </b-col>
           <div>
             <b-modal id="email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
