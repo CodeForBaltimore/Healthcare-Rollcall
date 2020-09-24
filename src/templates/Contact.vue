@@ -8,29 +8,31 @@
         <b-form @submit.prevent="submitExistingContact">
           <b-form-group label="Select existing contact" label-align="left">
             <Search-select
-              v-model="selectedContact" 
-              :autocomplete="false"
-              :options="contactSelectList" 
-              :close-on-select="true" 
-              :clear-on-select="true"
-              :preserve-search="true"
-              :hide-selected="true" 
-              label="name"
-              track-by="id"
+                v-model="selectedContact"
+                :autocomplete="false"
+                :options="contactSelectList"
+                :close-on-select="true"
+                :clear-on-select="true"
+                :preserve-search="true"
+                :hide-selected="true"
+                label="name"
+                track-by="id"
             ></Search-select>
           </b-form-group>
-        <b-form-group id="relationship-title" label="Relationship to Facility">
-          <b-form-input type="text" v-model="selectedContact.relationshipTitle" />
-        </b-form-group>
+          <b-form-group id="relationship-title" label="Relationship to Facility">
+            <b-form-input type="text" v-model="selectedContact.relationshipTitle"/>
+          </b-form-group>
           <b-button
-            type="submit"
-            variant="primary"
-          >Link Contact</b-button>
+              type="submit"
+              variant="primary"
+          >Link Contact
+          </b-button>
           <b-button
-            type="cancel"
-            variant="outline-secondary"
-            @click.prevent="returnToLastPage"
-          >Cancel</b-button>
+              type="cancel"
+              variant="outline-secondary"
+              @click.prevent="returnToLastPage"
+          >Cancel
+          </b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -41,46 +43,51 @@
         <h4>{{ this.$route.params.contactID ? 'Update existing contact' : 'Create new contact' }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
-            <b-form-input type="text" required v-model="contact.name" />
+            <b-form-input type="text" required v-model="contact.name"/>
           </b-form-group>
           <b-form-group id="contact-phone" label="Phone Number">
             <b-form-input
-              type="tel"
-              ref="contactPhone"
-              v-model="numberFormatted"
-              @keydown.exact="formatTelInput($event)"
-              @keydown.delete.prevent="formatTelBackspace($event)"
-              minlength="10"
-              :state="phoneValid"
-              aria-describedby="phone-input-live-feedback"
+                type="tel"
+                ref="contactPhone"
+                v-model="numberFormatted"
+                @keydown.exact="formatTelInput($event)"
+                @keydown.delete.prevent="formatTelBackspace($event)"
+                minlength="10"
+                :state="phoneValid"
+                aria-describedby="phone-input-live-feedback"
             />
             <b-form-invalid-feedback
-              id="phone-input-live-feedback"
-            >Please enter a valid phone number.</b-form-invalid-feedback>
+                id="phone-input-live-feedback"
+            >Please enter a valid phone number.
+            </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="contact-email" label="Email Address">
             <b-form-input
-              type="email"
-              v-model="contact.email[0].address"
-              :state="emailValid"
-              aria-describedby="email-input-live-feedback"
+                type="email"
+                v-model="contact.email[0].address"
+                :state="emailValid"
+                aria-describedby="email-input-live-feedback"
             />
             <b-form-invalid-feedback
-              id="email-input-live-feedback"
-            >Please enter a valid email address.</b-form-invalid-feedback>
+                id="email-input-live-feedback"
+            >Please enter a valid email address.
+            </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="contact-notes" label="Notes">
             <b-form-input type="text" v-model="contact.attributes.notes"/>
           </b-form-group>
           <b-button
-            type="submit"
-            variant="primary"
-          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
+              type="submit"
+              variant="primary"
+              class="mr-2center"
+          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}
+          </b-button>
           <b-button
-            type="cancel"
-            variant="outline-secondary"
-            @click.prevent="returnToLastPage"
-          >Cancel</b-button>
+              type="cancel"
+              variant="outline-secondary"
+              @click.prevent="returnToLastPage"
+          >Cancel
+          </b-button>
         </b-form>
       </b-col>
     </b-row>
@@ -91,20 +98,22 @@
         <h4>Linked Facilities</h4>
         <b-input-group v-if="contact.entities.length > 0">
           <b-form-select v-model="selectedEntityID" :options="entitySelectList"></b-form-select>
-            <b-button
-            type="submit"
-            variant="primary"
-            @click.prevent="unlinkContact"
-          >Unlink from Facility</b-button>
+          <b-button
+              type="submit"
+              variant="primary"
+              @click.prevent="unlinkContact"
+          >Unlink from Facility
+          </b-button>
         </b-input-group>
         <p v-if="contact.entities.length === 0">This contact has no linked facilities.</p>
         <br>
         <h4>Other Options</h4>
-          <b-button
+        <b-button
             type="submit"
             variant="primary"
             @click.prevent="deleteContact"
-          >Delete Contact</b-button>
+        >Delete Contact
+        </b-button>
       </b-col>
     </b-row>
 
@@ -155,15 +164,15 @@ export default {
     updateContact(obj) {
       if (!obj.phone || obj.phone[0] === undefined || obj.phone[0] === null) {
         obj.phone = [];
-        obj.phone.push({ number: "", isPrimary: true });
+        obj.phone.push({number: "", isPrimary: true});
       }
       if (!obj.email || obj.email[0] === undefined || obj.email[0] === null) {
         obj.email = [];
-        obj.email.push({ address: "", isPrimary: true });
+        obj.email.push({address: "", isPrimary: true});
       }
       this.contact = obj;
 
-      if (this.contact.phone[0] === undefined || this.contact.phone[0].number ===  "") {
+      if (this.contact.phone[0] === undefined || this.contact.phone[0].number === "") {
         if (
             this.contact.phone[0].number.length < 11 ||
             this.contact.phone[0].number.charAt(0) !== "1"
@@ -173,11 +182,11 @@ export default {
       }
 
       this.numberFormatted = this.$options.filters.phone(
-        this.contact.phone[0].number
+          this.contact.phone[0].number
       );
 
       if (this.contact.attributes === null) {
-        this.contact.attributes = {"notes":""};
+        this.contact.attributes = {"notes": ""};
       }
 
       this.populateEntitiesDropdown();
@@ -203,11 +212,11 @@ export default {
           emailDisplayed = contact_.email[0].address;
         }
         this.contactSelectList.push(
-          {
-            name: contact_.name + ", " + emailDisplayed, 
-            id: contact_.id,
-            relationshipTitle: "default"
-          }
+            {
+              name: contact_.name + ", " + emailDisplayed,
+              id: contact_.id,
+              relationshipTitle: "default"
+            }
         );
       }
     },
@@ -218,12 +227,12 @@ export default {
       if (this.$route.name === "get-single-contact") {
         this.$router.push({
           name: "get-all-contacts",
-          params: { entityID: this.$route.params.entityID }
+          params: {entityID: this.$route.params.entityID}
         });
       } else {
         this.$router.push({
           name: "facility",
-          params: { entityID: this.$route.params.entityID }
+          params: {entityID: this.$route.params.entityID}
         });
       }
 
@@ -231,13 +240,13 @@ export default {
     submitForm() {
       this.phoneValid = this.contact.phone[0].number.length >= 10;
       this.emailValid =
-        this.contact.email[0].address.includes("@") &&
-        this.contact.email[0].address.includes(".");
+          this.contact.email[0].address.includes("@") &&
+          this.contact.email[0].address.includes(".");
       this.validationRun = true;
       if (
-        (this.phoneValid && this.emailValid) ||
-        (this.contact.phone[0].number === "1" && this.emailValid) ||
-        (this.contact.email[0].address === "" && this.phoneValid)
+          (this.phoneValid && this.emailValid) ||
+          (this.contact.phone[0].number === "1" && this.emailValid) ||
+          (this.contact.email[0].address === "" && this.phoneValid)
       ) {
         let newContact = this.duplicateData(this.contact);
         if (this.contact.phone[0].number === "1") {
@@ -245,28 +254,28 @@ export default {
         } else {
           newContact.phone = newContact.phone.filter(phone => !!phone.number);
           newContact.phone =
-            newContact.phone.length > 0 ? newContact.phone : null;
+              newContact.phone.length > 0 ? newContact.phone : null;
         }
         newContact.email = newContact.email.filter(email => !!email.address);
         newContact.email =
-          newContact.email.length > 0 ? newContact.email : null;
+            newContact.email.length > 0 ? newContact.email : null;
         if (this.$route.params.entityID) {
-          newContact.entities = [{"id":this.$route.params.entityID}]
+          newContact.entities = [{"id": this.$route.params.entityID}]
         }
-        if (this.contact.attributes === {"notes":""}) {
+        if (this.contact.attributes === {"notes": ""}) {
           newContact.attributes = null;
         }
         if (this.$route.params.contactID) {
           this.$root.apiPUTRequest(
-            "/contact",
-            newContact,
-            this.returnToLastPage
+              "/contact",
+              newContact,
+              this.returnToLastPage
           );
         } else {
           this.$root.apiPOSTRequest(
-            "/contact",
-            newContact,
-            this.returnToLastPage
+              "/contact",
+              newContact,
+              this.returnToLastPage
           );
         }
       }
@@ -278,9 +287,9 @@ export default {
         ]
       };
       this.$root.apiPOSTRequest(
-        "/entity/link/" + this.$route.params.entityID,
-        body,
-        this.returnToLastPage
+          "/entity/link/" + this.$route.params.entityID,
+          body,
+          this.returnToLastPage
       );
     },
     unlinkContact() {
@@ -294,9 +303,9 @@ export default {
         ]
       };
       this.$root.apiPOSTRequest(
-        "/entity/unlink/" + this.selectedEntityID,
-        body,
-        this.returnToLastPage
+          "/entity/unlink/" + this.selectedEntityID,
+          body,
+          this.returnToLastPage
       )
     },
     deleteContact() {
@@ -305,9 +314,9 @@ export default {
         return
       }
       this.$root.apiDELRequest(
-        "/contact/" + this.$route.params.contactID,
-        {},
-        this.returnToLastPage
+          "/contact/" + this.$route.params.contactID,
+          {},
+          this.returnToLastPage
       )
     },
     duplicateData(object) {
@@ -321,7 +330,7 @@ export default {
         }
         this.contact.phone[0].number += event.key;
         this.numberFormatted = this.$options.filters.phone(
-          this.contact.phone[0].number
+            this.contact.phone[0].number
         );
       }
     },
@@ -329,11 +338,11 @@ export default {
       event.preventDefault();
       if (this.contact.phone[0].number.length > 0) {
         this.contact.phone[0].number = this.contact.phone[0].number.slice(
-          0,
-          -1
+            0,
+            -1
         );
         this.numberFormatted = this.$options.filters.phone(
-          this.contact.phone[0].number
+            this.contact.phone[0].number
         );
       }
     }
@@ -344,7 +353,7 @@ export default {
     } else {
       this.getAllContacts();
       this.numberFormatted = this.$options.filters.phone(
-        this.contact.phone[0].number
+          this.contact.phone[0].number
       );
     }
   }
@@ -355,36 +364,45 @@ export default {
 h1 {
   text-align: left;
 }
+
 form h5 {
   border-bottom: 2px solid #42484f;
   padding-bottom: 8px;
   margin: 16px 0;
 }
+
 form h6 {
   font-weight: bold;
   background-color: #f1f1f1;
   box-sizing: border-box;
   padding: 8px;
 }
+
 .card-body {
   text-align: left;
 }
+
 p.return-link {
   text-align: left;
 }
+
 .facility-check-in {
   margin-bottom: 24px;
 }
+
 .address-line {
   display: block;
 }
+
 .alert {
   margin-bottom: 0;
 }
+
 .alert h6 {
   font-weight: bold;
   margin-top: 4px;
 }
+
 p:last-child {
   margin-bottom: 0;
 }

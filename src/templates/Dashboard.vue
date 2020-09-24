@@ -37,9 +37,10 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col cols="4" class="center" id="facility--btn--container">
+          <b-col cols="4" class="align--right" id="facility--btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin || showUser" v-b-modal.email-modal>Email Facilities</b-button>
+            <b-button v-on:click="addFacility()" id="create-facility--btn">Create Facility</b-button>
           </b-col>
           <div>
             <b-modal id="email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
@@ -243,24 +244,22 @@ p.lead {
   margin: 30px 0 15px;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+#create-facility--btn {
+  margin-top: 1rem;
 
-#facility--btn--container button {
-  margin: 1rem 0.25rem 0 0.25rem;
-  line-height: 100%;
-  width: 100%;
-}
-
-#email-modal {
-  p.error {
+  #facility--btn--container button {
+    margin: 1rem 0.25rem 0 0.25rem;
+    line-height: 100%;
     width: 100%;
-    margin-top: .25rem;
-    font-size: 80%;
-    color: #dc3545;
+  }
+
+  #email-modal {
+    p.error {
+      width: 100%;
+      margin-top: .25rem;
+      font-size: 80%;
+      color: #dc3545;
+    }
   }
 }
 
