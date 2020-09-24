@@ -37,7 +37,7 @@
 
     <b-modal ref="unlink-entity" title="Unlink Entity" @ok="unlinkEntity">
       <div class="d-block text-center">
-        <p>Are you sure you want to unlink Facility?</p>
+        <p>Are you sure you want to unlink {{ this.selectedContactID || 'facility' }}?</p>
       </div>
     </b-modal>
 
