@@ -3,7 +3,7 @@
     <h1>Contact Information</h1>
 
     <b-row v-if="!$route.params.contactID">
-      <b-col cols="6">
+      <b-col cols="12">
         <h4>Link existing contact</h4>
         <b-form @submit.prevent="submitExistingContact">
           <b-form-group label="Select existing contact" label-align="left">
@@ -23,10 +23,10 @@
             <b-form-input type="text" v-model="selectedContact.relationshipTitle"/>
           </b-form-group>
           <b-button
-              type="submit"
-              variant="primary"
-          >Link Contact
-          </b-button>
+            type="submit"
+            variant="primary"
+            class="mr-2"
+          >Link Contact</b-button>
           <b-button
               type="cancel"
               variant="outline-secondary"
@@ -39,7 +39,7 @@
     <br>
 
     <b-row>
-      <b-col cols="6">
+      <b-col cols="12">
         <h4>{{ this.$route.params.contactID ? 'Update existing contact' : 'Create new contact' }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
@@ -77,11 +77,10 @@
             <b-form-input type="text" v-model="contact.attributes.notes"/>
           </b-form-group>
           <b-button
-              type="submit"
-              variant="primary"
-              class="mr-2center"
-          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}
-          </b-button>
+            type="submit"
+            variant="primary"
+            class="mr-2 center"
+          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
           <b-button
               type="cancel"
               variant="outline-secondary"
@@ -93,17 +92,24 @@
     </b-row>
     <br>
 
+    <b-modal ref="unlink-entity" title="Unlink Entity" @ok="unlinkContact">
+      <div class="d-block text-center">
+        <p>Are you sure you want to unlink this Contact?</p>
+      </div>
+    </b-modal>
+
     <b-row v-if="$route.params.contactID">
-      <b-col cols="6">
+      <b-col cols="12" md="6">
         <h4>Linked Facilities</h4>
         <b-input-group v-if="contact.entities.length > 0">
           <b-form-select v-model="selectedEntityID" :options="entitySelectList"></b-form-select>
-          <b-button
-              type="submit"
-              variant="primary"
-              @click.prevent="unlinkContact"
-          >Unlink from Facility
-          </b-button>
+            <b-button
+            type="submit"
+            variant="primary"
+            @click.prevent="showUnlinkModal"
+            class="ml-2"
+            :disabled="!selectedEntityID"
+            >Unlink from Facility</b-button>
         </b-input-group>
         <p v-if="contact.entities.length === 0">This contact has no linked facilities.</p>
         <br>
@@ -292,11 +298,10 @@ export default {
           this.returnToLastPage
       );
     },
+    showUnlinkModal() {
+      this.$refs['unlink-entity'].show()
+    },
     unlinkContact() {
-      let unlinkConfirm = confirm("Confirm unlink?")
-      if (!unlinkConfirm) {
-        return
-      }
       let body = {
         contacts: [
           {id: this.$route.params.contactID}
