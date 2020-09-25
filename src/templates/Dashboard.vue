@@ -39,7 +39,7 @@
           </b-col>
           <b-col cols="4" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
-            <b-button v-if="showAdmin || showUser" class="ml-2" v-b-modal.email-modal>Email Facilities</b-button>
+            <b-button v-if="showAdmin || showUser"  v-bind:class="{ full: !showAdmin }" class="ml-2" v-b-modal.email-modal>Email Facilities</b-button>
           </b-col>
           <div>
             <b-modal id="email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
@@ -246,6 +246,9 @@ p.lead {
 .btn--container {
   button {
     width: 50%;
+    &.full {
+      width: 100%;
+    }
     @media screen and (max-width: 1000px) {
       line-height: 100%;
       font-size: 1rem;
