@@ -245,8 +245,14 @@ p.lead {
 
 .btn--container {
   button {
+    width: 50%;
     @media screen and (max-width: 1000px) {
       line-height: 100%;
+      font-size: 1rem;
+    }
+    @media screen and (max-width: 768px) {
+      line-height: 100%;
+      font-size: 0.7rem;
     }
   }
 }
