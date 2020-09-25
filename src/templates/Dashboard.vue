@@ -37,7 +37,7 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col cols="4" class="align--right mt-3">
+          <b-col cols="4" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin || showUser" class="ml-2" v-b-modal.email-modal>Email Facilities</b-button>
           </b-col>
@@ -177,9 +177,9 @@ export default {
       })
     },
     handleSendResponse(response) {
-      const title = response.results ? 'Success' : 'Error';
-      const variant = response.results ? 'success' : 'danger';
-      const msg = response.results ? `Success: Emails sent to ${response.results.total}` : 'Error: Failed to send emails';
+      const title = response.data.results ? 'Success' : 'Error';
+      const variant = response.data.results ? 'success' : 'danger';
+      const msg = response.data.results ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
       this.$bvToast.toast(msg, {
         title,
         variant,
@@ -243,22 +243,20 @@ p.lead {
   margin: 30px 0 15px;
 }
 
-#create-facility--btn {
-  margin-top: 1rem;
-
-  #facility--btn--container button {
-    margin: 1rem 0.25rem 0 0.25rem;
-    line-height: 100%;
-    width: 100%;
-  }
-
-  #email-modal {
-    p.error {
-      width: 100%;
-      margin-top: .25rem;
-      font-size: 80%;
-      color: #dc3545;
+.btn--container {
+  button {
+    @media screen and (max-width: 1000px) {
+      line-height: 100%;
     }
+  }
+}
+
+#email-modal {
+  p.error {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
   }
 }
 
