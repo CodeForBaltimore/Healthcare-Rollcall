@@ -30,16 +30,17 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col cols="4">
+          <b-col cols="3">
             <b-form-group label="Status" label-align="left" label-for="dashboard-table">
               <b-input-group>
                 <b-form-select v-model="filter.status" :options="statusOptions"></b-form-select>
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col cols="4" class="align--right mt-3 btn--container">
+          <b-col cols="5" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
-            <b-button v-if="showAdmin || showUser"  v-bind:class="{ full: !showAdmin }" class="ml-2" v-b-modal.email-modal>Email Facilities</b-button>
+            <b-button v-if="showAdmin" class="ml-1" v-on:click="downloadCSV()">Download CSV</b-button>
+            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.email-modal>Email Facilities</b-button>
           </b-col>
           <div>
             <b-modal id="email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
@@ -205,6 +206,21 @@ export default {
       this.$router.push({
         name: "facility-add"
       })
+    },
+    downloadCSV() {
+      const path = this.filter.keyword ? `/csv/Entity?filter=${this.filter.keyword}` : '/csv/Entity';
+      this.$root.apiGETRequest(path, this.createDownload)
+    },
+    createDownload(data) {
+      const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      const dateObj = new Date()
+      const dateStr = `${dateObj.getUTCMonth() + 1}_${dateObj.getUTCDate()}_${dateObj.getUTCFullYear()}`
+      link.setAttribute('download', `HCRC_Facilities_${dateStr}.csv`); //any other extension
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
   },
   mounted() {
@@ -241,23 +257,6 @@ ul.pagination > li {
 
 p.lead {
   margin: 30px 0 15px;
-}
-
-.btn--container {
-  button {
-    width: 50%;
-    &.full {
-      width: 100%;
-    }
-    @media screen and (max-width: 1000px) {
-      line-height: 100%;
-      font-size: 1rem;
-    }
-    @media screen and (max-width: 768px) {
-      line-height: 100%;
-      font-size: 0.7rem;
-    }
-  }
 }
 
 #email-modal {

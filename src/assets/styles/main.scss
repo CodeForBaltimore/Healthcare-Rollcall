@@ -167,3 +167,16 @@ ul.navbar-nav.ml-auto li:last-child a::after {
   align-items: center;
   justify-content: flex-start;
 }
+
+.btn--container {
+  button {
+    @media screen and (max-width: 1000px) {
+      line-height: 100%;
+      font-size: 1rem;
+    }
+    @media screen and (max-width: 768px) {
+      line-height: 100%;
+      font-size: 0.7rem;
+    }
+  }
+}

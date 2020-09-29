@@ -1,50 +1,54 @@
 <template>
-<b-container fluid="md" id="contact-list">
+  <b-container fluid="md" id="contact-list">
     <b-row>
       <b-col cols="12">
         <h1>Contacts Management</h1>
         <h4 class="text-muted">Create, delete, link, and unlink contacts</h4>
         <p
-          class="lead"
+            class="lead"
         >Select a contact below for more information.</p>
 
         <b-row>
-          <b-col cols="4">
+          <b-col cols="6">
             <b-form-group label="Filter" label-align="left">
               <b-input-group>
                 <b-form-input
-                  v-model="filter.keyword"
-                  type="search"
-                  id="dashboard-table"
-                  placeholder="Type to Search"
+                    v-model="filter.keyword"
+                    type="search"
+                    id="dashboard-table"
+                    placeholder="Type to Search"
                 ></b-form-input>
                 <b-input-group-append>
                   <b-button
-                    :disabled="!filter.keyword"
-                    @click="filter.keyword = ''"
-                    variant="outline-primary"
-                  >Clear</b-button>
+                      :disabled="!filter.keyword"
+                      @click="filter.keyword = ''"
+                      variant="outline-primary"
+                  >Clear
+                  </b-button>
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
           </b-col>
+          <b-col cols="6" class="align--right mt-3 btn--container">
+            <b-button v-if="showAdmin" v-on:click="downloadCSV()">Download CSV</b-button>
+          </b-col>
         </b-row>
 
         <b-table
-          id="dashboard-table"
-          striped
-          hover
-          
-          :per-page="perPage"
-          :current-page="currentPage"
-          :sort-by.sync="sortBy"
-          :sort-desc.sync="sortDesc"
-          :sort-direction="sortDirection"
-          @filtered="onFiltered"
-          :items="contacts"
-          :filter="filter"
-          :filter-function="filterRow"
-          :fields="[
+            id="dashboard-table"
+            striped
+            hover
+
+            :per-page="perPage"
+            :current-page="currentPage"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            :sort-direction="sortDirection"
+            @filtered="onFiltered"
+            :items="contacts"
+            :filter="filter"
+            :filter-function="filterRow"
+            :fields="[
             {
               key: 'name', stickyColumn: true, isRowHeader: true,
               sortable: true
@@ -70,66 +74,83 @@
         >
           <template v-slot:cell(name)="data">
             <router-link
-              :to="{ name: 'get-single-contact', params: { contactID: data.item.id }}"
-            >{{ data.item.name }}</router-link>
+                :to="{ name: 'get-single-contact', params: { contactID: data.item.id }}"
+            >{{ data.item.name }}
+            </router-link>
           </template>
         </b-table>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
       </b-col>
     </b-row>
-</b-container>
+  </b-container>
 </template>
 
 <script>
+
 export default {
-    name: "ContactList",
-    data() {
-        return {
-            rows: 0,
-            perPage: 25,
-            currentPage: 1,
-            filter: {
-                keyword: null,
-                status: null
-            },
-            filterOn: ["name"],
-            sortBy: "updated",
-            sortDesc: false,
-            sortDirection: "asc",
-            fields: [
-                { key: "name", sortable: true },
-                { key: "status", sortable: true },
-                { key: "updatedAt", sortable: true }
-            ],
-            contacts: []
-        }
-    },
-    methods: {
-        getContacts() {
-            this.$root.apiGETRequest("/contact/", this.handleContactsResponse);
-        },
-        handleContactsResponse(response) {
-            this.contacts = response.results;
-            console.log(this.contacts);
-        },
-        onFiltered(filteredItems) {
-            this.rows = filteredItems.length;
-            this.currentPage = 1;
-        },
-        filterRow(row, filter) {
-            let match = !filter.status || row.status === this.filter.status;
-            return match && filter.keyword
-                ? this.filterOn.reduce(
-                    (match, field) =>
-                    match ||
-                    row[field].toLowerCase().match(filter.keyword.toLowerCase()),
-                    false
-                )
-                : match;
-            }
-    },
-    mounted() {
-        this.getContacts();
+  name: "ContactList",
+  data() {
+    return {
+      rows: 0,
+      perPage: 25,
+      currentPage: 1,
+      filter: {
+        keyword: null,
+        status: null
+      },
+      showAdmin: this.$jwt.decode(this.$root.auth_token).type === "admin",
+      filterOn: ["name"],
+      sortBy: "updated",
+      sortDesc: false,
+      sortDirection: "asc",
+      fields: [
+        {key: "name", sortable: true},
+        {key: "status", sortable: true},
+        {key: "updatedAt", sortable: true}
+      ],
+      contacts: []
     }
+  },
+  methods: {
+    getContacts() {
+      this.$root.apiGETRequest("/contact/", this.handleContactsResponse);
+    },
+    handleContactsResponse(response) {
+      this.contacts = response.results;
+    },
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    downloadCSV() {
+      const path = this.filter.keyword ? `/csv/Contact?filter=${this.filter.keyword}` : '/csv/Contact';
+      this.$root.apiGETRequest(path, this.createDownload)
+    },
+    createDownload(data) {
+      const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      const dateObj = new Date()
+      const dateStr = `${dateObj.getUTCMonth() + 1}_${dateObj.getUTCDate()}_${dateObj.getUTCFullYear()}`
+      link.setAttribute('download', `HCRC_Contacts_${dateStr}.csv`); //any other extension
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    },
+    filterRow(row, filter) {
+      let match = !filter.status || row.status === this.filter.status;
+      return match && filter.keyword
+          ? this.filterOn.reduce(
+              (match, field) =>
+                  match ||
+                  row[field].toLowerCase().match(filter.keyword.toLowerCase()),
+              false
+          )
+          : match;
+    }
+  },
+  mounted() {
+    this.getContacts();
+  }
 }
 </script>
