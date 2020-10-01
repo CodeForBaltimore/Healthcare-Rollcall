@@ -40,16 +40,19 @@
           <b-col cols="5" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin" class="ml-1" v-on:click="downloadCSV()">Download CSV</b-button>
-            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.email-modal>Email Facilities</b-button>
+            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.bulk-email-modal>Email Facilities</b-button>
           </b-col>
           <div>
-            <b-modal id="email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
+            <b-modal id="bulk-email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
               <b-form-group label="Select a facility type to send bulk emails" label-align="left">
                 <b-form-radio required v-for="(type, i) in facilityTypes" :key="i" v-model="facilityTypeSelected"
                               v-bind:value="type">{{ type }}
                 </b-form-radio>
                 <p class="error" v-if="showEmailErr">Type is required</p>
               </b-form-group>
+            </b-modal>
+            <b-modal id="single-email-modal" title="Send Email to Facility" ok-title="Send" @ok="sendEmail">
+              <p>Are you sure you want to send an email to {{ actionedFacility ? actionedFacility.name : 'this facility' }}?</p>
             </b-modal>
           </div>
         </b-row>
@@ -86,6 +89,11 @@
               formatter: value => {
                 return this.$options.filters.timestamp(value);
               }
+            },
+            {
+              key: 'actions',
+              label: 'Actions',
+              sortable: false
             }
           ]"
         >
@@ -98,6 +106,11 @@
           <template v-slot:cell(type)="data">{{ data.item.type }}</template>
           <template v-slot:cell(status)="data">
             <span>{{ data.item.status }}</span>
+          </template>
+          <template v-slot:cell(actions)="data">
+            <span v-if="data.item.email" class="clickable" @click="actionedFacility = data.item" v-b-modal.single-email-modal>
+              <b-icon-envelope-fill></b-icon-envelope-fill>
+            </span>
           </template>
         </b-table>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
@@ -125,6 +138,7 @@ export default {
         keyword: null,
         status: null
       },
+      actionedFacility: null,
       filterOn: ["name"],
       statusOptions: [],
       showAdmin,
@@ -160,6 +174,15 @@ export default {
         }
       }
     },
+    sendEmail() {
+      // send emails
+      this.$root.apiPOSTRequest(`/contact/send/entity/${this.actionedFacility.id}`, {}, this.handleSendResponse)
+      // close modal
+      this.$nextTick(() => {
+        this.showEmailErr = false;
+        this.$bvModal.hide('bulk-email-modal')
+      })
+    },
     sendEmails(bvModalEvt) {
       bvModalEvt.preventDefault()
       if (!this.facilityTypeSelected) {
@@ -170,14 +193,24 @@ export default {
       const payload = {
         "relationshipTitle": [this.facilityTypeSelected]
       };
-      this.$root.apiPOSTRequest("/contact/send", payload, this.handleSendResponse)
+      this.$root.apiPOSTRequest("/contact/send", payload, this.handleBulkSendResponse)
       // close modal
       this.$nextTick(() => {
         this.showEmailErr = false;
-        this.$bvModal.hide('email-modal')
+        this.$bvModal.hide('bulk-email-modal')
       })
     },
     handleSendResponse(response) {
+      const title = response.data.results ? 'Success' : 'Error';
+      const variant = response.data.results ? 'success' : 'danger';
+      const msg = response.data.results ? `Success: ${response.data.results.message}` : 'Error: Failed to send email';
+      this.$bvToast.toast(msg, {
+        title,
+        variant,
+        solid: true
+      })
+    },
+    handleBulkSendResponse(response) {
       const title = response.data.results ? 'Success' : 'Error';
       const variant = response.data.results ? 'success' : 'danger';
       const msg = response.data.results ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
@@ -259,7 +292,7 @@ p.lead {
   margin: 30px 0 15px;
 }
 
-#email-modal {
+#bulk-email-modal {
   p.error {
     width: 100%;
     margin-top: .25rem;

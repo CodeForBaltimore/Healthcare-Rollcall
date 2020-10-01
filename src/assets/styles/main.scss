@@ -150,6 +150,15 @@ ul.navbar-nav.ml-auto li:last-child a::after {
 }
 
 // HELPER CLASSES
+
+.clickable {
+  cursor: pointer;
+  transition: 0.2s ease-in;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .align--center {
   display: flex;
   justify-content: center;
@@ -170,7 +179,7 @@ ul.navbar-nav.ml-auto li:last-child a::after {
 
 .btn--container {
   button {
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1200px) {
       line-height: 100%;
       font-size: 1rem;
     }
@@ -178,5 +187,13 @@ ul.navbar-nav.ml-auto li:last-child a::after {
       line-height: 100%;
       font-size: 0.7rem;
     }
+  }
+}
+
+// Remove the weird red outline on focus for all elements
+button, th, tr, svg, span, div, p, h1, h2, h3, h4, h5 {
+  outline: none;
+  &:active, &:focus {
+    outline: none;
   }
 }
