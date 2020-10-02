@@ -7,10 +7,13 @@
     "start": "vue-cli-service serve --watch",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "test": "jest",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
   "dependencies": {
+    "@vue/cli-plugin-unit-jest": "^4.5.6",
+    "@vue/test-utils": "^1.1.0",
     "axios": "^0.19.2",
     "babel-runtime": "6.26.0",
     "bootstrap": "^4.5.0",

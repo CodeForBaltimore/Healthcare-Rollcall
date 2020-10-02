@@ -89,7 +89,8 @@ docker pull codeforbaltimore/bmore-responsive:1.0.2
 ## Compiles and hot-reloads for development
 
 ```shell
-npm run serve
+`npm start`
+`yarn start`
 ```
 
 The application will be available at http://localhost:8080/
