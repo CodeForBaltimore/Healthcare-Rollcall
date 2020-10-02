@@ -109,6 +109,13 @@ npm run build
 npm run lint
 ```
 
+## Using Jest for unit testing
+
+```shell
+`npm test`
+`yarn test`
+```
+
 ## Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
