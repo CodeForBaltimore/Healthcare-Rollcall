@@ -69,6 +69,11 @@
               }
               // Variant applies to the whole column, including the header and footer
               //variant: 'danger'
+            },
+            {
+              key: 'actions',
+              label: 'Actions',
+              sortable: false
             }
           ]"
         >
@@ -78,7 +83,16 @@
             >{{ data.item.name }}
             </router-link>
           </template>
+          <template v-slot:cell(actions)="data">
+            <span v-if="data.item.email && showAdmin" class="clickable" @click="actionedContact = data.item"
+                  v-b-modal.single-email-modal>
+              <b-icon-envelope-fill></b-icon-envelope-fill>
+            </span>
+          </template>
         </b-table>
+        <b-modal id="single-email-modal" title="Send Email to Contact" ok-title="Send" @ok="sendEmail">
+          <p>Are you sure you want to send an email to {{ actionedContact ? actionedContact.name : 'this contact' }}?</p>
+        </b-modal>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
       </b-col>
     </b-row>
@@ -98,6 +112,7 @@ export default {
         keyword: null,
         status: null
       },
+      actionedContact: null,
       showAdmin: this.$jwt.decode(this.$root.auth_token).type === "admin",
       filterOn: ["name"],
       sortBy: "updated",
@@ -121,6 +136,25 @@ export default {
     onFiltered(filteredItems) {
       this.rows = filteredItems.length;
       this.currentPage = 1;
+    },
+    sendEmail() {
+      // send emails
+      this.$root.apiPOSTRequest(`/contact/send/contact/${this.actionedContact.id}`, {}, this.handleSendResponse)
+      // close modal
+      this.$nextTick(() => {
+        this.showEmailErr = false;
+        this.$bvModal.hide('bulk-email-modal')
+      })
+    },
+    handleSendResponse(response) {
+      const title = response.data.results ? 'Success' : 'Error';
+      const variant = response.data.results ? 'success' : 'danger';
+      const msg = response.data.results ? `Success: ${response.data.results.message}` : 'Error: Failed to send email';
+      this.$bvToast.toast(msg, {
+        title,
+        variant,
+        solid: true
+      })
     },
     downloadCSV() {
       const path = this.filter.keyword ? `/csv/Contact?filter=${this.filter.keyword}` : '/csv/Contact';

@@ -108,7 +108,7 @@
             <span>{{ data.item.status }}</span>
           </template>
           <template v-slot:cell(actions)="data">
-            <span v-if="data.item.email" class="clickable" @click="actionedFacility = data.item" v-b-modal.single-email-modal>
+            <span v-if="data.item.email && showAdmin" class="clickable" @click="actionedFacility = data.item" v-b-modal.single-email-modal>
               <b-icon-envelope-fill></b-icon-envelope-fill>
             </span>
           </template>
