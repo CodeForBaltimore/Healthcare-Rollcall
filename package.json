@@ -20,6 +20,8 @@
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
     "dotenv": "8.2.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-jest": "^24.0.2",
     "helmet": "3.23.3",
     "vue": "^2.6.10",
     "vue-cookies": "1.7.3",
