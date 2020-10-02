@@ -32,7 +32,29 @@ describe('Mounted App', () => {
         }
     })
 
-    test('is a Vue instance', () => {
-        expect(app.isVueInstance()).toBeTruthy()
+    test('is a Vue instance with the following components', () => {
+        expect(app.find('b-navbar')).toBeTruthy()
+        expect(app.find('b-navbar-toggle')).toBeTruthy()
+        expect(app.find('b-navbar-brand')).toBeTruthy()
+        expect(app.find('b-container')).toBeTruthy()
+        expect(app.find('b-nav-item')).toBeTruthy()
+        expect(app.find('b-navbar-nav')).toBeTruthy()
+        expect(app.find('b-collapse')).toBeTruthy()
+        expect(app.find('b-icon-person-circle')).toBeTruthy()
+        expect(app.find('template')).toBeTruthy()
+        expect(app.find('router-view')).toBeTruthy()
+    })
+
+    test('is a Vue instance with the following components', () => {
+        expect(app.find('b-navbar')).toBeTruthy()
+        expect(app.find('b-navbar-toggle')).toBeTruthy()
+        expect(app.find('b-navbar-brand')).toBeTruthy()
+        expect(app.find('b-container')).toBeTruthy()
+        expect(app.find('b-nav-item')).toBeTruthy()
+        expect(app.find('b-navbar-nav')).toBeTruthy()
+        expect(app.find('b-collapse')).toBeTruthy()
+        expect(app.find('b-icon-person-circle')).toBeTruthy()
+        expect(app.find('template')).toBeTruthy()
+        expect(app.find('router-view')).toBeTruthy()
     })
 })
