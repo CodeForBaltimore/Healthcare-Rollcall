@@ -2,7 +2,7 @@
 
 # Healthcare Rollcall
 
-In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) needs to be able to verify the status of all healthcare providers in the city. 
+In the event of a disaster, Baltimore City and the Baltimore City Health Department (BCHD) needs to be able to verify the status of all healthcare providers in the city.
 
 <!-- TOC -->
 
@@ -89,7 +89,8 @@ docker pull codeforbaltimore/bmore-responsive:1.0.2
 ## Compiles and hot-reloads for development
 
 ```shell
-npm run serve
+`npm start`
+`yarn start`
 ```
 
 The application will be available at http://localhost:8080/
@@ -108,6 +109,8 @@ npm run build
 npm run lint
 ```
 
+
+
 ## Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -118,7 +121,19 @@ How would someone use this product? Give a few examples here.
 
 ## Testing
 
-What does someone need to do to test their work? Have you included a specific testing framework or guideline (hint: you should)? Any information about testing should be added here.
+### Using Jest for unit testing
+
+```shell
+`npm test`
+`yarn test`
+```
+
+### Using Snyk to check for security vulnerabilities
+
+```shell
+`npm install snyk -g`
+`snyk test`
+```
 
 # Sources and Links
 
