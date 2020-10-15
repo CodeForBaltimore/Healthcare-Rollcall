@@ -147,6 +147,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "ijadams",
+      "name": "Ian Adams",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7966226?v=4",
+      "profile": "http://ianjadams.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
