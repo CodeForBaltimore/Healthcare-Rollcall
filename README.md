@@ -25,17 +25,18 @@ In the event of a disaster, Baltimore City and the Baltimore City Health Departm
 <!-- /TOC -->
 
 ## What is this?
-This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track providers responses to a questionnaire.  This questionnaire can be specific to a single disaster, or can be more general.  Examples:
 
-* Widespread power blackout
-* Epidemic or Pandemic response (COVID-19)
-* Natural disaster
+This system will provide methods for healthcare providers to check-in during disasters, and update their information during non-emergency periods. During an emergency this system will track providers responses to a questionnaire. This questionnaire can be specific to a single disaster, or can be more general. Examples:
+
+- Widespread power blackout
+- Epidemic or Pandemic response (COVID-19)
+- Natural disaster
 
 This system will make use of digital services and modern methodologies to automate parts of the check-in process to help the city prioritize its call list and response plan. Additionally, the system will validate contact information regularly during non-emergency times to ensure the city has the most up-to-date information for each provider.
 
 ## Documentation
 
-We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
+We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project. Other documents and relevant information that has no other place can live in the `docs` folder. Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
 # Project setup
 
@@ -44,19 +45,24 @@ npm install
 ```
 
 Add the following to a file named `.env` in your project directory:
+
 ```shell
 VUE_APP_BASE_API_URL=<your API url>
 ```
+
 Where <your API url> would be http://localhost:3000 if you're running the backend locally, by default PORT is 3000.
 
 ## Docker and docker-compose
+
 To use the backend of this project in an easy way, a `docker-compose` file has been included for convenience. To run this you must add a few entries to your `.env` file.
+
 ```shell
 DATABASE_URL=postgres://user:pass@example.com:5432/dbname
 DATABASE_USER=<your username>
 DATABASE_PASSWORD=<your password>
 DATABASE_SCHEMA=<your schema>
 ```
+
 The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgres://username:password@host:port/database_name`
 
 An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
@@ -64,7 +70,9 @@ An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:
 You would then run the docker-compose setup with `docker-compose up -d` to run the DB & API in detached mode and then `npm run serve` to run the frontend.
 
 ### Full .env example
-Here is a full example of default values for our `.env` file. You should be able to copy/paste this directly and it will work locally, however we ***STRONGLY*** encourage you to use custom values.
+
+Here is a full example of default values for our `.env` file. You should be able to copy/paste this directly and it will work locally, however we **_STRONGLY_** encourage you to use custom values.
+
 ```
 VUE_APP_BASE_API_URL=http://localhost:3000
 NODE_ENV=development
@@ -77,11 +85,15 @@ BYPASS_LOGIN=true
 ```
 
 ### Keeping your API up to date
+
 By default the backend solution will pull the latest image from Dockerhub. If you wish to keep this up to date you should run:
+
 ```
 docker pull codeforbaltimore/bmore-responsive
 ```
+
 You can also specify a tagged release:
+
 ```
 docker pull codeforbaltimore/bmore-responsive:1.0.2
 ```
@@ -95,7 +107,9 @@ docker pull codeforbaltimore/bmore-responsive:1.0.2
 
 The application will be available at http://localhost:8080/
 
-**Note:** Depending on the OS you are running `Docker` on your localhost may be mapped to a different IP address. The standard IP address `Docker` is mapped to on Windows is `192.168.99.100` so you would access the application at `192.168.99.100:8080`.  
+**User Credentials:** To find example user credentials, look to the seed file in the Bmore-Responsive repository in the user.json file.
+
+**Note:** Depending on the OS you are running `Docker` on your localhost may be mapped to a different IP address. The standard IP address `Docker` is mapped to on Windows is `192.168.99.100` so you would access the application at `192.168.99.100:8080`.
 
 ## Compiles and minifies for production
 
@@ -108,8 +122,6 @@ npm run build
 ```shell
 npm run lint
 ```
-
-
 
 ## Customize configuration
 
@@ -176,6 +188,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
