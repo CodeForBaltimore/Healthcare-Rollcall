@@ -1,25 +1,45 @@
-version: '3'
+version: "3"
 services:
-  api:
-    image: codeforbaltimore/bmore-responsive
-    depends_on: 
-      - db
-    links:
-      - "db: database"
+  web:
+    build: .
+    depends_on:
+      - api
     ports:
-      - '3000:3000'
+      - ${PORT:-3000}:${PORT:-3000}
+    expose:
+      - ${PORT:-3000}
+    volumes:
+      - ./src:/usr/src/src
+    env_file: .env
+  api:
+    build:
+      context: https://github.com/CodeForBaltimore/Bmore-Responsive.git#${API_TAG:-master}
+    depends_on:
+      - db
+    ports:
+      - ${API_PORT:-3001}:3000
+    expose:
+      - ${API_PORT:-3001}
     command: >
       sh -c "npm run db-delete &&
-             npm run db-create && 
+             npm run db-create &&
              npm run db-seed &&
              npm start"
-    volumes:
-      - .:/app/
-      - /app/node_modules
-    env_file: .env
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - BYPASS_LOGIN=${BYPASS_LOGIN:-true}
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - DATABASE_PORT=${DATABASE_PORT:-5432}
+      - DATABASE_NAME=${DATABASE_NAME:-postgres}
+      - DATABASE_SCHEMA=${DATABASE_SCHEMA:-public}
+      - DATABASE_USERNAME=${DATABASE_USERNAME:-postgres}
+      - JWT_KEY=${JWT_KEY:?JWT_KEY must be set}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
   db:
     image: postgres
     restart: always
+    expose:
+      - 5432
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_USER=${DATABASE_USERNAME:-postgres}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
