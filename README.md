@@ -46,13 +46,13 @@ Add the following to a file named `.env` in your project directory:
 
 ```conf
 PORT=3000
-VUE_APP_BASE_API_URL=http://api:3001
+VUE_APP_BASE_API_URL=http://localhost:3001
 DATABASE_PASSWORD= # Custom value
 JWT_KEY= # Custom value
 ```
 
 - `PORT`: The port the web service will be exposed on the host machine. Default: `3000`
-- `VUE_APP_BASE_API_URL`: The URL to the api service, includes hostname and port. Default: `http://api:3001`.
+- `VUE_APP_BASE_API_URL`: The URL to the api service, includes hostname and port. Default: `http://localhost:3001`.
 - `DATABASE_PASSWORD`: The password used to authenticate to the postgres database. For security, use a custom value.
 - `JWT_KEY`: A secret value to generate JSON Web Tokens (JWTs) locally. For security, use a custom value.
 
