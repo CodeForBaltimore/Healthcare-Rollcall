@@ -36,76 +36,49 @@ This system will make use of digital services and modern methodologies to automa
 
 ## Documentation
 
-We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project. Other documents and relevant information that has no other place can live in the `docs` folder. Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
+More documentation can be found in the [Docs](/docs) folder.
 
 # Project setup
 
-```shell
-npm install
-```
+The quickest way to get started is using the included `docker-compose` to build a complete local stack (web, api, and database) of the project.
 
 Add the following to a file named `.env` in your project directory:
 
-```shell
-VUE_APP_BASE_API_URL=<your API url>
+```conf
+PORT=3000
+VUE_APP_BASE_API_URL=http://localhost:3001
+DATABASE_PASSWORD= # Custom value
+JWT_KEY= # Custom value
 ```
 
-Where <your API url> would be http://localhost:3000 if you're running the backend locally, by default PORT is 3000.
-
-## Docker and docker-compose
-
-To use the backend of this project in an easy way, a `docker-compose` file has been included for convenience. To run this you must add a few entries to your `.env` file.
-
-```shell
-DATABASE_URL=postgres://user:pass@example.com:5432/dbname
-DATABASE_USER=<your username>
-DATABASE_PASSWORD=<your password>
-DATABASE_SCHEMA=<your schema>
-```
-
-The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgres://username:password@host:port/database_name`
-
-An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@db:5432/dbname`
+- `PORT`: The port the web service will be exposed on the host machine. Default: `3000`
+- `VUE_APP_BASE_API_URL`: The URL to the api service, includes hostname and port. Default: `http://localhost:3001`.
+- `DATABASE_PASSWORD`: The password used to authenticate to the postgres database. For security, use a custom value.
+- `JWT_KEY`: A secret value to generate JSON Web Tokens (JWTs) locally. For security, use a custom value.
 
 You would then run the docker-compose setup with `docker-compose up -d` to run the DB & API in detached mode and then `npm run serve` to run the frontend.
 
-### Full .env example
+## Keeping your API up to date
 
-Here is a full example of default values for our `.env` file. You should be able to copy/paste this directly and it will work locally, however we **_STRONGLY_** encourage you to use custom values.
+By default the backend solution will pull the `master` branch of [Bmore-Responsive](https://github.com/CodeForBaltimore/Bmore-Responsive). If you wish to keep this up to date you should run:
 
-```
-VUE_APP_BASE_API_URL=http://localhost:3000
-NODE_ENV=development
-DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-DATABASE_USER=postgres
-DATABASE_PASSWORD=postgres
-DATABASE_SCHEMA=public
-JWT_KEY=abc123
-BYPASS_LOGIN=true
+```shell
+docker-compose build
 ```
 
-### Keeping your API up to date
+You can also specify a tagged release by setting the `API_TAG` value in your `.env` file:
 
-By default the backend solution will pull the latest image from Dockerhub. If you wish to keep this up to date you should run:
-
-```
-docker pull codeforbaltimore/bmore-responsive
+```shell
+API_TAG=1.3.2
 ```
 
-You can also specify a tagged release:
-
-```
-docker pull codeforbaltimore/bmore-responsive:1.0.2
-```
+For more information on valid `API_TAG` values, see: [docker build - Git repositories](https://docs.docker.com/engine/reference/commandline/build/#git-repositories)
 
 ## Compiles and hot-reloads for development
 
-```shell
-`npm start`
-`yarn start`
-```
+Using `docker-compose` will mount your local `./src` directory into the application, which allows you to continue to make changes and view them within the application.
 
-The application will be available at http://localhost:8080/
+The application will be available at [http://localhost:3000/](http://localhost:3000/).
 
 **User Credentials:** To find example user credentials, look to the user.json file in the [Bmore-Responsive repository](https://github.com/CodeForBaltimore/Bmore-Responsive).
 
