@@ -87,6 +87,8 @@ export default {
   methods: {
     submitQuestionnaire(questionnaire) {
       console.log(questionnaire);
+      //Wait for endpoint to implement
+      //   this.$root.apiPOSTRequest("/endpoint", "payload", "callback");
     },
     createQuestionnaireObject(questionnaire) {
       if (questionnaire?.questions) {
@@ -94,7 +96,11 @@ export default {
       }
     },
     getQuestionnaire() {
-      "/questionnaires", this.createQuestionnaireObject();
+      //Wait for endpoint to implement
+      //   this.$root.apiGETRequest(
+      //     "/questionnaires",
+      //     this.createQuestionnaireObject()
+      //   );
     },
   },
   created() {
