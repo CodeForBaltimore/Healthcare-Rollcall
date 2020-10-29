@@ -89,15 +89,16 @@ export default {
       console.log(questionnaire);
     },
     createQuestionnaireObject(questionnaire) {
-      if (questionnaire.questions) {
-        //parse questions and create structure
-        // this.questions
+      if (questionnaire?.questions) {
         this.questionnaire = questionnaire;
       }
     },
     getQuestionnaire() {
       "/questionnaires", this.createQuestionnaireObject();
     },
+  },
+  created() {
+    this.getQuestionnaire();
   },
 };
 </script>
