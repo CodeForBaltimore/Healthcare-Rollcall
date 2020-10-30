@@ -46,7 +46,9 @@
 export default {
   name: "questionnaire",
   props: ["questionnaires"],
-  data() {},
+  data() {
+    return {};
+  },
   methods: {
     submitQuestionnaire(questionnaire) {
       console.log(questionnaire);

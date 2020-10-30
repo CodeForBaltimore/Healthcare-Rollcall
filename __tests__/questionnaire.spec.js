@@ -25,12 +25,15 @@ describe("Questionnaire renders questions correctly", () => {
   it("shows radios for correct type", () => {
     const componentWrapper = mount(Questionnaire, {
       localVue,
-      data() {
-        return {
-          questionnaire: {
+      propsData: {
+        questionnaires: [
+          {
             questions: [createQuestion("single-select")],
           },
-        };
+        ],
+      },
+      data() {
+        return {};
       },
     });
     const checkboxArray = componentWrapper.findAll(".custom-radio");
@@ -55,12 +58,15 @@ describe("Questionnaire renders questions correctly", () => {
   it("shows checkbox for correct type", () => {
     const componentWrapper = mount(Questionnaire, {
       localVue,
-      data() {
-        return {
-          questionnaire: {
+      propsData: {
+        questionnaires: [
+          {
             questions: [createQuestion("multi-select")],
           },
-        };
+        ],
+      },
+      data() {
+        return {};
       },
     });
     const checkboxArray = componentWrapper.findAll(".custom-checkbox");
@@ -85,12 +91,15 @@ describe("Questionnaire renders questions correctly", () => {
   it("shows short text input correctly", () => {
     const componentWrapper = mount(Questionnaire, {
       localVue,
-      data() {
-        return {
-          questionnaire: {
+      propsData: {
+        questionnaires: [
+          {
             questions: [createQuestion("short-text")],
           },
-        };
+        ],
+      },
+      data() {
+        return {};
       },
     });
 
@@ -101,12 +110,15 @@ describe("Questionnaire renders questions correctly", () => {
   it("shows long text input correctly", () => {
     const componentWrapper = mount(Questionnaire, {
       localVue,
-      data() {
-        return {
-          questionnaire: {
+      propsData: {
+        questionnaires: [
+          {
             questions: [createQuestion("long-text")],
           },
-        };
+        ],
+      },
+      data() {
+        return {};
       },
     });
 
