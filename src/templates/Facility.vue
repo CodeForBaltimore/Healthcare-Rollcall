@@ -245,9 +245,14 @@
                 variant="warning"
                 v-if="!formAvailability.covidForm.includes(entity.type)"
               >
-                <h6 class="alert-heading">No Forms Available</h6>
-                <p>There are no forms available for this type of facility.</p>
-                <questionnaire />
+                <questionnaire
+                  v-if="questionnaires"
+                  v-bind:questionnaires.sync="questionnaires"
+                />
+                <div v-else>
+                  <h6 class="alert-heading">No Forms Available</h6>
+                  <p>There are no forms available for this type of facility.</p>
+                </div>
               </b-alert>
             </b-card>
           </b-col>
@@ -330,6 +335,44 @@ export default {
           "Senior Housing",
         ],
       },
+      questionnaires: [
+        {
+          questions: [
+            {
+              index: 0,
+              required: true,
+              questionText: "Test Text",
+              responseType: "short-text",
+              validResponses: ["Poor", "Not Great", "Fantastic"],
+              allowOther: false,
+            },
+            {
+              index: 0,
+              required: true,
+              questionText: "Test Text",
+              responseType: "long-text",
+              validResponses: ["Poor", "Not Great", "Fantastic"],
+              allowOther: false,
+            },
+            {
+              index: 0,
+              required: true,
+              questionText: "Test Text",
+              responseType: "single-select",
+              validResponses: ["Poor", "Not Great", "Fantastic"],
+              allowOther: false,
+            },
+            {
+              index: 0,
+              required: true,
+              questionText: "Test Text",
+              responseType: "multi-select",
+              validResponses: ["Poor", "Not Great", "Fantastic"],
+              allowOther: false,
+            },
+          ],
+        },
+      ],
       formMatched: false,
       lastCheckIn: null,
       history: null,
@@ -488,9 +531,22 @@ export default {
         params: { entityID: this.$route.params.entityID },
       });
     },
+    createQuestionnaireObject(questionnaire) {
+      if (questionnaire?.questions) {
+        this.questionnaire = questionnaire;
+      }
+    },
+    getQuestionnaire() {
+      //Wait for endpoint to implement
+      //   this.$root.apiGETRequest(
+      //     "/questionnaires",
+      //     this.createQuestionnaireObject()
+      //   );
+    },
   },
   created() {
     this.getEntity();
+    this.getQuestionnaire();
   },
 };
 </script>
