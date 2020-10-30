@@ -531,9 +531,9 @@ export default {
         params: { entityID: this.$route.params.entityID },
       });
     },
-    createQuestionnaireObject(questionnaire) {
-      if (questionnaire?.questions) {
-        this.questionnaire = questionnaire;
+    createQuestionnaireObject(questionnaires) {
+      if (questionnaires) {
+        this.questionnaires = questionnaires;
       }
     },
     getQuestionnaire() {
