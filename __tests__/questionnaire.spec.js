@@ -1,4 +1,4 @@
-import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import BootstrapVue from "bootstrap-vue";
 import Questionnaire from "../src/components/Questionnaire";
 
