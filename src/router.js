@@ -52,6 +52,11 @@ export default new Router({
         },
         {
             path: "/contact/link/new/:entityID",
+            name: 'link-contact',
+            component: ContactComponent
+        },
+        {
+            path: "/contact/new/",
             name: 'create-contact',
             component: ContactComponent
         },

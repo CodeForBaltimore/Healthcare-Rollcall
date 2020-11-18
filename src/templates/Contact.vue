@@ -2,7 +2,7 @@
   <b-container fluid="md" id="contact">
     <h1>Contact Information</h1>
 
-    <b-row v-if="!$route.params.contactID">
+    <b-row v-if="!$route.params.contactID && $route.params.entityID">
       <b-col cols="12">
         <h4>Link existing contact</h4>
         <b-form @submit.prevent="submitExistingContact">
@@ -230,7 +230,7 @@ export default {
       this.$root.apiGETRequest("/contact/", this.populateContactsDropdown)
     },
     returnToLastPage() {
-      if (this.$route.name === "get-single-contact") {
+      if (this.$route.name === "get-single-contact" || this.$route.name === "create-contact") {
         this.$router.push({
           name: "get-all-contacts",
           params: {entityID: this.$route.params.entityID}

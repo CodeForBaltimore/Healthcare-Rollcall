@@ -76,6 +76,7 @@ export default {
       role,
       disableBackBtn: [
         "dashboard",
+        "link-contact",
         "create-contact",
         "update-contact",
         "facility"

@@ -30,7 +30,11 @@
             </b-form-group>
           </b-col>
           <b-col cols="6" class="align--right mt-3 btn--container">
-            <b-button v-if="showAdmin" v-on:click="downloadCSV()">Download CSV</b-button>
+            <router-link :to="{ name: 'create-contact' }">
+              <b-button v-if="showAdmin">Create Contact</b-button>
+            </router-link>
+            
+            <b-button v-if="showAdmin" v-on:click="downloadCSV()" class="ml-1">Download CSV</b-button>
           </b-col>
         </b-row>
 
