@@ -45,14 +45,21 @@
       <b-col cols="12" md="6">
         <h4>Linked Contacts</h4>
         <b-input-group v-if="entity.contacts.length > 0">
-          <b-form-select v-model="selectedContactID" :options="contactSelectList"></b-form-select>
-          <b-button
-            type="submit"
-            variant="primary"
-            class="ml-2"
-            :disabled="!selectedContactID"
-            @click.prevent="showUnlinkModal"
-          >Unlink from Facility</b-button>
+          <ul id="linked-contacts">
+            <li v-for="contact in contactSelectList" :key="contact.value">
+              {{ contact.text }}
+              
+              <b-button
+                type="submit"
+                variant="light"
+                size="sm"
+                v-on:click="showUnlinkModal(contact.value)"
+              >
+              <b-icon-trash></b-icon-trash>
+              <div class='sr-only'>Unlink from Facility</div>
+              </b-button>
+            </li>
+          </ul>
         </b-input-group>
         <p v-if="entity.contacts.length === 0">This facility has no linked contact.</p>
         <br />
@@ -88,7 +95,7 @@ export default {
           contacts: []
         },
         showAdmin,
-        contactSelectList: [{ value: null, text: "Contacts Linked" }],
+        contactSelectList: [],
         selectedContactID: null,
         stateSelected: "MD",
         stateOptions: [{ value: "MD", text: "Maryland" }],
@@ -155,7 +162,8 @@ export default {
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object))
     },
-    showUnlinkModal() {
+    showUnlinkModal(contactID) {
+      this.selectedContactID = contactID;
       this.$refs['unlink-entity'].show()
     },
     unlinkEntity() {
