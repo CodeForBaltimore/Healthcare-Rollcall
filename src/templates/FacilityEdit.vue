@@ -43,7 +43,7 @@
             entity.contacts.some(contact => contact.id === this.selectedContactID) ? 
               entity.contacts.find(contact => contact.id === this.selectedContactID).name 
               : 'this contact' 
-          }} from {{ this.entity.name | 'this facility' }}?
+          }} from {{ this.entity.name || 'this facility' }}?
         </p>
       </div>
     </b-modal>
