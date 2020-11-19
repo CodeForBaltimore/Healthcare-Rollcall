@@ -110,14 +110,21 @@
       <b-col cols="12" md="6">
         <h4>Linked Facilities</h4>
         <b-input-group v-if="contact.entities.length > 0">
-          <b-form-select v-model="selectedEntityID" :options="entitySelectList"></b-form-select>
-            <b-button
-            type="submit"
-            variant="primary"
-            @click.prevent="showUnlinkModal"
-            class="ml-2"
-            :disabled="!selectedEntityID"
-            >Unlink from Facility</b-button>
+          <ul id="linked-facilities">
+            <li v-for="entity in entitySelectList" :key="entity.value">
+              {{ entity.text }}
+              
+              <b-button
+                type="submit"
+                variant="light"
+                size="sm"
+                v-on:click="showUnlinkModal(entity.value)"
+              >
+              <b-icon-trash></b-icon-trash>
+              <div class='sr-only'>Unlink from Contact</div>
+              </b-button>
+            </li>
+          </ul>
         </b-input-group>
         <p v-if="contact.entities.length === 0">This contact has no linked facilities.</p>
         <br>
@@ -306,7 +313,8 @@ export default {
           this.returnToLastPage
       );
     },
-    showUnlinkModal() {
+    showUnlinkModal(entityID) {
+      this.selectedEntityID = entityID;
       this.$refs['unlink-entity'].show()
     },
     unlinkContact() {
