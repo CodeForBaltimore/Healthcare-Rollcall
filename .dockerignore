@@ -1,0 +1,6 @@
+*
+!public
+!src
+!civic.json
+!Dockerfile
+!package*.json

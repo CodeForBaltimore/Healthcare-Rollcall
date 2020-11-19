@@ -108,7 +108,7 @@
           />
         </b-card>
       </b-col>
-      <b-col cols="12" md="8">
+      <b-col cols="12" md="8" class="mt-3 mt-md-0">
         <b-row>
           <b-col>
             <h2>Begin New Check-In</h2>
@@ -422,7 +422,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   text-align: left;
   margin-bottom: 0px;
@@ -469,7 +469,7 @@ button.btn-primary {
   margin-bottom: 24px;
 }
 
-.facility-header {
+#facility-header {
   margin-bottom: 25px;
 }
 </style>

@@ -434,7 +434,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 form h5 {
   border-bottom: 2px solid #42484f;
   padding-bottom: 8px;
