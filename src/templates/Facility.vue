@@ -405,7 +405,7 @@ export default {
     },
     addContact() {
       this.$router.push({
-        name: "create-contact",
+        name: "link-contact",
         params: { entityID: this.$route.params.entityID }
       });
     },
