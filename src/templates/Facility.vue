@@ -108,7 +108,7 @@
           />
         </b-card>
       </b-col>
-      <b-col cols="12" md="8">
+      <b-col cols="12" md="8" class="mt-3 mt-md-0">
         <b-row>
           <b-col>
             <h2>Begin New Check-In</h2>

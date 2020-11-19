@@ -2,7 +2,7 @@
   <b-container fluid="md" id="entity">
     <h1>Facility Information</h1>
     <b-row>
-      <b-col cols="6">
+      <b-col cols="12">
         <h4>{{ this.$route.params.entityID ? 'Update facility' : 'Create facility' }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="entity-name" label="Name">
@@ -27,6 +27,7 @@
           <b-button
             type="cancel"
             variant="outline-secondary"
+            class="ml-2"
             @click.prevent="returnToLastPage"
           >Cancel</b-button>
         </b-form>
@@ -34,15 +35,23 @@
     </b-row>
     <br />
 
+    <b-modal ref="unlink-entity" title="Unlink Entity" @ok="unlinkEntity">
+      <div class="d-block text-center">
+        <p>Are you sure you want to unlink {{ this.selectedContactID || 'facility' }}?</p>
+      </div>
+    </b-modal>
+
     <b-row v-if="$route.params.entityID">
-      <b-col cols="6">
+      <b-col cols="12" md="6">
         <h4>Linked Contacts</h4>
         <b-input-group v-if="entity.contacts.length > 0">
           <b-form-select v-model="selectedContactID" :options="contactSelectList"></b-form-select>
           <b-button
             type="submit"
             variant="primary"
-            @click.prevent="unlinkEntity"
+            class="ml-2"
+            :disabled="!selectedContactID"
+            @click.prevent="showUnlinkModal"
           >Unlink from Facility</b-button>
         </b-input-group>
         <p v-if="entity.contacts.length === 0">This facility has no linked contact.</p>
@@ -146,11 +155,10 @@ export default {
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object))
     },
+    showUnlinkModal() {
+      this.$refs['unlink-entity'].show()
+    },
     unlinkEntity() {
-      let unlinkConfirm = confirm("Confirm unlink?")
-      if (!unlinkConfirm) {
-        return
-      }
       let body = {
         entities: [{ id: this.$route.params.entityID }]
       }
@@ -182,6 +190,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/styles/variables';
+
 h1 {
   text-align: left;
 }
@@ -217,5 +227,16 @@ p.return-link {
 }
 p:last-child {
   margin-bottom: 0;
+}
+
+form {
+  fieldset#entity-address {
+    input, select {
+      margin-bottom: $inputMargin;
+    }
+    input:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 }
 </style>
