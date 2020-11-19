@@ -94,7 +94,15 @@
 
     <b-modal ref="unlink-entity" title="Unlink Entity" @ok="unlinkContact">
       <div class="d-block text-center">
-        <p>Are you sure you want to unlink this {{ this.selectedContact.name || 'contact' }}?</p>
+        <p>
+          Are you sure you want to unlink
+          {{ this.contact ? this.contact.name : "this contact" }} from
+          {{
+            this.contact.entities.find(entity => entity.id === this.selectedEntityID)
+              ? this.contact.entities.find(entity => entity.id === this.selectedEntityID).name
+              : "this facility"
+          }}?
+        </p>
       </div>
     </b-modal>
 
