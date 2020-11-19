@@ -22,7 +22,7 @@
     "helmet": "3.23.3",
     "lodash": "^4.17.20",
     "vue": "^2.6.12",
-    "vue-cookies": "1.7.3",
+    "vue-cookies": "1.7.4",
     "vue-country-region-select": "2.0.14",
     "vue-helmet": "1.1.5",
     "vue-multiselect": "^2.1.6",
