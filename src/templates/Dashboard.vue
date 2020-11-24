@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import {FACILITY_TYPES, FACILITY_TYPE_ALL} from '../constants/facilities.const';
+const FACILITY_TYPE_ALL = 'All Facilities';
 
 export default {
   name: "Dashboard",
@@ -143,8 +143,8 @@ export default {
       statusOptions: [],
       showAdmin,
       showUser,
-      facilityTypes: FACILITY_TYPES,
-      facilityTypeSelected: 'All Facilities',
+      facilityTypes: [FACILITY_TYPE_ALL],
+      facilityTypeSelected: FACILITY_TYPE_ALL,
       showEmailErr: false,
       entities: null,
       sortBy: "updated",
