@@ -119,6 +119,3 @@ dist
 *.sw?
 
 .env
-
-#Git Config
-.gitconfig
