@@ -191,7 +191,7 @@ export default {
       }
       // send emails
       const payload = {
-        "relationshipTitle": [this.facilityTypeSelected]
+        "entityType": this.facilityTypeSelected
       };
       this.$root.apiPOSTRequest("/contact/send", payload, this.handleBulkSendResponse)
       // close modal
@@ -211,9 +211,9 @@ export default {
       })
     },
     handleBulkSendResponse(response) {
-      const title = response.data.results ? 'Success' : 'Error';
-      const variant = response.data.results ? 'success' : 'danger';
-      const msg = response.data.results ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
+      const title = (response && response.data.results) ? 'Success' : 'Error';
+      const variant = (response && response.data.results) ? 'success' : 'danger';
+      const msg = (response && response.data.results) ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
       this.$bvToast.toast(msg, {
         title,
         variant,
