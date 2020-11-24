@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import {FACILITY_TYPES} from '../constants/facilities.const';
+import {FACILITY_TYPES, FACILITY_TYPE_ALL} from '../constants/facilities.const';
 
 export default {
   name: "Dashboard",
@@ -144,7 +144,7 @@ export default {
       showAdmin,
       showUser,
       facilityTypes: FACILITY_TYPES,
-      facilityTypeSelected: null,
+      facilityTypeSelected: 'All Facilities',
       showEmailErr: false,
       entities: null,
       sortBy: "updated",
@@ -173,6 +173,11 @@ export default {
           entity.status = "No Previous Check-in"
         }
       }
+      this.updateFacilityTypesList();
+    },
+    updateFacilityTypesList() {
+      // Get all unique facility types from the list of facilities, sort aphabetically, and then append them to an "All Facilities" option
+      this.facilityTypes = [FACILITY_TYPE_ALL].concat([...new Set(this.entities.map(entity => entity.type))].sort())
     },
     sendEmail() {
       // send emails
@@ -191,7 +196,7 @@ export default {
       }
       // send emails
       const payload = {
-        "entityType": this.facilityTypeSelected
+        "entityType": this.facilityTypeSelected !== FACILITY_TYPE_ALL ? this.facilityTypeSelected : null
       };
       this.$root.apiPOSTRequest("/contact/send", payload, this.handleBulkSendResponse)
       // close modal
