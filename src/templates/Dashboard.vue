@@ -86,7 +86,7 @@
             :filter-function="filterRow"
             :fields="[
             {
-              key: 'checkbox', stickyColumn: true, isRowHeader: true,
+              key: 'checkbox', stickyColumn: true,
             },
             {
               key: 'name', stickyColumn: true, isRowHeader: true,
