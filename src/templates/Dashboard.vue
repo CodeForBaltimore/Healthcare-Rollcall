@@ -40,7 +40,11 @@
           <b-col cols="5" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin" class="ml-1" v-on:click="downloadCSV()">Download CSV</b-button>
-            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.bulk-email-modal>Email Facilities</b-button>
+            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.bulk-email-modal>
+              Email 
+              {{ getSelectedEntityIds && getSelectedEntityIds.length ? 'Selected' : '' }}
+              Facilities
+            </b-button>
           </b-col>
           <div>
             <b-modal id="bulk-email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
@@ -57,6 +61,7 @@
           </div>
         </b-row>
         <b-table
+            ref="entityTable" 
             id="dashboard-table"
             striped
             hover
@@ -71,11 +76,14 @@
             :filter-function="filterRow"
             :fields="[
             {
+              key: 'checkbox', stickyColumn: true, isRowHeader: true,
+            },
+            {
               key: 'name', stickyColumn: true, isRowHeader: true,
               sortable: true
             },
             {
-              key: 'type', stickyColumn: true, isRowHeader: true,
+              key: 'type', stickyColumn: true,
               sortable: true
             },
             {
@@ -97,6 +105,32 @@
             }
           ]"
         >
+          <template v-slot:head(checkbox)>
+            <b-form-checkbox
+              name="selectEntityAll"
+              v-bind:value='true'
+              v-model='selectAllEntities'
+              id="selectEntityAll" 
+              @change="selectEntityAllClick"
+            >
+              <span class='sr-only'>
+                Select all
+              </span>
+            </b-form-checkbox>
+          </template>
+          <template v-slot:cell(checkbox)="data">
+            <b-form-checkbox
+              name="selectEntity"
+              v-model="data.item.selected"
+              v-bind:value='true'
+              v-bind:id="'selectEntity-' + data.item.id" 
+              @change="selectEntityClick"
+            >
+              <span class='sr-only'>
+                Select {{ data.item.name }}
+              </span>
+            </b-form-checkbox>
+          </template>
           <template v-slot:cell(name)="data">
             <router-link
                 :to="{ name: 'facility', params: { entityID: data.item.id }}"
@@ -147,6 +181,8 @@ export default {
       facilityTypeSelected: FACILITY_TYPE_ALL,
       showEmailErr: false,
       entities: null,
+      selectedEntities: [],
+      selectAllEntities: false,
       sortBy: "updated",
       sortDesc: false,
       sortDirection: "asc",
@@ -157,7 +193,21 @@ export default {
       ]
     }
   },
+  computed: {
+      reversedMessage() {
+      // `this` points to the vm instance
+      return 'asdf'.split('').reverse().join('')
+    },
+    getSelectedEntityIds() {
+      if (this.entities) {
+        return this.entities.filter(entity => entity.selected === true).map(entity => entity.id)
+      } else {
+        return []
+      }
+    },
+  },
   methods: {
+
     updateEntities(obj) {
       this.entities = obj.results
       this.rows = this.entities.length
@@ -245,6 +295,17 @@ export default {
         name: "facility-add"
       })
     },
+    selectEntityAllClick(checked) {
+      for (const entity of this.entities) {
+        entity.selected = checked
+      }
+      this.$refs.entityTable.refresh()
+    },
+    selectEntityClick(checked) {
+      if (!checked) {
+        this.selectAllEntities = false
+      }
+    },
     downloadCSV() {
       const path = this.filter.keyword ? `/csv/Entity?filter=${this.filter.keyword}` : '/csv/Entity';
       this.$root.apiGETRequest(path, this.createDownload)
@@ -267,7 +328,7 @@ export default {
     })
     this.statusOptions = [{value: null, text: "All"}, ...options]
     this.$root.apiGETRequest("/entity", this.updateEntities)
-  }
+  },
 }
 </script>
 
