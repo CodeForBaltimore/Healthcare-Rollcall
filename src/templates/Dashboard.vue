@@ -239,7 +239,7 @@ export default {
       this.facilityTypes = [FACILITY_TYPE_ALL];
       this.facilityTypes = this.facilityTypes.concat([...new Set(this.entities.map(entity => entity.type))].sort())
     },
-    sendEmails(bvModalEvt, actionedFacility) {
+    sendEmails(bvModalEvt) {
       bvModalEvt.preventDefault()
       if (this.actionedFacility) {
         this.selectedEntityIds = [this.actionedFacility.id]
