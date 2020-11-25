@@ -240,7 +240,6 @@ export default {
       this.facilityTypes = this.facilityTypes.concat([...new Set(this.entities.map(entity => entity.type))].sort())
     },
     sendEmails(bvModalEvt, actionedFacility) {
-      console.log(actionedFacility);
       bvModalEvt.preventDefault()
       if (this.actionedFacility) {
         this.selectedEntityIds = [this.actionedFacility.id]
