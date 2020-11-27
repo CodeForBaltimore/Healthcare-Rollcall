@@ -120,7 +120,6 @@
 </template>
 
 <script>
-import {FACILITY_TYPES} from '../constants/facilities.const';
 
 export default {
   name: "Dashboard",
@@ -129,7 +128,6 @@ export default {
         this.$jwt.decode(this.$root.auth_token).type === "admin" ? true : false
     const showUser =
         this.$jwt.decode(this.$root.auth_token).type === "user" ? true : false
-
     return {
       rows: 0,
       perPage: 25,
@@ -143,7 +141,7 @@ export default {
       statusOptions: [],
       showAdmin,
       showUser,
-      facilityTypes: FACILITY_TYPES,
+      facilityTypes: [],
       facilityTypeSelected: null,
       showEmailErr: false,
       entities: null,
@@ -173,6 +171,7 @@ export default {
           entity.status = "No Previous Check-in"
         }
       }
+      this.$root.apiGETRequest("/facilitytype", this.populateFacilityTypes)
     },
     sendEmail() {
       // send emails
@@ -254,14 +253,20 @@ export default {
       document.body.appendChild(link);
       link.click();
       link.remove();
-    }
+    },
+    populateFacilityTypes(facilityTypes) {
+      this.facilityTypes = facilityTypes
+    },
   },
   mounted() {
+    console.log("MOUNTING")
     let options = this.$root.getStatuses().map(status => {
       return {value: status, text: status, disabled: false}
     })
     this.statusOptions = [{value: null, text: "All"}, ...options]
+    console.log("UPDATING ENTITIES")
     this.$root.apiGETRequest("/entity", this.updateEntities)
+    console.log("MOUNTED")
   }
 }
 </script>
