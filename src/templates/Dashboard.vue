@@ -259,14 +259,11 @@ export default {
     },
   },
   mounted() {
-    console.log("MOUNTING")
     let options = this.$root.getStatuses().map(status => {
       return {value: status, text: status, disabled: false}
     })
     this.statusOptions = [{value: null, text: "All"}, ...options]
-    console.log("UPDATING ENTITIES")
     this.$root.apiGETRequest("/entity", this.updateEntities)
-    console.log("MOUNTED")
   }
 }
 </script>
