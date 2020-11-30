@@ -49,7 +49,7 @@
           <div>
             <b-modal id="email-facility-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">              
               <div v-if="selectedEntityIds.length || actionedFacility">
-                Are you sure you want to send an email to the following facilities?
+                Are you sure you want to send an email to the contacts of the following facilities?
                 <ul>
                   <template v-if="actionedFacility">
                     <li>{{ actionedFacility.name }}</li>
@@ -272,7 +272,7 @@ export default {
     handleSendEmailsResponse(response) {
       const title = (response && response.data.results) ? 'Success' : 'Error';
       const variant = (response && response.data.results) ? 'success' : 'danger';
-      const msg = (response && response.data.results) ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
+      const msg = (response && response.data.results) ? `Success: Emails sent to ${response.data.results.totalContacts} contact${response.data.results.totalContacts === 1 ? '' : 's'} at ${response.data.results.totalEntities} facilit${response.data.results.totalEntities === 1 ? 'y' : 'ies'}` : 'Error: Failed to send emails';
       this.$bvToast.toast(msg, {
         title,
         variant,
