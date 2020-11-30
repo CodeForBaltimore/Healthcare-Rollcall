@@ -156,6 +156,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://ianjadams.com"><img src="https://avatars1.githubusercontent.com/u/7966226?v=4" width="100px;" alt=""/><br /><sub><b>Ian Adams</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=ijadams" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.joshglazer.com"><img src="https://avatars1.githubusercontent.com/u/5789311?v=4" width="100px;" alt=""/><br /><sub><b>Ian Adams</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Healthcare-Rollcall/commits?author=joshglazer" title="Code">💻</a></td>
   </tr>
 </table>
 
