@@ -45,7 +45,7 @@ h1 {
 }
 
 #dashboard-table a {
-  color: #006EE3 !important;
+  color: #006ee3;
 }
 
 p.lead {
@@ -191,9 +191,21 @@ ul.navbar-nav.ml-auto li:last-child a::after {
 }
 
 // Remove the weird red outline on focus for all elements
-button, th, tr, svg, span, div, p, h1, h2, h3, h4, h5 {
+button,
+th,
+tr,
+svg,
+span,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
   outline: none;
-  &:active, &:focus {
+  &:active,
+  &:focus {
     outline: none;
   }
 }
