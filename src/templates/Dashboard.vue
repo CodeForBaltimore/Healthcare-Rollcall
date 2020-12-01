@@ -234,14 +234,12 @@ export default {
       this.updateFacilityTypesList();
     },
     updateFacilityTypesList() {
-      // Get all unique facility types from the list of facilities, sort aphabetically, and then append them to an "All Facilities" option
-      // this.facilityTypes = [FACILITY_TYPE_ALL];
-      // this.facilityTypes = this.facilityTypes.concat([...new Set(this.entities.map(entity => entity.type))].sort())
       this.$root.apiGETRequest("/facilitytype", this.populateFacilityTypes)
     },
     populateFacilityTypes(facilityTypes) {
+      // Get all unique facility types from the list of facilities, sort aphabetically, and then append them to an "All Facilities" option
       this.facilityTypes = [FACILITY_TYPE_ALL];
-      this.facilityTypes = this.facilityTypes.concat(facilityTypes)
+      this.facilityTypes = this.facilityTypes.concat([...new Set(facilityTypes)].sort())
     },
     sendEmails(bvModalEvt) {
       bvModalEvt.preventDefault()
