@@ -40,23 +40,40 @@
           <b-col cols="5" class="align--right mt-3 btn--container">
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin" class="ml-1" v-on:click="downloadCSV()">Download CSV</b-button>
-            <b-button v-if="showAdmin || showUser"  class="ml-1" v-b-modal.bulk-email-modal>Email Facilities</b-button>
+            <b-button v-if="showAdmin || showUser" @click="actionedFacility = null" class="ml-1" v-b-modal.email-facility-modal>
+              Email 
+              {{ selectedEntityIds.length ? 'Selected' : '' }}
+              Facilities
+            </b-button>
           </b-col>
           <div>
-            <b-modal id="bulk-email-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
-              <b-form-group label="Select a facility type to send bulk emails" label-align="left">
-                <b-form-radio required v-for="(type, i) in facilityTypes" :key="i" v-model="facilityTypeSelected"
-                              v-bind:value="type">{{ type }}
-                </b-form-radio>
-                <p class="error" v-if="showEmailErr">Type is required</p>
-              </b-form-group>
-            </b-modal>
-            <b-modal id="single-email-modal" title="Send Email to Facility" ok-title="Send" @ok="sendEmail">
-              <p>Are you sure you want to send an email to {{ actionedFacility ? actionedFacility.name : 'this facility' }}?</p>
+            <b-modal id="email-facility-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">              
+              <div v-if="selectedEntityIds.length || actionedFacility">
+                Are you sure you want to send an email to the contacts of the following facilities?
+                <ul>
+                  <template v-if="actionedFacility">
+                    <li>{{ actionedFacility.name }}</li>
+                  </template>
+                  <template v-else>
+                    <li v-for="(entityName, i) in entities.filter(entity => selectedEntityIds.includes(entity.id)).map(entity => entity.name).sort()" :key="i">
+                      <div>{{ entityName }}</div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+              <div v-else>
+                <b-form-group label="Select a facility type to send bulk emails" label-align="left">
+                  <b-form-radio v-for="(type, i) in facilityTypes" required :key="i" v-model="facilityTypeSelected"
+                                v-bind:value="type">{{ type }}
+                  </b-form-radio>
+                  <p class="error" v-if="showEmailErr">Type is required</p>
+                </b-form-group>
+              </div>
             </b-modal>
           </div>
         </b-row>
         <b-table
+            ref="entityTable" 
             id="dashboard-table"
             striped
             hover
@@ -71,11 +88,14 @@
             :filter-function="filterRow"
             :fields="[
             {
+              key: 'checkbox', stickyColumn: true,
+            },
+            {
               key: 'name', stickyColumn: true, isRowHeader: true,
               sortable: true
             },
             {
-              key: 'type', stickyColumn: true, isRowHeader: true,
+              key: 'type', stickyColumn: true,
               sortable: true
             },
             {
@@ -97,6 +117,31 @@
             }
           ]"
         >
+          <template v-slot:head(checkbox)>
+            <b-form-checkbox
+              name="selectEntityAll"
+              v-bind:value='true'
+              v-model='selectAllEntities'
+              id="selectEntityAll" 
+              @change="selectEntityAllClick"
+            >
+              <span class='sr-only'>
+                Select all
+              </span>
+            </b-form-checkbox>
+          </template>
+          <template v-slot:cell(checkbox)="data">
+            <b-form-checkbox
+              name="selectEntity"
+              v-model="selectedEntityIds"
+              :value='data.item.id'
+              @change="selectEntityClick"
+            >
+              <span class='sr-only'>
+                Select {{ data.item.name }}
+              </span>
+            </b-form-checkbox>
+          </template>
           <template v-slot:cell(name)="data">
             <router-link
                 :to="{ name: 'facility', params: { entityID: data.item.id }}"
@@ -108,9 +153,20 @@
             <span>{{ data.item.status }}</span>
           </template>
           <template v-slot:cell(actions)="data">
-            <span v-if="data.item.email && showAdmin" class="clickable" @click="actionedFacility = data.item" v-b-modal.single-email-modal>
-              <b-icon-envelope-fill></b-icon-envelope-fill>
-            </span>
+            <div class="tableIcons">
+              <a v-if="showAdmin" class="clickable">
+                <router-link
+                  :to="{ name: 'facility-edit', params: { entityID: data.item.id }}"
+                >
+                  <b-icon-pencil></b-icon-pencil>
+                  <span class="sr-only">Edit {{ data.item.name }}</span>
+                </router-link>
+              </a>
+              <a v-if="showAdmin" class="clickable" @click="actionedFacility = data.item" v-b-modal.email-facility-modal>
+                <b-icon-envelope-fill></b-icon-envelope-fill>
+                <span class="sr-only">Send an email to {{ data.item.name }}</span>
+              </a>
+            </div>
           </template>
         </b-table>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="mt-4"></b-pagination>
@@ -120,7 +176,8 @@
 </template>
 
 <script>
-import {FACILITY_TYPES} from '../constants/facilities.const';
+
+import { FACILITY_TYPE_ALL } from '../constants/facilities.const'
 
 export default {
   name: "Dashboard",
@@ -143,10 +200,12 @@ export default {
       statusOptions: [],
       showAdmin,
       showUser,
-      facilityTypes: FACILITY_TYPES,
-      facilityTypeSelected: null,
+      facilityTypes: [FACILITY_TYPE_ALL],
+      facilityTypeSelected: FACILITY_TYPE_ALL,
       showEmailErr: false,
       entities: null,
+      selectedEntityIds: [],
+      selectAllEntities: false,
       sortBy: "updated",
       sortDesc: false,
       sortDirection: "asc",
@@ -173,47 +232,47 @@ export default {
           entity.status = "No Previous Check-in"
         }
       }
+      this.updateFacilityTypesList();
     },
-    sendEmail() {
-      // send emails
-      this.$root.apiPOSTRequest(`/contact/send/entity/${this.actionedFacility.id}`, {}, this.handleSendResponse)
-      // close modal
-      this.$nextTick(() => {
-        this.showEmailErr = false;
-        this.$bvModal.hide('bulk-email-modal')
-      })
+    updateFacilityTypesList() {
+      // Get all unique facility types from the list of facilities, sort aphabetically, and then append them to an "All Facilities" option
+      this.facilityTypes = [FACILITY_TYPE_ALL];
+      this.facilityTypes = this.facilityTypes.concat([...new Set(this.entities.map(entity => entity.type))].sort())
     },
     sendEmails(bvModalEvt) {
       bvModalEvt.preventDefault()
-      if (!this.facilityTypeSelected) {
+      if (this.actionedFacility) {
+        this.selectedEntityIds = [this.actionedFacility.id]
+      }
+      if (!this.facilityTypeSelected && this.selectedEntityIds.length === 0) {
         this.showEmailErr = true;
         return
       }
       // send emails
-      const payload = {
-        "relationshipTitle": [this.facilityTypeSelected]
-      };
-      this.$root.apiPOSTRequest("/contact/send", payload, this.handleBulkSendResponse)
+      const payload = {};
+
+      if (this.selectedEntityIds.length) {
+        payload.entityIds = this.selectedEntityIds;
+      } else {
+        payload.entityType = this.facilityTypeSelected !== FACILITY_TYPE_ALL ? this.facilityTypeSelected : null;
+      }
+
+      this.$root.apiPOSTRequest("/contact/send", payload, this.handleSendEmailsResponse)
       // close modal
       this.$nextTick(() => {
+        // Reset selected Entities
+        this.selectAllEntities = false;
+        this.selectedEntityIds = [];
+        this.actionedFacility = null;
+
         this.showEmailErr = false;
-        this.$bvModal.hide('bulk-email-modal')
+        this.$bvModal.hide('email-facility-modal')
       })
     },
-    handleSendResponse(response) {
-      const title = response.data.results ? 'Success' : 'Error';
-      const variant = response.data.results ? 'success' : 'danger';
-      const msg = response.data.results ? `Success: ${response.data.results.message}` : 'Error: Failed to send email';
-      this.$bvToast.toast(msg, {
-        title,
-        variant,
-        solid: true
-      })
-    },
-    handleBulkSendResponse(response) {
-      const title = response.data.results ? 'Success' : 'Error';
-      const variant = response.data.results ? 'success' : 'danger';
-      const msg = response.data.results ? `Success: Emails sent to ${response.data.results.total} facilities` : 'Error: Failed to send emails';
+    handleSendEmailsResponse(response) {
+      const title = (response && response.data.results) ? 'Success' : 'Error';
+      const variant = (response && response.data.results) ? 'success' : 'danger';
+      const msg = (response && response.data.results) ? `Success: Emails sent to ${response.data.results.totalContacts} contact${response.data.results.totalContacts === 1 ? '' : 's'} at ${response.data.results.totalEntities} facilit${response.data.results.totalEntities === 1 ? 'y' : 'ies'}` : 'Error: Failed to send emails';
       this.$bvToast.toast(msg, {
         title,
         variant,
@@ -240,6 +299,17 @@ export default {
         name: "facility-add"
       })
     },
+    selectEntityAllClick(checked) {
+      if (checked) {
+        this.selectedEntityIds = this.entities.map(entity => entity.id);
+      } else {
+        this.selectedEntityIds = [];
+      }
+      this.$refs.entityTable.refresh()
+    },
+    selectEntityClick(checkedValue) {
+      this.selectAllEntities = checkedValue.length === this.entities.length
+    },
     downloadCSV() {
       const path = this.filter.keyword ? `/csv/Entity?filter=${this.filter.keyword}` : '/csv/Entity';
       this.$root.apiGETRequest(path, this.createDownload)
@@ -262,7 +332,7 @@ export default {
     })
     this.statusOptions = [{value: null, text: "All"}, ...options]
     this.$root.apiGETRequest("/entity", this.updateEntities)
-  }
+  },
 }
 </script>
 
@@ -292,13 +362,18 @@ p.lead {
   margin: 30px 0 15px;
 }
 
-#bulk-email-modal {
+#email-facility-modal {
   p.error {
     width: 100%;
     margin-top: .25rem;
     font-size: 80%;
     color: #dc3545;
   }
+}
+
+.tableIcons a {
+  margin-right: 5px;
+  color: inherit !important;
 }
 
 </style>

@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${API_PORT:-3001}:3000
+      - ${API_PORT:-3001}:3001
     expose:
       - ${API_PORT:-3001}
     command: >
