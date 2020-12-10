@@ -56,7 +56,7 @@ JWT_KEY= # Custom value
 - `DATABASE_PASSWORD`: The password used to authenticate to the postgres database. For security, use a custom value.
 - `JWT_KEY`: A secret value to generate JSON Web Tokens (JWTs) locally. For security, use a custom value.
 
-You would then run the docker-compose setup with `docker-compose up -d` to run the DB & API in detached mode and then `npm run serve` to run the frontend.
+You would then run the docker-compose setup with `docker-compose up -d --build` to run the DB & API, build the front end and stand up all containers.  Once this command completes, wait 5-30 seconds for the db scripts to finish and you'll be able to access your own Healthcare Rollcall app at `https://localhost:3000`.
 
 ## Keeping your API up to date
 
