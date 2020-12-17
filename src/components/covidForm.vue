@@ -297,7 +297,7 @@
           v-model="newCheckIn.status"
           name="question-status"
           value="Spoke to owner. Follow-up needed."
-        >Yes, Follow-up needed.</b-form-radio>
+        >Yes, follow-up needed.</b-form-radio>
       </b-form-group>
       <b-button type="submit" variant="primary">Submit Check-In</b-button>
       <b-button type="reset" variant="outline-secondary">Reset</b-button>
@@ -318,9 +318,7 @@ export default {
   data() {
     const validRoles = ["admin", "user"];
     const showDetails =
-      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1
-        ? true
-        : false;
+      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type);
     return {
       formName: "COVID-19 Response",
       elementFocus: null,
