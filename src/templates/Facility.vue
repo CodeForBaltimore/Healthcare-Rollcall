@@ -225,7 +225,7 @@ export default {
   data() {
     const validRoles = ["admin", "user"];
     const showDetails =
-      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type);
+      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1;
     return {
       historyFields: [
         {
