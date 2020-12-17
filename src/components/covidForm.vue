@@ -228,8 +228,9 @@
           rows="3"
         ></b-form-textarea>
       </b-form-group>
-      <h5>Call Outcome &amp; Follow-up</h5>
-      <b-form-group
+
+      <h5 v-if="showDetails">Call Outcome &amp; Follow-up</h5>
+      <b-form-group v-if="showDetails"
         id="check-in-input-status"
         label="Choose an outcome and indicate if a follow-up is needed"
       >
@@ -278,6 +279,26 @@
           value="Wrong number"
         >Wrong Number</b-form-radio>
       </b-form-group>
+
+
+      <h5 v-if="!showDetails">Follow-up</h5>
+      <b-form-group v-if="!showDetails"
+        id="check-in-input-status"
+        label="Do you need us to follow up with you?"
+      >
+        <b-form-radio
+          required
+          v-model="newCheckIn.status"
+          name="question-status"
+          value="Spoke to owner. No follow-up needed."
+        >No follow-up needed.</b-form-radio>
+        <b-form-radio
+          required
+          v-model="newCheckIn.status"
+          name="question-status"
+          value="Spoke to owner. Follow-up needed."
+        >Yes, Follow-up needed.</b-form-radio>
+      </b-form-group>
       <b-button type="submit" variant="primary">Submit Check-In</b-button>
       <b-button type="reset" variant="outline-secondary">Reset</b-button>
     </b-form>
@@ -295,6 +316,11 @@ export default {
   name: "covidForm",
   props: ["entity", "entityCheckIn"],
   data() {
+    const validRoles = ["admin", "user"];
+    const showDetails =
+      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1
+        ? true
+        : false;
     return {
       formName: "COVID-19 Response",
       elementFocus: null,
@@ -374,7 +400,8 @@ export default {
           value: null
         }
       },
-      showForm: true
+      showForm: true,
+      showDetails
     };
   },
   methods: {
