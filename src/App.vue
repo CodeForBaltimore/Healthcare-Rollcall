@@ -28,7 +28,6 @@
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>Management</template>
               <b-dropdown-item v-on:click="goToContacts()">Contacts</b-dropdown-item>
-              <b-dropdown-item @click="goToAccountManager">Account</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
@@ -36,6 +35,7 @@
                 {{ user }} &middot; <span class="nav--role">{{ role }}</span>
                 <b-icon-person-circle></b-icon-person-circle>
               </template>
+              <b-dropdown-item @click="goToAccountManager">Account</b-dropdown-item>
               <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
