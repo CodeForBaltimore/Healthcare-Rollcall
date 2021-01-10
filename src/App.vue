@@ -3,8 +3,8 @@
     <b-navbar variant="faded" type="dark" id="primary-nav">
       <b-container fluid="md">
         <b-navbar-brand v-on:click="goToDashboard()" role="link" class="branding-link">
-          <img alt="City of Baltimore Seal" src="./assets/balt-logo-white.png" class="seal"/>
-          <img alt="Healthcare Roll Call" src="./assets/hcrc.svg" class="app-logo"/>
+          <img alt="City of Baltimore Seal" src="./assets/balt-logo-white.png" class="seal" />
+          <img alt="Healthcare Roll Call" src="./assets/hcrc.svg" class="app-logo" />
         </b-navbar-brand>
       </b-container>
     </b-navbar>
@@ -13,10 +13,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item
-                v-on:click="goToDashboard()"
-                v-if="checkNavBar && showDashboardLink()"
-            >
+            <b-nav-item v-on:click="goToDashboard()" v-if="checkNavBar && showDashboardLink()">
               <span class="d-none d-md-block">
                 <b-icon-arrow-left-circle class="mr-1"></b-icon-arrow-left-circle>
                 Return to Dashboard
@@ -31,6 +28,7 @@
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>Management</template>
               <b-dropdown-item v-on:click="goToContacts()">Contacts</b-dropdown-item>
+              <b-dropdown-item @click="goToAccountManager">Account</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
@@ -46,16 +44,13 @@
     </b-navbar>
     <router-view></router-view>
     <b-container fluid="md" id="footer">
-      <img alt="Code for Baltimore Logo" src="./assets/CfB.png" width="200"/>
-      <br/>
+      <img alt="Code for Baltimore Logo" src="./assets/CfB.png" width="200" />
+      <br />
       <strong>
         Proudly Designed &amp; Developed by
-        <a
-            href="https://codeforbaltimore.org/"
-            target="_blank"
-        >Code for Baltimore</a>
+        <a href="https://codeforbaltimore.org/" target="_blank">Code for Baltimore</a>
       </strong>
-      <br/>A local chapter of
+      <br />A local chapter of
       <a href="https://www.codeforamerica.org/" target="_blank">Code for America</a>
     </b-container>
   </div>
@@ -66,34 +61,26 @@ export default {
   name: "App",
   data() {
     const navBar = this.$root.getNavBarStatus();
-    const user = this.$root.auth_token
-        ? this.$jwt.decode(this.$root.auth_token).email
-        : false;
-    const role = this.$jwt.decode(this.$root.auth_token).type || '';
+    const user = this.$root.auth_token ? this.$jwt.decode(this.$root.auth_token).email : false;
+    const role = this.$jwt.decode(this.$root.auth_token).type || "";
     return {
       user,
       navBar,
       role,
-      disableBackBtn: [
-        "dashboard",
-        "link-contact",
-        "create-contact",
-        "update-contact",
-        "facility"
-      ]
+      disableBackBtn: ["dashboard", "link-contact", "create-contact", "update-contact", "facility"],
     };
   },
   methods: {
     logout() {
       this.$root.destroySession();
-      this.$router.push({name: "login"});
+      this.$router.push({ name: "login" });
     },
     goBack() {
       this.$router.go(-1);
     },
     goToDashboard() {
       if (this.$router.currentRoute.name !== "dashboard") {
-        this.$router.push({name: "dashboard"});
+        this.$router.push({ name: "dashboard" });
       }
     },
     showDashboardLink() {
@@ -109,24 +96,29 @@ export default {
     },
     goToContacts() {
       if (this.$router.currentRoute.name !== "get-all-contacts") {
-        this.$router.push({name: "get-all-contacts"});
+        this.$router.push({ name: "get-all-contacts" });
+      }
+    },
+    goToAccountManager() {
+      if (this.$router.currentRoute.name !== "account-manager") {
+        this.$router.push({ name: "account-manager" });
       }
     },
     updateUser() {
-      if (this.$root.auth_token) this.user = this.$jwt.decode(this.$root.auth_token).email
-    }
+      if (this.$root.auth_token) this.user = this.$jwt.decode(this.$root.auth_token).email;
+    },
   },
   computed: {
     checkNavBar() {
-      this.updateUser()
+      this.updateUser();
       return this.$root.getNavBarStatus();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
-@import 'src/assets/styles/main';
+@import "src/assets/styles/main";
 </style>
