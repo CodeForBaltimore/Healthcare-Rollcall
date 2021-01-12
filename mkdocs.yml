@@ -1,0 +1,17 @@
+site_name: Healthcare-Rolecall Wiki
+
+nav:
+  - 'Home': 'index.md'
+  - 'For Users': 
+    - 'Quick Start - Less than 10 min': 'QuickStart.md'
+    - 'Slow Start - Advanced Config': 'SlowStart.md'
+    - 'Users Guide': 'HowToUse.md'
+  - 'For Developers':
+    - 'Solution Overview': 'DevIntro.md'
+  - 'For Everyone':
+    - 'How to Contribute': 'HowToContribute.md'
+    - 'Code of Conduct': 'Code_of_Conduct.md'
+
+theme:
+  name: readthedocs
+  
