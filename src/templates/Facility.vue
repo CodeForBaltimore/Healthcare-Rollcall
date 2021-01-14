@@ -34,55 +34,8 @@
         <b-card title="Contact Information">
           <!-- Show Contacts if available -->
           <div v-if="entity.contacts && entity.contacts.length > 0" class="mb2">
-            <div v-if="entity.contacts.length === 1" class="contact">
+            <div v-for="contact in entity.contacts" :key="`${contact.id}`" class="contact">
               <p>
-                <router-link
-                  :to="{
-                    name: 'update-contact',
-                    params: { entityID: entity.id, contactID: entity.contacts[0].id },
-                  }"
-                  >{{ entity.contacts[0].name }}</router-link
-                >
-              </p>
-              <p
-                v-if="
-                  entity.contacts[0].entityContacts !== null &&
-                  entity.contacts[0].entityContacts.relationshipTitle
-                "
-              >
-                Role:
-                <i>{{ entity.contacts[0].entityContacts.relationshipTitle }}</i>
-              </p>
-              <p v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1">
-                Phone:
-                <a v-bind:href="'tel:' + entity.contacts[0].phone[0].number">{{
-                  entity.contacts[0].phone[0].number | phone
-                }}</a>
-              </p>
-              <p v-if="entity.contacts[0].email && entity.contacts[0].email.length === 1">
-                Email:
-                <a v-bind:href="'mailto:' + entity.contacts[0].email[0].address">{{
-                  entity.contacts[0].email[0].address
-                }}</a>
-              </p>
-              <div v-if="entity.contacts[0].attributes" class="mt-2 mb-2">
-                <div v-if="entity.contacts[0].attributes.notes">
-                  <h6 class="card-subtitle mb2">Notes</h6>
-                  <p class="notes">
-                    <i>{{ entity.contacts[0].attributes.notes }}</i>
-                  </p>
-                </div>
-              </div>
-              <!-- <p
-                class="notes"
-                v-if="entity.contacts[0].attributes !== null && entity.contacts[0].attributes.notes"
-              >
-                <b>Notes</b><br />
-                <i>{{ entity.contacts[0].attributes.notes }}</i>
-              </p> -->
-            </div>
-            <ul v-if="entity.contacts && entity.contacts.length > 1">
-              <li v-for="contact in entity.contacts" v-bind:key="contact.id" class="contact">
                 <router-link
                   :to="{
                     name: 'update-contact',
@@ -90,33 +43,34 @@
                   }"
                   >{{ contact.name }}</router-link
                 >
-                <p
-                  v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle"
-                >
-                  Role:
-                  <i>{{ contact.entityContacts.relationshipTitle }}</i>
-                </p>
-                <p v-if="contact.phone && contact.phone[0]">
-                  Phone:
-                  <a v-bind:href="'tel:' + contact.phone[0].number">{{
-                    contact.phone[0].number | phone
-                  }}</a>
-                </p>
-                <p v-if="contact.email && contact.email[0]">
-                  Email:
-                  <a v-bind:href="'mailto:' + contact.email[0].address">{{
-                    contact.email[0].address
-                  }}</a>
-                </p>
-                <p class="" v-if="contact.attributes !== null && contact.attributes.notes">
-                  Notes:
-                  <i>{{ contact.attributes.notes }}</i>
-                </p>
-              </li>
-            </ul>
+              </p>
+              <p v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle">
+                Role:
+                <i>{{ contact.entityContacts.relationshipTitle }}</i>
+              </p>
+              <p v-if="contact.phone && contact.phone.length === 1">
+                Phone:
+                <a v-bind:href="'tel:' + contact.phone[0].number">{{
+                  contact.phone[0].number | phone
+                }}</a>
+              </p>
+              <p v-if="contact.email && contact.email.length === 1">
+                Email:
+                <a v-bind:href="'mailto:' + contact.email[0].address">{{
+                  contact.email[0].address
+                }}</a>
+              </p>
+              <div v-if="contact.attributes" class="mt-2 mb-2">
+                <div v-if="contact.attributes.notes">
+                  <h6 class="card-subtitle mb2">Notes</h6>
+                  <p class="notes">
+                    <i>{{ contact.attributes.notes }}</i>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <b-button v-on:click="addContact()">Add Contact</b-button>
+          <b-button class="mt-2" v-on:click="addContact()">Add Contact</b-button>
         </b-card>
         <br />
         <b-card title="Quick Check-In">
