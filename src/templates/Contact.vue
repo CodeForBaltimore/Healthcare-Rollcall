@@ -8,89 +8,77 @@
         <b-form @submit.prevent="submitExistingContact">
           <b-form-group label="Select existing contact" label-align="left">
             <Search-select
-                v-model="selectedContact"
-                :autocomplete="false"
-                :options="contactSelectList"
-                :close-on-select="true"
-                :clear-on-select="true"
-                :preserve-search="true"
-                :hide-selected="true"
-                label="name"
-                track-by="id"
+              v-model="selectedContact"
+              :autocomplete="false"
+              :options="contactSelectList"
+              :close-on-select="true"
+              :clear-on-select="true"
+              :preserve-search="true"
+              :hide-selected="true"
+              label="name"
+              track-by="id"
             ></Search-select>
           </b-form-group>
           <b-form-group id="relationship-title" label="Relationship to Facility">
-            <b-form-input type="text" v-model="selectedContact.relationshipTitle"/>
+            <b-form-input type="text" v-model="selectedContact.relationshipTitle" />
           </b-form-group>
-          <b-button
-            type="submit"
-            variant="primary"
-            class="mr-2"
-          >Link Contact</b-button>
-          <b-button
-              type="cancel"
-              variant="outline-secondary"
-              @click.prevent="returnToLastPage"
-          >Cancel
+          <b-button type="submit" variant="primary" class="mr-2">Link Contact</b-button>
+          <b-button type="cancel" variant="outline-secondary" @click.prevent="returnToLastPage"
+            >Cancel
           </b-button>
         </b-form>
       </b-col>
     </b-row>
-    <br>
+    <br />
 
     <b-row>
       <b-col cols="12">
-        <h4>{{ this.$route.params.contactID ? 'Update existing contact' : 'Create new contact' }}</h4>
+        <h4>
+          {{ this.$route.params.contactID ? "Update existing contact" : "Create new contact" }}
+        </h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="contact-name" label="Name">
-            <b-form-input type="text" required v-model="contact.name"/>
+            <b-form-input type="text" required v-model="contact.name" />
           </b-form-group>
           <b-form-group id="contact-phone" label="Phone Number">
             <b-form-input
-                type="tel"
-                ref="contactPhone"
-                v-model="numberFormatted"
-                @keydown.exact="formatTelInput($event)"
-                @keydown.delete.prevent="formatTelBackspace($event)"
-                minlength="10"
-                :state="phoneValid"
-                aria-describedby="phone-input-live-feedback"
+              type="tel"
+              ref="contactPhone"
+              v-model="numberFormatted"
+              @keydown.exact="formatTelInput($event)"
+              @keydown.delete.prevent="formatTelBackspace($event)"
+              minlength="10"
+              :state="phoneValid"
+              aria-describedby="phone-input-live-feedback"
             />
-            <b-form-invalid-feedback
-                id="phone-input-live-feedback"
-            >Please enter a valid phone number.
+            <b-form-invalid-feedback id="phone-input-live-feedback"
+              >Please enter a valid phone number.
             </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="contact-email" label="Email Address">
             <b-form-input
-                type="email"
-                v-model="contact.email[0].address"
-                :state="emailValid"
-                aria-describedby="email-input-live-feedback"
+              type="email"
+              v-model="contact.email[0].address"
+              :state="emailValid"
+              aria-describedby="email-input-live-feedback"
             />
-            <b-form-invalid-feedback
-                id="email-input-live-feedback"
-            >Please enter a valid email address.
+            <b-form-invalid-feedback id="email-input-live-feedback"
+              >Please enter a valid email address.
             </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="contact-notes" label="Notes">
-            <b-form-input type="text" v-model="contact.attributes.notes"/>
+            <b-form-textarea type="text" v-model="contact.attributes.notes" rows="5" />
           </b-form-group>
-          <b-button
-            type="submit"
-            variant="primary"
-            class="mr-2 center"
-          >{{ this.$route.params.contactID ? 'Update Contact' : 'Create Contact' }}</b-button>
-          <b-button
-              type="cancel"
-              variant="outline-secondary"
-              @click.prevent="returnToLastPage"
-          >Cancel
+          <b-button type="submit" variant="primary" class="mr-2 center">{{
+            this.$route.params.contactID ? "Update Contact" : "Create Contact"
+          }}</b-button>
+          <b-button type="cancel" variant="outline-secondary" @click.prevent="returnToLastPage"
+            >Cancel
           </b-button>
         </b-form>
       </b-col>
     </b-row>
-    <br>
+    <br />
 
     <b-modal ref="unlink-entity" title="Unlink Entity" @ok="unlinkContact">
       <div class="d-block text-center">
@@ -98,8 +86,8 @@
           Are you sure you want to unlink
           {{ this.contact ? this.contact.name : "this contact" }} from
           {{
-            this.contact.entities.find(entity => entity.id === this.selectedEntityID)
-              ? this.contact.entities.find(entity => entity.id === this.selectedEntityID).name
+            this.contact.entities.find((entity) => entity.id === this.selectedEntityID)
+              ? this.contact.entities.find((entity) => entity.id === this.selectedEntityID).name
               : "this facility"
           }}?
         </p>
@@ -113,31 +101,27 @@
           <ul id="linked-facilities">
             <li v-for="entity in entitySelectList" :key="entity.value">
               {{ entity.text }}
-              
+
               <b-button
                 type="submit"
                 variant="light"
                 size="sm"
                 v-on:click="showUnlinkModal(entity.value)"
               >
-              <b-icon-trash></b-icon-trash>
-              <div class='sr-only'>Unlink from Contact</div>
+                <b-icon-trash></b-icon-trash>
+                <div class="sr-only">Unlink from Contact</div>
               </b-button>
             </li>
           </ul>
         </b-input-group>
         <p v-if="contact.entities.length === 0">This contact has no linked facilities.</p>
-        <br>
+        <br />
         <h4>Other Options</h4>
-        <b-button
-            type="submit"
-            variant="primary"
-            @click.prevent="deleteContact"
-        >Delete Contact
+        <b-button type="submit" variant="primary" @click.prevent="deleteContact"
+          >Delete Contact
         </b-button>
       </b-col>
     </b-row>
-
   </b-container>
 </template>
 
@@ -153,19 +137,19 @@ export default {
         phone: [
           {
             number: "1",
-            isPrimary: true
-          }
+            isPrimary: true,
+          },
         ],
         email: [
           {
             address: "",
-            isPrimary: true
-          }
+            isPrimary: true,
+          },
         ],
         attributes: {
-          notes: ""
+          notes: "",
         },
-        entities: []
+        entities: [],
       },
       numberFormatted: "",
       phoneValid: null,
@@ -185,29 +169,27 @@ export default {
     updateContact(obj) {
       if (!obj.phone || obj.phone[0] === undefined || obj.phone[0] === null) {
         obj.phone = [];
-        obj.phone.push({number: "", isPrimary: true});
+        obj.phone.push({ number: "", isPrimary: true });
       }
       if (!obj.email || obj.email[0] === undefined || obj.email[0] === null) {
         obj.email = [];
-        obj.email.push({address: "", isPrimary: true});
+        obj.email.push({ address: "", isPrimary: true });
       }
       this.contact = obj;
 
       if (this.contact.phone[0] === undefined || this.contact.phone[0].number === "") {
         if (
-            this.contact.phone[0].number.length < 11 ||
-            this.contact.phone[0].number.charAt(0) !== "1"
+          this.contact.phone[0].number.length < 11 ||
+          this.contact.phone[0].number.charAt(0) !== "1"
         ) {
           this.contact.phone[0].number = "1" + this.contact.phone[0].number;
         }
       }
 
-      this.numberFormatted = this.$options.filters.phone(
-          this.contact.phone[0].number
-      );
+      this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
 
       if (this.contact.attributes === null) {
-        this.contact.attributes = {"notes": ""};
+        this.contact.attributes = { notes: "" };
       }
 
       this.populateEntitiesDropdown();
@@ -219,8 +201,8 @@ export default {
       for (let entity_ of this.contact.entities) {
         this.entitySelectList.push({
           value: entity_.id,
-          text: entity_.name
-        })
+          text: entity_.name,
+        });
       }
     },
     populateContactsDropdown(obj) {
@@ -232,113 +214,95 @@ export default {
         } else {
           emailDisplayed = contact_.email[0].address;
         }
-        this.contactSelectList.push(
-            {
-              name: contact_.name + ", " + emailDisplayed,
-              id: contact_.id,
-              relationshipTitle: "default"
-            }
-        );
+        this.contactSelectList.push({
+          name: contact_.name + ", " + emailDisplayed,
+          id: contact_.id,
+          relationshipTitle: "default",
+        });
       }
     },
     getAllContacts() {
-      this.$root.apiGETRequest("/contact/", this.populateContactsDropdown)
+      this.$root.apiGETRequest("/contact/", this.populateContactsDropdown);
     },
     returnToLastPage() {
       if (this.$route.name === "get-single-contact" || this.$route.name === "create-contact") {
         this.$router.push({
           name: "get-all-contacts",
-          params: {entityID: this.$route.params.entityID}
+          params: { entityID: this.$route.params.entityID },
         });
       } else {
         this.$router.push({
           name: "facility",
-          params: {entityID: this.$route.params.entityID}
+          params: { entityID: this.$route.params.entityID },
         });
       }
-
     },
     submitForm() {
       this.phoneValid = this.contact.phone[0].number.length >= 10;
       this.emailValid =
-          this.contact.email[0].address.includes("@") &&
-          this.contact.email[0].address.includes(".");
+        this.contact.email[0].address.includes("@") && this.contact.email[0].address.includes(".");
       this.validationRun = true;
       if (
-          (this.phoneValid && this.emailValid) ||
-          (this.contact.phone[0].number === "1" && this.emailValid) ||
-          (this.contact.email[0].address === "" && this.phoneValid)
+        (this.phoneValid && this.emailValid) ||
+        (this.contact.phone[0].number === "1" && this.emailValid) ||
+        (this.contact.email[0].address === "" && this.phoneValid)
       ) {
         let newContact = this.duplicateData(this.contact);
         if (this.contact.phone[0].number === "1") {
           newContact.phone = [];
         } else {
-          newContact.phone = newContact.phone.filter(phone => !!phone.number);
-          newContact.phone =
-              newContact.phone.length > 0 ? newContact.phone : null;
+          newContact.phone = newContact.phone.filter((phone) => !!phone.number);
+          newContact.phone = newContact.phone.length > 0 ? newContact.phone : null;
         }
-        newContact.email = newContact.email.filter(email => !!email.address);
-        newContact.email =
-            newContact.email.length > 0 ? newContact.email : null;
+        newContact.email = newContact.email.filter((email) => !!email.address);
+        newContact.email = newContact.email.length > 0 ? newContact.email : null;
         if (this.$route.params.entityID) {
-          newContact.entities = [{"id": this.$route.params.entityID}]
+          newContact.entities = [{ id: this.$route.params.entityID }];
         }
-        if (this.contact.attributes === {"notes": ""}) {
+        if (this.contact.attributes === { notes: "" }) {
           newContact.attributes = null;
         }
         if (this.$route.params.contactID) {
-          this.$root.apiPUTRequest(
-              "/contact",
-              newContact,
-              this.returnToLastPage
-          );
+          this.$root.apiPUTRequest("/contact", newContact, this.returnToLastPage);
         } else {
-          this.$root.apiPOSTRequest(
-              "/contact",
-              newContact,
-              this.returnToLastPage
-          );
+          this.$root.apiPOSTRequest("/contact", newContact, this.returnToLastPage);
         }
       }
     },
     submitExistingContact() {
       let body = {
-        contacts: [
-          {id: this.selectedContact.id, title: this.selectedContact.relationshipTitle}
-        ]
+        contacts: [{ id: this.selectedContact.id, title: this.selectedContact.relationshipTitle }],
       };
       this.$root.apiPOSTRequest(
-          "/entity/link/" + this.$route.params.entityID,
-          body,
-          this.returnToLastPage
+        "/entity/link/" + this.$route.params.entityID,
+        body,
+        this.returnToLastPage
       );
     },
     showUnlinkModal(entityID) {
       this.selectedEntityID = entityID;
-      this.$refs['unlink-entity'].show()
+      this.$refs["unlink-entity"].show();
     },
     unlinkContact() {
       let body = {
-        contacts: [
-          {id: this.$route.params.contactID}
-        ]
+        contacts: [{ id: this.$route.params.contactID }],
       };
       this.$root.apiPOSTRequest(
-          "/entity/unlink/" + this.selectedEntityID,
-          body,
-          this.returnToLastPage
-      )
+        "/entity/unlink/" + this.selectedEntityID,
+        body,
+        this.returnToLastPage
+      );
     },
     deleteContact() {
-      let deleteConfirm = confirm("Confirm delete of contact?")
+      let deleteConfirm = confirm("Confirm delete of contact?");
       if (!deleteConfirm) {
-        return
+        return;
       }
       this.$root.apiDELRequest(
-          "/contact/" + this.$route.params.contactID,
-          {},
-          this.returnToLastPage
-      )
+        "/contact/" + this.$route.params.contactID,
+        {},
+        this.returnToLastPage
+      );
     },
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));
@@ -350,34 +314,25 @@ export default {
           this.contact.phone[0].number = "";
         }
         this.contact.phone[0].number += event.key;
-        this.numberFormatted = this.$options.filters.phone(
-            this.contact.phone[0].number
-        );
+        this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
       }
     },
     formatTelBackspace(event) {
       event.preventDefault();
       if (this.contact.phone[0].number.length > 0) {
-        this.contact.phone[0].number = this.contact.phone[0].number.slice(
-            0,
-            -1
-        );
-        this.numberFormatted = this.$options.filters.phone(
-            this.contact.phone[0].number
-        );
+        this.contact.phone[0].number = this.contact.phone[0].number.slice(0, -1);
+        this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
       }
-    }
+    },
   },
   mounted() {
     if (this.$route.params.contactID) {
       this.getContact(this.$route.params.contactID);
     } else {
       this.getAllContacts();
-      this.numberFormatted = this.$options.filters.phone(
-          this.contact.phone[0].number
-      );
+      this.numberFormatted = this.$options.filters.phone(this.contact.phone[0].number);
     }
-  }
+  },
 };
 </script>
 

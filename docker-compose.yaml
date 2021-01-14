@@ -13,6 +13,8 @@ services:
     env_file: .env
     environment:
       - ${PORT:-3000}
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
   api:
     build:
       context: https://github.com/CodeForBaltimore/Bmore-Responsive.git#${API_TAG:-master}

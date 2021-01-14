@@ -11,21 +11,21 @@
           <div v-if="entity.address" class="mb-2">
             <h6 class="card-subtitle mb2">Address</h6>
             <p>
-              <span
-                v-for="line in entity.address.street"
-                v-bind:key="line"
-                class="address-line"
-              >{{ line }}</span>
+              <span v-for="line in entity.address.street" v-bind:key="line" class="address-line">{{
+                line
+              }}</span>
               <span
                 v-if="entity.address.city && entity.address.state && entity.address.zip"
                 class="address-line"
-              >{{ entity.address.city }}, {{ entity.address.state }} {{ entity.address.zip }}</span>
+                >{{ entity.address.city }}, {{ entity.address.state }}
+                {{ entity.address.zip }}</span
+              >
             </p>
           </div>
           <div v-if="entity.attributes" class="mb-2">
             <div v-if="entity.attributes.notes">
               <h6 class="card-subtitle mb2">Notes</h6>
-              <p>{{ entity.attributes.notes }}</p>
+              <p class="notes">{{ entity.attributes.notes }}</p>
             </div>
           </div>
           <b-button v-on:click="editFacility()">Edit Facility</b-button>
@@ -37,39 +37,59 @@
             <div v-if="entity.contacts.length === 1" class="contact">
               <p>
                 <router-link
-                  :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: entity.contacts[0].id }}"
-                >{{ entity.contacts[0].name }}</router-link>
+                  :to="{
+                    name: 'update-contact',
+                    params: { entityID: entity.id, contactID: entity.contacts[0].id },
+                  }"
+                  >{{ entity.contacts[0].name }}</router-link
+                >
               </p>
               <p
-                v-if="entity.contacts[0].entityContacts !== null && entity.contacts[0].entityContacts.relationshipTitle"
+                v-if="
+                  entity.contacts[0].entityContacts !== null &&
+                  entity.contacts[0].entityContacts.relationshipTitle
+                "
               >
                 Role:
                 <i>{{ entity.contacts[0].entityContacts.relationshipTitle }}</i>
               </p>
               <p v-if="entity.contacts[0].phone && entity.contacts[0].phone.length === 1">
                 Phone:
-                <a
-                  v-bind:href="'tel:' + entity.contacts[0].phone[0].number"
-                >{{ entity.contacts[0].phone[0].number | phone }}</a>
+                <a v-bind:href="'tel:' + entity.contacts[0].phone[0].number">{{
+                  entity.contacts[0].phone[0].number | phone
+                }}</a>
               </p>
               <p v-if="entity.contacts[0].email && entity.contacts[0].email.length === 1">
                 Email:
-                <a
-                  v-bind:href="'mailto:' + entity.contacts[0].email[0].address"
-                >{{ entity.contacts[0].email[0].address}}</a>
+                <a v-bind:href="'mailto:' + entity.contacts[0].email[0].address">{{
+                  entity.contacts[0].email[0].address
+                }}</a>
               </p>
-              <p
+              <div v-if="entity.contacts[0].attributes" class="mt-2 mb-2">
+                <div v-if="entity.contacts[0].attributes.notes">
+                  <h6 class="card-subtitle mb2">Notes</h6>
+                  <p class="notes">
+                    <i>{{ entity.contacts[0].attributes.notes }}</i>
+                  </p>
+                </div>
+              </div>
+              <!-- <p
+                class="notes"
                 v-if="entity.contacts[0].attributes !== null && entity.contacts[0].attributes.notes"
               >
-                Notes:
+                <b>Notes</b><br />
                 <i>{{ entity.contacts[0].attributes.notes }}</i>
-              </p>
+              </p> -->
             </div>
             <ul v-if="entity.contacts && entity.contacts.length > 1">
               <li v-for="contact in entity.contacts" v-bind:key="contact.id" class="contact">
                 <router-link
-                  :to="{ name: 'update-contact', params: { entityID: entity.id, contactID: contact.id }}"
-                >{{ contact.name }}</router-link>
+                  :to="{
+                    name: 'update-contact',
+                    params: { entityID: entity.id, contactID: contact.id },
+                  }"
+                  >{{ contact.name }}</router-link
+                >
                 <p
                   v-if="contact.entityContacts !== null && contact.entityContacts.relationshipTitle"
                 >
@@ -78,24 +98,24 @@
                 </p>
                 <p v-if="contact.phone && contact.phone[0]">
                   Phone:
-                  <a
-                    v-bind:href="'tel:' + contact.phone[0].number"
-                  >{{ contact.phone[0].number | phone }}</a>
+                  <a v-bind:href="'tel:' + contact.phone[0].number">{{
+                    contact.phone[0].number | phone
+                  }}</a>
                 </p>
                 <p v-if="contact.email && contact.email[0]">
                   Email:
-                  <a
-                    v-bind:href="'mailto:' +  contact.email[0].address"
-                  >{{ contact.email[0].address }}</a>
+                  <a v-bind:href="'mailto:' + contact.email[0].address">{{
+                    contact.email[0].address
+                  }}</a>
                 </p>
-                <p v-if="contact.attributes !== null && contact.attributes.notes">
+                <p class="" v-if="contact.attributes !== null && contact.attributes.notes">
                   Notes:
                   <i>{{ contact.attributes.notes }}</i>
                 </p>
               </li>
             </ul>
           </div>
-          <br />
+
           <b-button v-on:click="addContact()">Add Contact</b-button>
         </b-card>
         <br />
@@ -114,17 +134,25 @@
             <h2>Begin New Check-In</h2>
             <ol>
               <li
-                v-if="entity.phone || (entity.contacts && entity.contacts[0] && entity.contacts[0].phone && entity.contacts[0].phone[0])"
+                v-if="
+                  entity.phone ||
+                  (entity.contacts &&
+                    entity.contacts[0] &&
+                    entity.contacts[0].phone &&
+                    entity.contacts[0].phone[0])
+                "
               >
                 Call the phone number
-                <span
-                  v-if="entity.contacts[0].phone[0].number"
-                >{{ entity.contacts[0].phone[0].number | phone }}</span>
+                <span v-if="entity.contacts[0].phone[0].number">{{
+                  entity.contacts[0].phone[0].number | phone
+                }}</span>
                 <span v-else>{{ entity.phone[0].number | phone }}</span>
               </li>
               <li v-else>Contact the facility using the contact information to the left.</li>
               <li>Start the check-in by asking the 5 questions under &quot;New Check-in&quot;</li>
-              <li>Once you are finished, click &quot;Submit Check-In&quot; at the bottom of the form</li>
+              <li>
+                Once you are finished, click &quot;Submit Check-In&quot; at the bottom of the form
+              </li>
               <li>Start the next provider</li>
             </ol>
             <b-card title="Previous Check-In" class="facility-check-in">
@@ -135,10 +163,9 @@
               <div v-if="lastCheckIn" class="last-checkin">
                 <h5>
                   Status:
-                  <b-badge
-                    pill
-                    v-bind:variant="lastCheckInStatus.state"
-                  >{{ lastCheckInStatus.status }}</b-badge>
+                  <b-badge pill v-bind:variant="lastCheckInStatus.state">{{
+                    lastCheckInStatus.status
+                  }}</b-badge>
                 </h5>
                 <h6>Comments</h6>
                 <p>{{ lastCheckIn.comments.value | nullToNone }}</p>
@@ -148,16 +175,21 @@
                   {{ lastCheckIn.date | timestamp }}
                 </p>
                 <b-button v-b-modal.checkin-detail-modal>Review check-in</b-button>
-                <p>Defaults to the most recent check-in. To view older check-ins please select one from the list below then click the review button</p>
+                <p>
+                  Defaults to the most recent check-in. To view older check-ins please select one
+                  from the list below then click the review button
+                </p>
                 <h6>Previous check-in's</h6>
                 <b-table striped hover :items="entity.checkIn.checkIns" :fields="historyFields">
                   <template v-slot:cell(date)="data">
-                    <b-button @click="setHistoricalData(data.item)">{{formatDate(data.item.date)}}</b-button>
+                    <b-button @click="setHistoricalData(data.item)">{{
+                      formatDate(data.item.date)
+                    }}</b-button>
                   </template>
                 </b-table>
               </div>
-            </b-card>
-          </b-col>-
+            </b-card> </b-col
+          >-
         </b-row>
         <b-row>
           <b-col>
@@ -220,45 +252,40 @@ export default {
   components: {
     questionReadout,
     covidForm,
-    quickForm
+    quickForm,
   },
   data() {
     const validRoles = ["admin", "user"];
-    const showDetails =
-      validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1;
+    const showDetails = validRoles.indexOf(this.$jwt.decode(this.$root.auth_token).type) > -1;
     return {
       historyFields: [
         {
           key: "status",
-          sortable: true
+          sortable: true,
         },
         {
           key: "date",
           sortable: true,
-          formatter: this.formatDate
-        }
+          formatter: this.formatDate,
+        },
       ],
       entity: {
-        name: "Loading..."
+        name: "Loading...",
       },
       entityCheckIn: {
-        name: null
+        name: null,
       },
       lastCheckInStatus: {
         state: "dark",
-        status: "Unknown"
+        status: "Unknown",
       },
       formAvailability: {
-        covidForm: [
-          "Assisted Living Facility",
-          "Mixed Housing",
-          "Senior Housing"
-        ]
+        covidForm: ["Assisted Living Facility", "Mixed Housing", "Senior Housing"],
       },
       formMatched: false,
       lastCheckIn: null,
       history: null,
-      showDetails
+      showDetails,
     };
   },
   methods: {
@@ -299,7 +326,7 @@ export default {
         hour: "numeric",
         minute: "numeric",
         second: "numeric",
-        timeZone: "America/New_York"
+        timeZone: "America/New_York",
       };
       const formatted = new Intl.DateTimeFormat("en-US", options).format(date);
       return formatted;
@@ -308,7 +335,7 @@ export default {
       if (obj.checkIn === null) {
         this.entity = this.duplicateData(obj);
         this.entity.checkIn = {
-          checkIns: []
+          checkIns: [],
         };
         this.entityCheckIn = this.duplicateData(obj);
         this.entityCheckIn.checkIn = [];
@@ -316,16 +343,14 @@ export default {
         this.entity = this.duplicateData(obj);
         this.entityCheckIn = this.duplicateData(obj);
         if (this.entityCheckIn.checkIn != null) {
-          this.entityCheckIn.checkIn = this.duplicateData(
-            this.entityCheckIn.checkIn.checkIns
-          );
+          this.entityCheckIn.checkIn = this.duplicateData(this.entityCheckIn.checkIn.checkIns);
           this.setLastCheckInData();
         }
       }
       if (!obj.contacts || obj.contacts.length === 0) {
         let emptyContact = {
           phone: [],
-          email: []
+          email: [],
         };
         this.entityCheckIn.contacts = [];
         this.entity.contacts = this.duplicateData(emptyContact);
@@ -345,10 +370,7 @@ export default {
       }
     },
     getEntity() {
-      this.$root.apiGETRequest(
-        "/entity/" + this.$route.params.entityID,
-        this.updateFacilityData
-      );
+      this.$root.apiGETRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
     },
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));
@@ -369,11 +391,8 @@ export default {
         this.entity.checkIn.checkIns[this.entity.checkIn.checkIns.length - 1] ||
         pos !== undefined
       ) {
-        const postition =
-          pos !== undefined ? pos : this.entity.checkIn.checkIns.length - 1;
-        this.lastCheckIn = this.duplicateData(
-          this.entity.checkIn.checkIns[postition]
-        );
+        const postition = pos !== undefined ? pos : this.entity.checkIn.checkIns.length - 1;
+        this.lastCheckIn = this.duplicateData(this.entity.checkIn.checkIns[postition]);
         this.lastCheckInStatus.status = this.lastCheckIn.status;
       }
 
@@ -404,19 +423,19 @@ export default {
     addContact() {
       this.$router.push({
         name: "link-contact",
-        params: { entityID: this.$route.params.entityID }
+        params: { entityID: this.$route.params.entityID },
       });
     },
     editFacility() {
       this.$router.push({
         name: "facility-edit",
-        params: { entityID: this.$route.params.entityID }
+        params: { entityID: this.$route.params.entityID },
       });
-    }
+    },
   },
   created() {
     this.getEntity();
-  }
+  },
 };
 </script>
 
@@ -442,6 +461,13 @@ p.return-link {
 }
 .address-line {
   display: block;
+}
+.notes {
+  max-height: 6.5rem;
+  overflow-y: auto;
+  white-space: pre-line;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 .alert {
   margin-bottom: 0;
