@@ -107,15 +107,7 @@ export default {
         stateSelected: "MD",
         stateOptions: [{ value: "MD", text: "Maryland" }],
         typeSelected: null,
-        typeOptions: [
-          { value: null, text: "Select facility type" },
-          {
-            value: "Assisted Living Facility",
-            text: "Assisted Living Facility"
-          },
-          { value: "Mixed Housing", text: "Mixed Housing" },
-          { value: "Senior Housing", text: "Senior Housing" }
-        ]
+        typeOptions: []
       }
     )
   },
@@ -140,6 +132,12 @@ export default {
           value: contact_.id,
           text: contact_.name
         })
+      }
+    },
+    populateFacilityTypesDropdown(facilityTypes) {
+      this.typeOptions.push({value: null, text: "Select facility type"})
+      for (let type_ of facilityTypes) {
+        this.typeOptions.push({value: type_, text: type_})
       }
     },
     returnToLastPage() {
@@ -197,6 +195,7 @@ export default {
     }
   },
   mounted() {
+    this.$root.apiGETRequest("/facilitytype", this.populateFacilityTypesDropdown)
     if (this.$route.params.entityID) {
       this.getEntity(this.$route.params.entityID)
     }

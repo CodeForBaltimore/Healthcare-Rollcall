@@ -186,7 +186,6 @@ export default {
         this.$jwt.decode(this.$root.auth_token).type === "admin" ? true : false
     const showUser =
         this.$jwt.decode(this.$root.auth_token).type === "user" ? true : false
-
     return {
       rows: 0,
       perPage: 25,
@@ -235,9 +234,12 @@ export default {
       this.updateFacilityTypesList();
     },
     updateFacilityTypesList() {
+      this.$root.apiGETRequest("/facilitytype", this.populateFacilityTypes)
+    },
+    populateFacilityTypes(facilityTypes) {
       // Get all unique facility types from the list of facilities, sort aphabetically, and then append them to an "All Facilities" option
       this.facilityTypes = [FACILITY_TYPE_ALL];
-      this.facilityTypes = this.facilityTypes.concat([...new Set(this.entities.map(entity => entity.type))].sort())
+      this.facilityTypes = this.facilityTypes.concat([...new Set(facilityTypes)].sort())
     },
     sendEmails(bvModalEvt) {
       bvModalEvt.preventDefault()
@@ -324,7 +326,7 @@ export default {
       document.body.appendChild(link);
       link.click();
       link.remove();
-    }
+    },
   },
   mounted() {
     let options = this.$root.getStatuses().map(status => {
