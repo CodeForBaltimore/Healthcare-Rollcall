@@ -3,7 +3,7 @@
     <h1>Facility Information</h1>
     <b-row>
       <b-col cols="12">
-        <h4>{{ this.$route.params.entityID ? 'Update facility' : 'Create facility' }}</h4>
+        <h4>{{ this.$route.params.entityID ? "Update facility" : "Create facility" }}</h4>
         <b-form @submit.prevent="submitForm">
           <b-form-group id="entity-name" label="Name">
             <b-form-input type="text" required v-model="entity.name" />
@@ -18,18 +18,18 @@
             <b-form-select v-model="typeSelected" required :options="typeOptions"></b-form-select>
           </b-form-group>
           <b-form-group id="entity-notes" label="Notes">
-            <b-form-input type="text" v-model="entity.attributes.notes" />
+            <b-form-textarea type="text" v-model="entity.attributes.notes" rows="5" />
           </b-form-group>
-          <b-button
-            type="submit"
-            variant="primary"
-          >{{ this.$route.params.entityID ? 'Update facility' : 'Create facility' }}</b-button>
+          <b-button type="submit" variant="primary">{{
+            this.$route.params.entityID ? "Update facility" : "Create facility"
+          }}</b-button>
           <b-button
             type="cancel"
             variant="outline-secondary"
             class="ml-2"
             @click.prevent="returnToLastPage"
-          >Cancel</b-button>
+            >Cancel</b-button
+          >
         </b-form>
       </b-col>
     </b-row>
@@ -39,11 +39,12 @@
       <div class="d-block text-center">
         <p>
           Are you sure you want to unlink
-          {{ 
-            entity.contacts.some(contact => contact.id === this.selectedContactID) ? 
-              entity.contacts.find(contact => contact.id === this.selectedContactID).name 
-              : 'this contact' 
-          }} from {{ this.entity.name || 'this facility' }}?
+          {{
+            entity.contacts.some((contact) => contact.id === this.selectedContactID)
+              ? entity.contacts.find((contact) => contact.id === this.selectedContactID).name
+              : "this contact"
+          }}
+          from {{ this.entity.name || "this facility" }}?
         </p>
       </div>
     </b-modal>
@@ -55,15 +56,15 @@
           <ul id="linked-contacts">
             <li v-for="contact in contactSelectList" :key="contact.value">
               {{ contact.text }}
-              
+
               <b-button
                 type="submit"
                 variant="light"
                 size="sm"
                 v-on:click="showUnlinkModal(contact.value)"
               >
-              <b-icon-trash></b-icon-trash>
-              <div class='sr-only'>Unlink from Facility</div>
+                <b-icon-trash></b-icon-trash>
+                <div class="sr-only">Unlink from Facility</div>
               </b-button>
             </li>
           </ul>
@@ -72,7 +73,9 @@
         <br />
         <div v-if="showAdmin">
           <h4>Admin Options</h4>
-          <b-button type="submit" variant="primary" @click.prevent="deleteFacility">Delete Facility</b-button>
+          <b-button type="submit" variant="primary" @click.prevent="deleteFacility"
+            >Delete Facility</b-button
+          >
         </div>
       </b-col>
     </b-row>
@@ -83,129 +86,126 @@
 export default {
   name: "Entity",
   data() {
-    const showAdmin =
-      this.$jwt.decode(this.$root.auth_token).type === "admin" ? true : false
-    return (
-      {
-        entity: {
-          id: null,
-          name: null,
-          address: {
-            street: [""],
-            city: "",
-            state: "",
-            zip: ""
-          },
-          attributes: {
-            notes: ""
-          },
-          contacts: []
+    const showAdmin = this.$jwt.decode(this.$root.auth_token).type === "admin" ? true : false;
+    return {
+      entity: {
+        id: null,
+        name: null,
+        address: {
+          street: [""],
+          city: "",
+          state: "",
+          zip: "",
         },
-        showAdmin,
-        contactSelectList: [],
-        selectedContactID: null,
-        stateSelected: "MD",
-        stateOptions: [{ value: "MD", text: "Maryland" }],
-        typeSelected: null,
-        typeOptions: [
-          { value: null, text: "Select facility type" },
-          {
-            value: "Assisted Living Facility",
-            text: "Assisted Living Facility"
-          },
-          { value: "Mixed Housing", text: "Mixed Housing" },
-          { value: "Senior Housing", text: "Senior Housing" }
-        ]
-      }
-    )
+        attributes: {
+          notes: "",
+        },
+        contacts: [],
+      },
+      showAdmin,
+      contactSelectList: [],
+      selectedContactID: null,
+      stateSelected: "MD",
+      stateOptions: [{ value: "MD", text: "Maryland" }],
+      typeSelected: null,
+      typeOptions: [
+        { value: null, text: "Select facility type" },
+        {
+          value: "Assisted Living Facility",
+          text: "Assisted Living Facility",
+        },
+        { value: "Mixed Housing", text: "Mixed Housing" },
+        { value: "Senior Housing", text: "Senior Housing" },
+      ],
+    };
   },
   methods: {
     updateEntity(obj) {
-      this.entity = obj
+      this.entity = obj;
 
-      this.stateSelected = this.entity.address.state
-      this.typeSelected = this.entity.type
+      this.stateSelected = this.entity.address.state;
+      this.typeSelected = this.entity.type;
       if (this.entity.attributes === null) {
-        this.entity.attributes = { notes: "" }
+        this.entity.attributes = { notes: "" };
       }
 
-      this.populateContactsDropdown()
+      this.populateContactsDropdown();
     },
     getEntity(id) {
-      this.$root.apiGETRequest("/entity/" + id, this.updateEntity)
+      this.$root.apiGETRequest("/entity/" + id, this.updateEntity);
     },
     populateContactsDropdown() {
       for (let contact_ of this.entity.contacts) {
         this.contactSelectList.push({
           value: contact_.id,
-          text: contact_.name
-        })
+          text: contact_.name,
+        });
       }
     },
     returnToLastPage() {
       if (this.$route.params.entityID) {
         this.$router.push({
           name: "facility",
-          params: { entityID: this.$route.params.entityID }
-        })
+          params: { entityID: this.$route.params.entityID },
+        });
       } else {
         this.$router.push({
-          name: "dashboard"
-        })
+          name: "dashboard",
+        });
       }
     },
     submitForm() {
-      this.validationRun = true
-      if (this.typeSelected !== null) this.entity.type = this.typeSelected
-      this.entity.address.state = this.stateSelected
-      let newEntity = this.duplicateData(this.entity)
+      this.validationRun = true;
+      if (this.typeSelected !== null) this.entity.type = this.typeSelected;
+      this.entity.address.state = this.stateSelected;
+      let newEntity = this.duplicateData(this.entity);
 
       if (this.$route.params.entityID) {
-        this.$root.apiPUTRequest("/entity", newEntity, this.returnToLastPage)
+        this.$root.apiPUTRequest("/entity", newEntity, this.returnToLastPage);
       } else {
-        this.$root.apiPOSTRequest("/entity", newEntity, this.returnToLastPage)
+        this.$root.apiPOSTRequest("/entity", newEntity, this.returnToLastPage);
       }
     },
     duplicateData(object) {
-      return JSON.parse(JSON.stringify(object))
+      return JSON.parse(JSON.stringify(object));
     },
     showUnlinkModal(contactID) {
       this.selectedContactID = contactID;
-      this.$refs['unlink-entity'].show()
+      this.$refs["unlink-entity"].show();
     },
     unlinkEntity() {
       let body = {
-        entities: [{ id: this.$route.params.entityID }]
-      }
+        entities: [{ id: this.$route.params.entityID }],
+      };
       this.$root.apiPOSTRequest(
         "/contact/unlink/" + this.selectedContactID,
         body,
         this.returnToLastPage
-      )
+      );
     },
     deleteFacility() {
-      let deleteConfirm = confirm("Confirm delete of facility?")
+      let deleteConfirm = confirm("Confirm delete of facility?");
       if (!deleteConfirm) {
-        return
+        return;
       }
       this.$root.apiDELRequest(
         "/entity/" + this.$route.params.entityID,
         this.$router.push({
-          name: "dashboard"
+          name: "dashboard",
         })
-      )
-    }
+      );
+    },
   },
   mounted() {
     if (this.$route.params.entityID) {
-      this.getEntity(this.$route.params.entityID)
+      this.getEntity(this.$route.params.entityID);
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/styles/variables';
+@import "src/assets/styles/variables";
 
 h1 {
   text-align: left;
@@ -246,7 +246,8 @@ p:last-child {
 
 form {
   fieldset#entity-address {
-    input, select {
+    input,
+    select {
       margin-bottom: $inputMargin;
     }
     input:last-of-type {
