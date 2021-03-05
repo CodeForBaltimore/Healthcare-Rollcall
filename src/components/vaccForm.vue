@@ -29,6 +29,19 @@
           placeholder="0"
           min="0"
         ></b-form-input>
+        </b-form-group>
+      <h6>Part C</h6>
+      <b-form-group
+        id="check-in-input-question-1c"
+        v-bind:label="newCheckIn.questionnaire.questions[0].parts[2].label"
+      >
+        <b-form-input
+          id="question-1c"
+          type="number"
+          v-model="newCheckIn.questionnaire.questions[0].parts[2].value[0]"
+          placeholder="0"
+          min="0"
+        ></b-form-input>
       </b-form-group>
 
     <h5>Question 2</h5>
@@ -71,48 +84,8 @@
           <b-form-radio
             v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
             name="question-2b-radio"
-            value="BCHD Mobile"
-          >BCHD Mobile</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Hospital System"
-          >Hospital System</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Lord Baltimore Hotel"
-          >Lord Baltimore Hotel</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Rite Aid"
-          >Rite Aid</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Safeway"
-          >Safeway</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Giant"
-          >Giant</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="National Guard"
-          >National Guard</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Facility itself will organize vaccine clinic"
-          >* Facility itself will organize vaccine clinic *</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[1].value[0]"
-            name="question-2b-radio"
-            value="Other"
-          >Other</b-form-radio>
+            value="Not Applicable"
+          >Not Applicable</b-form-radio>
       </b-form-group> 
     <h6>Part C</h6>
       <b-form-group
@@ -135,162 +108,6 @@
           rows="1"
         ></b-form-textarea>
       </b-form-group>
-      <h6>Part D</h6>
-        <b-form-group
-        id="check-in-input-question-2d"
-        v-bind:label="newCheckIn.questionnaire.questions[1].parts[3].label"
-      >
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="MedStar"
-          >MedStar</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="Lifebridge"
-          >Lifebridge</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="Hopkins"
-          >Hopkins</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="Mercy"
-          >Mercy</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="St Agnes"
-          >St Agnes</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[3].value[0]"
-            name="question-2d-radio"
-            value="Other"
-          >Other</b-form-radio>
-      </b-form-group> 
-
-
-    <h6>Part E</h6>
-      <b-form-group
-        id="check-in-input-question-2e"
-        v-bind:label="newCheckIn.questionnaire.questions[1].parts[4].label"
-      >
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Walgreens"
-          >Walgreens</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="CVS"
-          >CVS</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="BCHD Mobile"
-          >BCHD Mobile</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Hospital System"
-          >Hospital System</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Lord Baltimore Hotel"
-          >Lord Baltimore Hotel</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Rite Aid"
-          >Rite Aid</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Safeway"
-          >Safeway</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Giant"
-          >Giant</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="National Guard"
-          >National Guard</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Facility itself will organize vaccine clinic"
-          >* Facility itself will organize vaccine clinic *</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[4].value[0]"
-            name="question-2e-radio"
-            value="Other"
-          >Other</b-form-radio>
-      </b-form-group> 
-    <h6>Part F</h6>
-      <b-form-group
-        id="check-in-input-question-2f"
-        v-bind:label="newCheckIn.questionnaire.questions[1].parts[5].label"
-        label-for="question-2f"
-      >
-        <p class="pi-alert">
-          <span v-if="elementFocus === 'question-2f'">
-            <img alt="Alert Icon" src="../assets/exclamation-triangle-solid.svg" />
-            <strong>Remember:</strong> Do not include any personal information
-          </span>
-        </p>
-        <b-form-textarea
-          id="question-2f"
-          v-model="newCheckIn.questionnaire.questions[1].parts[5].value[0]"
-          placeholder="Response"
-          @focus="elementFocus = 'question-2f'"
-          @blur="elementFocus = 'null'"
-          rows="1"
-        ></b-form-textarea>
-      </b-form-group>
-      <h6>Part G</h6>
-        <b-form-group
-        id="check-in-input-question-2g"
-        v-bind:label="newCheckIn.questionnaire.questions[1].parts[6].label"
-      >
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="MedStar"
-          >MedStar</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="Lifebridge"
-          >Lifebridge</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="Hopkins"
-          >Hopkins</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="Mercy"
-          >Mercy</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="St Agnes"
-          >St Agnes</b-form-radio>
-        <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[1].parts[6].value[0]"
-            name="question-2g-radio"
-            value="Other"
-          >Other</b-form-radio>
-      </b-form-group> 
     <h5>Question 3</h5>
     <h6>Part A</h6>
     <b-form-group
@@ -355,56 +172,6 @@
             value="I don't know"
           >I don't know</b-form-radio>
       </b-form-group>
-
-    <h5>Question 4</h5>
-    <h6>Part A</h6>
-    <b-form-group
-        id="check-in-input-question-4a"
-        v-bind:label="newCheckIn.questionnaire.questions[3].parts[0].label"
-      >
-         <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[3].parts[0].value[0]"
-            name="question-4a-radio"
-            value="Yes"
-          >Yes</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[3].parts[0].value[0]"
-            name="question-4a-radio"
-            value="No"
-          >No</b-form-radio>
-          <b-form-radio
-            v-model="newCheckIn.questionnaire.questions[3].parts[0].value[0]"
-            name="question-4a-radio"
-            value="I don't know"
-          >I don't know</b-form-radio>
-      </b-form-group>
-    <h6>Part B</h6>
-    <b-form-group
-        id="check-in-input-question-4b"
-        v-bind:label="newCheckIn.questionnaire.questions[3].parts[1].label"
-      >
-        <b-form-input
-          id="question-4b"
-          type="number"
-          v-model="newCheckIn.questionnaire.questions[3].parts[1].value[0]"
-          placeholder="0"
-          min="0"
-        ></b-form-input>
-      </b-form-group>
-    <h6>Part C</h6>
-    <b-form-group
-        id="check-in-input-question-4c"
-        v-bind:label="newCheckIn.questionnaire.questions[3].parts[2].label"
-      >
-        <b-form-input
-          id="question-4c"
-          type="number"
-          v-model="newCheckIn.questionnaire.questions[3].parts[2].value[0]"
-          placeholder="0"
-          min="0"
-        ></b-form-input>
-      </b-form-group>
-
       <h5>Comments</h5>
       <b-form-group
         id="check-in-input-comments"
@@ -529,12 +296,17 @@ export default {
               parts: [
                 {
                   label:
-                    'How many residents or clients are currently at this factility?',
+                    'How many residents are currently at this factility?',
                   value: [null]
                 },
                 {
                   label:
                     'How many staff currently work at this factility?',
+                  value: [null]
+                },
+                 {
+                  label:
+                    'Of those residents and staff, how many still need a Covid-19 vaccine?',
                   value: [null]
                 }
               ]
@@ -547,29 +319,11 @@ export default {
                   value: [null]
                 },
                 {
-                  label: 'Please select the name of the federal or hospital partner. Note: If you have two contacts, you can specify the second contact on the next question.',
+                  label: 'Please select the name of the federal partner. Note: If you have two contacts, you can specify the second contact on the next question.',
                   value: [null]
                 },
                 {
-                  label: 'If you selected "Other" please specify the name here:',
-                  value: [null]
-                },
-                {
-                  label:
-                     'If you selected "Hospital System" please specify the name here:',
-                  value: [null]
-                },
-                {
-                  label: 'Please select the name of the second interested federal or hospital partner.',
-                  value: [null]
-                },
-                {
-                  label: 'If you selected "Other" please specify the name here:',
-                  value: [null]
-                },
-                {
-                  label:
-                     'If you selected "Hospital System" please specify the name here:',
+                  label: 'Please indicate any other ways that residents and staff have received vaccines, or any information about issues with obtaining enough vaccines.',
                   value: [null]
                 }
               ]
@@ -585,23 +339,7 @@ export default {
                   value: [null]
                 },
                 {
-                  label: 'Are you interested in onsite vaccination thru BCHD mobile team?',
-                  value: [null]
-                }
-              ]
-            },
-            {
-              parts: [
-                {
-                  label: 'Have any residents/clients or staff been vaccinated, or already scheduled for vaccine?',
-                  value: [null]
-                },
-                {
-                  label: 'How many residents/clients have been vaccinated, or already scheduled for vaccine?',
-                  value: [null]
-                },
-                {
-                  label: 'How many staff have been vaccinated, or already scheduled for vaccine?',
+                  label: 'If available, are you interested in onsite vaccination thru BCHD mobile team?',
                   value: [null]
                 }
               ]
@@ -633,17 +371,14 @@ export default {
     },
     resetCheckin() {
       this.newCheckIn.questionnaire.questions[0].parts[0].value[0] = null;
+      this.newCheckIn.questionnaire.questions[0].parts[1].value[0] = null;
+      this.newCheckIn.questionnaire.questions[0].parts[2].value[0] = null;
       this.newCheckIn.questionnaire.questions[1].parts[0].value[0] = null;
       this.newCheckIn.questionnaire.questions[1].parts[1].value[0] = null;
       this.newCheckIn.questionnaire.questions[1].parts[2].value[0] = null;
-      this.newCheckIn.questionnaire.questions[1].parts[3].value[0] = null;
-      this.newCheckIn.questionnaire.questions[1].parts[4].value[0] = null;
       this.newCheckIn.questionnaire.questions[2].parts[0].value[0] = null;
-      this.newCheckIn.questionnaire.questions[3].parts[0].value[0] = null;
-      this.newCheckIn.questionnaire.questions[4].parts[0].value[0] = null;
-      this.newCheckIn.questionnaire.questions[4].parts[0].value[1] = null;
-      this.newCheckIn.questionnaire.questions[4].parts[0].value[2] = null;
-      this.newCheckIn.questionnaire.questions[4].parts[1].value[0] = null;
+      this.newCheckIn.questionnaire.questions[2].parts[1].value[0] = null;
+      this.newCheckIn.questionnaire.questions[2].parts[2].value[0] = null;
       this.newCheckIn.comments.value = null;
       this.newCheckIn.status = null;
     },
