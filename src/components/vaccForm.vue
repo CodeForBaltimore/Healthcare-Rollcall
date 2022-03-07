@@ -86,7 +86,7 @@
             name="question-2b-radio"
             value="Not Applicable"
           >Not Applicable</b-form-radio>
-      </b-form-group> 
+      </b-form-group>
     <h6>Part C</h6>
       <b-form-group
         id="check-in-input-question-2c"
@@ -387,7 +387,7 @@ export default {
       this.showForm = false;
       this.newCheckIn.date = new Date();
       this.entityCheckIn.checkIn = this.newCheckIn;
-      this.$root.apiPUTRequest("/entity", this.entityCheckIn, function() {
+      this.$root.apiPUTRequest("entity", this.entityCheckIn, function() {
         self.updateParent();
       });
       const token = this.$jwt.decode(this.$root.auth_token);

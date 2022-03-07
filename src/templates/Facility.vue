@@ -324,7 +324,7 @@ export default {
       }
     },
     getEntity() {
-      this.$root.apiGETRequest("/entity/" + this.$route.params.entityID, this.updateFacilityData);
+      this.$root.apiGETRequest("entity/" + this.$route.params.entityID, this.updateFacilityData);
     },
     duplicateData(object) {
       return JSON.parse(JSON.stringify(object));

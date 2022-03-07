@@ -205,7 +205,7 @@ export default {
       this.showForm = false;
       this.newCheckIn.date = new Date();
       this.entityCheckIn.checkIn = this.newCheckIn;
-      this.$root.apiPUTRequest("/entity", this.entityCheckIn, function() {
+      this.$root.apiPUTRequest("entity", this.entityCheckIn, function() {
         self.updateParent();
       });
       const token = this.$jwt.decode(this.$root.auth_token)

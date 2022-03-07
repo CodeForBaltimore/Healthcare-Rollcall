@@ -132,7 +132,7 @@ export default {
       this.populateContactsDropdown();
     },
     getEntity(id) {
-      this.$root.apiGETRequest("/entity/" + id, this.updateEntity);
+      this.$root.apiGETRequest("entity/" + id, this.updateEntity);
     },
     populateContactsDropdown() {
       for (let contact_ of this.entity.contacts) {
@@ -161,9 +161,9 @@ export default {
       let newEntity = this.duplicateData(this.entity);
 
       if (this.$route.params.entityID) {
-        this.$root.apiPUTRequest("/entity", newEntity, this.returnToLastPage);
+        this.$root.apiPUTRequest("entity", newEntity, this.returnToLastPage);
       } else {
-        this.$root.apiPOSTRequest("/entity", newEntity, this.returnToLastPage);
+        this.$root.apiPOSTRequest("entity", newEntity, this.returnToLastPage);
       }
     },
     duplicateData(object) {
@@ -178,7 +178,7 @@ export default {
         entities: [{ id: this.$route.params.entityID }],
       };
       this.$root.apiPOSTRequest(
-        "/contact/unlink/" + this.selectedContactID,
+        "contact/unlink/" + this.selectedContactID,
         body,
         this.returnToLastPage
       );
@@ -189,7 +189,7 @@ export default {
         return;
       }
       this.$root.apiDELRequest(
-        "/entity/" + this.$route.params.entityID,
+        "entity/" + this.$route.params.entityID,
         this.$router.push({
           name: "dashboard",
         })
