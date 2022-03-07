@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { api } from './utils/api'
 import {BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
 import VueCookies from 'vue-cookies'
 import vueCountryRegionSelect from 'vue-country-region-select'
@@ -126,7 +127,7 @@ new Vue({
     }),
     data() {
         return {
-            api: process.env.VUE_APP_BASE_API_URL,
+            api: api,
             authenticated: false
         }
     },
@@ -172,9 +173,10 @@ new Vue({
             this.$cookies.remove('Health_Auth')
         },
         apiGETRequest(endpoint, callback) {
+            const fullUrl = new URL(endpoint, api)
             let self = this
             axios
-                .get(self.api + endpoint, {
+                .get(fullUrl.toString(), {
                     headers: {
                         'token': self.getSavedToken()
                     },
@@ -187,9 +189,10 @@ new Vue({
                 })
         },
         apiPUTRequest(endpoint, payload, callback) {
+            const fullUrl = new URL(endpoint, api)
             let self = this
             axios
-                .put(self.api + endpoint, payload, {
+                .put(fullUrl.toString(), payload, {
                     headers: {
                         'token': self.getSavedToken()
                     },
@@ -202,9 +205,10 @@ new Vue({
                 })
         },
         apiPOSTRequest(endpoint, payload, callback) {
+            const fullUrl = new URL(endpoint, api)
             let self = this
             axios
-                .post(self.api + endpoint, payload, {
+                .post(fullUrl.toString(), payload, {
                     headers: {
                         'token': self.getSavedToken()
                     },
@@ -218,10 +222,11 @@ new Vue({
                 })
         },
         apiDELRequest(endpoint, callback) {
+            const fullUrl = new URL(endpoint, api)
             let self = this
             // requirement for axios
             axios
-                .delete(self.api + endpoint, {
+                .delete(fullUrl.toString(), {
                     headers: {
                         'token': self.getSavedToken()
                     },
