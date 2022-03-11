@@ -10,15 +10,15 @@ In the event of a disaster, Baltimore City and the Baltimore City Health Departm
   - [What is this?](#what-is-this)
   - [Documentation](#documentation)
 - [Project setup](#project-setup)
-  - [Docker and docker-compose](#docker-and-docker-compose)
-    - [Full .env example](#full-env-example)
-    - [Keeping your API up to date](#keeping-your-api-up-to-date)
+  - [Keeping your API up to date](#keeping-your-api-up-to-date)
   - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
   - [Compiles and minifies for production](#compiles-and-minifies-for-production)
   - [Lints and fixes files](#lints-and-fixes-files)
   - [Customize configuration](#customize-configuration)
 - [Using this product](#using-this-product)
   - [Testing](#testing)
+    - [Using Jest for unit testing](#using-jest-for-unit-testing)
+    - [Using Snyk to check for security vulnerabilities](#using-snyk-to-check-for-security-vulnerabilities)
 - [Sources and Links](#sources-and-links)
   - [Contributors ✨](#contributors-)
 
@@ -47,6 +47,7 @@ Add the following to a file named `.env` in your project directory:
 ```conf
 PORT=3000
 VUE_APP_BASE_API_URL=http://localhost:3001
+VUE_APP_API_VERSION=1
 DATABASE_PASSWORD= # Custom value
 JWT_KEY= # Custom value
 ```
