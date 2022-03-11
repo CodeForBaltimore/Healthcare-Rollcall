@@ -195,7 +195,7 @@ export default {
       this.populateEntitiesDropdown();
     },
     getContact(id) {
-      this.$root.apiGETRequest("/contact/" + id, this.updateContact);
+      this.$root.apiGETRequest("contact/" + id, this.updateContact);
     },
     populateEntitiesDropdown() {
       for (let entity_ of this.contact.entities) {
@@ -222,7 +222,7 @@ export default {
       }
     },
     getAllContacts() {
-      this.$root.apiGETRequest("/contact/", this.populateContactsDropdown);
+      this.$root.apiGETRequest("contact/", this.populateContactsDropdown);
     },
     returnToLastPage() {
       if (this.$route.name === "get-single-contact" || this.$route.name === "create-contact") {
@@ -263,9 +263,9 @@ export default {
           newContact.attributes = null;
         }
         if (this.$route.params.contactID) {
-          this.$root.apiPUTRequest("/contact", newContact, this.returnToLastPage);
+          this.$root.apiPUTRequest("contact", newContact, this.returnToLastPage);
         } else {
-          this.$root.apiPOSTRequest("/contact", newContact, this.returnToLastPage);
+          this.$root.apiPOSTRequest("contact", newContact, this.returnToLastPage);
         }
       }
     },
@@ -274,7 +274,7 @@ export default {
         contacts: [{ id: this.selectedContact.id, title: this.selectedContact.relationshipTitle }],
       };
       this.$root.apiPOSTRequest(
-        "/entity/link/" + this.$route.params.entityID,
+        "entity/link/" + this.$route.params.entityID,
         body,
         this.returnToLastPage
       );
@@ -288,7 +288,7 @@ export default {
         contacts: [{ id: this.$route.params.contactID }],
       };
       this.$root.apiPOSTRequest(
-        "/entity/unlink/" + this.selectedEntityID,
+        "entity/unlink/" + this.selectedEntityID,
         body,
         this.returnToLastPage
       );
@@ -299,7 +299,7 @@ export default {
         return;
       }
       this.$root.apiDELRequest(
-        "/contact/" + this.$route.params.contactID,
+        "contact/" + this.$route.params.contactID,
         {},
         this.returnToLastPage
       );

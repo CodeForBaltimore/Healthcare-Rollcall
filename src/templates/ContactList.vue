@@ -33,7 +33,7 @@
             <router-link :to="{ name: 'create-contact' }">
               <b-button v-if="showAdmin">Create Contact</b-button>
             </router-link>
-            
+
             <b-button v-if="showAdmin" v-on:click="downloadCSV()" class="ml-1">Download CSV</b-button>
           </b-col>
         </b-row>
@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     getContacts() {
-      this.$root.apiGETRequest("/contact/", this.handleContactsResponse);
+      this.$root.apiGETRequest("contact/", this.handleContactsResponse);
     },
     handleContactsResponse(response) {
       this.contacts = response.results;
@@ -143,7 +143,7 @@ export default {
     },
     sendEmail() {
       // send emails
-      this.$root.apiPOSTRequest(`/contact/send/contact/${this.actionedContact.id}`, {}, this.handleSendResponse)
+      this.$root.apiPOSTRequest(`contact/send/contact/${this.actionedContact.id}`, {}, this.handleSendResponse)
       // close modal
       this.$nextTick(() => {
         this.showEmailErr = false;
@@ -161,7 +161,7 @@ export default {
       })
     },
     downloadCSV() {
-      const path = this.filter.keyword ? `/csv/Contact?filter=${this.filter.keyword}` : '/csv/Contact';
+      const path = this.filter.keyword ? `csv/Contact?filter=${this.filter.keyword}` : 'csv/Contact';
       this.$root.apiGETRequest(path, this.createDownload)
     },
     createDownload(data) {

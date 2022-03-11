@@ -85,7 +85,7 @@
                 >{{ contact.contact.name }}</router-link>
                 <p v-if="contact.contact.phone && contact.contact.phone[0]">
                   Phone:
-                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a> 
+                  <a v-bind:href="'tel:' + contact.contact.phone[0].number">{{ contact.contact.phone[0].number | phone }}</a>
                 </p>
                 <p v-if="contact.contact.email && contact.contact.email[0]">
                     Email:
@@ -617,14 +617,14 @@ export default {
       this.entity.checkIn.checkIns.push(this.newCheckIn);
       this.entityCheckIn.checkIn = this.newCheckIn;
       this.$root.apiPUTRequest(
-        "/entity",
+        "entity",
         this.entityCheckIn,
         this.setLastCheckInData
       );
     },
     getEntity() {
       this.$root.apiGETRequest(
-        "/entity/" + this.$route.params.entityID,
+        "entity/" + this.$route.params.entityID,
         this.updateFacilityData
       );
     },

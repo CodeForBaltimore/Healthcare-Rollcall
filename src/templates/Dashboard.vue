@@ -41,13 +41,13 @@
             <b-button v-if="showAdmin" v-on:click="addFacility()">Create Facility</b-button>
             <b-button v-if="showAdmin" class="ml-1" v-on:click="downloadCSV()">Download CSV</b-button>
             <b-button v-if="showAdmin || showUser" @click="actionedFacility = null" class="ml-1" v-b-modal.email-facility-modal>
-              Email 
+              Email
               {{ selectedEntityIds.length ? 'Selected' : '' }}
               Facilities
             </b-button>
           </b-col>
           <div>
-            <b-modal id="email-facility-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">              
+            <b-modal id="email-facility-modal" title="Send Emails to Facilities" ok-title="Send" @ok="sendEmails">
               <div v-if="selectedEntityIds.length || actionedFacility">
                 Are you sure you want to send an email to the contacts of the following facilities?
                 <ul>
@@ -73,7 +73,7 @@
           </div>
         </b-row>
         <b-table
-            ref="entityTable" 
+            ref="entityTable"
             id="dashboard-table"
             striped
             hover
@@ -122,7 +122,7 @@
               name="selectEntityAll"
               v-bind:value='true'
               v-model='selectAllEntities'
-              id="selectEntityAll" 
+              id="selectEntityAll"
               @change="selectEntityAllClick"
             >
               <span class='sr-only'>
@@ -257,7 +257,7 @@ export default {
         payload.entityType = this.facilityTypeSelected !== FACILITY_TYPE_ALL ? this.facilityTypeSelected : null;
       }
 
-      this.$root.apiPOSTRequest("/contact/send", payload, this.handleSendEmailsResponse)
+      this.$root.apiPOSTRequest("contact/send", payload, this.handleSendEmailsResponse)
       // close modal
       this.$nextTick(() => {
         // Reset selected Entities
@@ -311,7 +311,7 @@ export default {
       this.selectAllEntities = checkedValue.length === this.entities.length
     },
     downloadCSV() {
-      const path = this.filter.keyword ? `/csv/Entity?filter=${this.filter.keyword}` : '/csv/Entity';
+      const path = this.filter.keyword ? `csv/Entity?filter=${this.filter.keyword}` : 'csv/Entity';
       this.$root.apiGETRequest(path, this.createDownload)
     },
     createDownload(data) {
@@ -331,7 +331,7 @@ export default {
       return {value: status, text: status, disabled: false}
     })
     this.statusOptions = [{value: null, text: "All"}, ...options]
-    this.$root.apiGETRequest("/entity", this.updateEntities)
+    this.$root.apiGETRequest("entity", this.updateEntities)
   },
 }
 </script>

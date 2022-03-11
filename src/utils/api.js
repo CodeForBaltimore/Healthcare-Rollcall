@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+export const api = `${process.env.VUE_APP_BASE_API_URL}/v${process.env.VUE_APP_API_VERSION}/`
+
 export const postLogin = async (email, password) => {
-  const fullUrl = new URL('/user/login', process.env.VUE_APP_BASE_API_URL)
+  const fullUrl = new URL('user/login', api)
   let response
   try {
     response = await axios.post(
@@ -36,7 +38,7 @@ export const postLogin = async (email, password) => {
 }
 
 export const postReset = (email) => {
-  const fullUrl = new URL('/user/reset/' + email, process.env.VUE_APP_BASE_API_URL)
+  const fullUrl = new URL('user/reset/' + email, api)
   return axios.post(fullUrl.toString(),
     {
       email
@@ -44,7 +46,7 @@ export const postReset = (email) => {
 }
 
 export const updateUser = (email_token, email, password) => {
-  const fullUrl = new URL('/user', process.env.VUE_APP_BASE_API_URL)
+  const fullUrl = new URL('user', api)
   return axios.put(fullUrl.toString(),
     {
       email,
