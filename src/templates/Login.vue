@@ -22,7 +22,7 @@
       </b-col>
       <b-col cols="12" md="6">
         <b-card title="Login">
-          <form class="login-container" v-on:submit.prevent="login">
+          <form class="login-container" v-on:submit.prevent="login" data-test="login">
             <label>
               <b-form-input
                 required
@@ -30,6 +30,7 @@
                 name="email"
                 v-model="input.email"
                 placeholder="Email"
+                data-test="email"
               />
             </label>
             <label>
@@ -39,10 +40,11 @@
                 name="password"
                 v-model="input.password"
                 placeholder="Password"
+                data-test="password"
               />
             </label>
             <div>
-              <a v-b-modal.reset-pass href="#">Forgot/Reset Password</a>
+              <a v-b-modal.reset-pass href="#" data-test="reset-password">Forgot/Reset Password</a>
             </div>
             <b-button type="submit" variant="primary">Login</b-button>
             <b-alert
@@ -103,6 +105,7 @@ export default {
   },
   methods: {
     login() {
+      console.log('hi')
       if (this.input.email !== "" && this.input.password !== "") {
         const response = postLogin(this.input.email, this.input.password)
         response.then(data => {
