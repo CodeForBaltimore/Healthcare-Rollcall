@@ -44,7 +44,7 @@
               />
             </label>
             <div>
-              <a v-b-modal.reset-pass href="#" data-test="reset-password">Forgot/Reset Password</a>
+              <a href="#" data-test="reset-password" v-on:click="toggleModalShow">Forgot/Reset Password</a>
             </div>
             <b-button type="submit" variant="primary">Login</b-button>
             <b-alert
@@ -58,41 +58,34 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-modal id="reset-pass" title="Reset Password" hide-footer>
-      <p class="my-4">Please provide the email of the account to reset the password for:</p>
-      <label>
-        <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" />
-      </label>
-      <b-button type="submit" v-on:click="resetPass()" variant="primary">Reset Password</b-button>
-      <b-alert
-        :show="this.dismissCountDown"
-        dismissible
-        fade
-        :variant="this.type"
-        @dismiss-count-down="this.countDownChanged"
-      >{{this.reset_alert}}</b-alert>
+    <b-modal v-b-modal.modal-prevent-closing v-model="modalShow" title="Reset Password" hide-footer>
+      <pasword-reset-request />
     </b-modal>
   </b-container>
 </template>
 
 <script>
-import { postLogin, postReset } from "../utils/api"
+import { postLogin } from "../utils/api"
+import PaswordResetRequest from "./PasswordResetRequest.vue"
 
 export default {
   name: "Login",
+  components: {
+    PaswordResetRequest
+  },
   data() {
     return {
       input: {
         email: "",
         password: "",
-        reset_email: ""
       },
       dismissSecs: 5,
       dismissCountDown: 0,
       dismissLoginCountDown: 0,
       reset_alert: "",
       login_alert: "",
-      type: "warning"
+      type: "warning",
+      modalShow: false
     }
   },
   created() {
@@ -104,8 +97,10 @@ export default {
     }
   },
   methods: {
+    toggleModalShow() {
+      this.modalShow = !this.modalShow
+    },
     login() {
-      console.log('hi')
       if (this.input.email !== "" && this.input.password !== "") {
         const response = postLogin(this.input.email, this.input.password)
         response.then(data => {
@@ -122,23 +117,6 @@ export default {
       } else {
         // eslint-disable-next-line no-console
         console.log("A email and password must be present")
-      }
-    },
-    resetPass() {
-      if (this.input.reset_email !== "") {
-        const response = postReset(this.input.reset_email)
-        this.showAlert("Sending...")
-        response
-          .then(data => {
-            if (data.status == 200) {
-              this.showAlert("Password reset email sent!", "success")
-            } else {
-              this.showAlert("Failed sending email", "warning")
-            }
-          })
-          .catch(() => {
-            this.showAlert("Failed sending email", "warning")
-          })
       }
     },
     countDownChanged(dismissCountDown) {
