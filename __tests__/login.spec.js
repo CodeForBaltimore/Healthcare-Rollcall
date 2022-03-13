@@ -1,4 +1,4 @@
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import {BootstrapVue} from 'bootstrap-vue'
 import LoginComponent from '../src/templates/Login.vue'
 
@@ -19,7 +19,7 @@ describe('Utils tests', () => {
     test('login function called on submit', async () => {
         wrapper.vm.login  = jest.fn();
 
-        await wrapper.get('[data-test="email"]').setValue('test')
+        await wrapper.get('[data-test="email"]').setValue('test@test.test')
         await wrapper.get('[data-test="password"]').setValue('test')
         await wrapper.get('[data-test="login"]').trigger('submit')
 

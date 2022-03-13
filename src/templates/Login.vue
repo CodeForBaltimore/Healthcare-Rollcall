@@ -44,7 +44,7 @@
               />
             </label>
             <div>
-              <a href="#" data-test="reset-password" v-on:click="toggleModalShow">Forgot/Reset Password</a>
+              <a href="#" v-on:click="toggleModalShow">Forgot/Reset Password</a>
             </div>
             <b-button type="submit" variant="primary">Login</b-button>
             <b-alert

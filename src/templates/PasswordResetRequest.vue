@@ -2,7 +2,7 @@
   <div>
     <p class="my-4">Please provide the email of the account to reset the password for:</p>
     <label>
-      <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" />
+      <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" data-test="reset-email" />
     </label>
     <b-button type="submit" v-on:click="resetPass()" variant="primary" data-test="reset-password-submit">Reset Password</b-button>
     <b-alert
