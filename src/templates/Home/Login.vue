@@ -93,7 +93,6 @@ export default {
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   text-align: left;
   margin-top: 15px;
   width: 100%;
