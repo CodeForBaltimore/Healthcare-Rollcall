@@ -109,9 +109,6 @@ export default {
         console.log("A email and password must be present")
       }
     },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
     changeAlert(message, type) {
       this.alertMessage = message
       this.alertType = type
