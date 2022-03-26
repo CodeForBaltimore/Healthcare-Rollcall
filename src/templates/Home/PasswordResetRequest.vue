@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { postReset } from '../utils/api'
+import { postReset } from '../../utils/api'
 import Alert from "./Alert.vue"
 
 export default {
