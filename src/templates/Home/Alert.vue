@@ -1,13 +1,15 @@
 <template>
-  <b-alert
-    :show="this.visibleSecondsLeft"
-    dismissible
-    fade
-    :variant="this.type"
-    @dismiss-count-down="this.countDownChanged"
-  >
-    {{this.message}}
-  </b-alert>
+  <div id="alert">
+    <b-alert
+      :show="this.visibleSecondsLeft"
+      dismissible
+      fade
+      :variant="this.type"
+      @dismiss-count-down="this.countDownChanged"
+    >
+      {{this.message}}
+    </b-alert>
+  </div>
 </template>
 
 <script>
@@ -41,3 +43,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#alert {
+  margin-top: 1rem
+}
+</style>
