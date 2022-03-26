@@ -47,13 +47,7 @@
               <a href="#" v-on:click="toggleModalShow">Forgot/Reset Password</a>
             </div>
             <b-button type="submit" variant="primary">Login</b-button>
-            <b-alert
-              :show="this.dismissLoginCountDown"
-              dismissible
-              fade
-              :variant="this.type"
-              @dismiss-login-count-down="this.countDownChanged"
-            >{{this.login_alert}}</b-alert>
+            <alert v-bind:message="alertMessage" v-bind:type="alertType"/>
           </form>
         </b-card>
       </b-col>
@@ -67,11 +61,13 @@
 <script>
 import { postLogin } from "../utils/api"
 import PaswordResetRequest from "./PasswordResetRequest.vue"
+import Alert from "./Alert.vue"
 
 export default {
   name: "Login",
   components: {
-    PaswordResetRequest
+    PaswordResetRequest,
+    Alert
   },
   data() {
     return {
@@ -79,12 +75,8 @@ export default {
         email: "",
         password: "",
       },
-      dismissSecs: 5,
-      dismissCountDown: 0,
-      dismissLoginCountDown: 0,
-      reset_alert: "",
-      login_alert: "",
-      type: "warning",
+      alertMessage: "",
+      alertType: "",
       modalShow: false
     }
   },
@@ -101,6 +93,7 @@ export default {
       this.modalShow = !this.modalShow
     },
     login() {
+      this.changeAlert("", "warning")
       if (this.input.email !== "" && this.input.password !== "") {
         const response = postLogin(this.input.email, this.input.password)
         response.then(data => {
@@ -108,10 +101,7 @@ export default {
             this.$root.authenticateUser(data.data)
             this.$router.replace({ name: "dashboard" })
           } else {
-            this.showAlert(
-              data.message,
-              "warning"
-            )
+            this.changeAlert(data.message, "warning")
           }
         })
       } else {
@@ -122,15 +112,9 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    showAlert(msg, type, alertType = null) {
-      if (alertType !== null) {
-      this.reset_alert = msg
-      this.dismissCountDown = this.dismissSecs
-      } else {
-        this.login_alert = msg
-      this.dismissLoginCountDown = this.dismissSecs
-      }
-      this.type = type
+    changeAlert(message, type) {
+      this.alertMessage = message
+      this.alertType = type
     }
   }
 }
