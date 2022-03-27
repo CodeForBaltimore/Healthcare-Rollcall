@@ -1,11 +1,11 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import {BootstrapVue} from 'bootstrap-vue'
-import PasswordResetRequest from '../src/templates/PasswordResetRequest.vue'
+import PasswordResetRequest from '../src/templates/Home/PasswordResetRequest.vue'
 
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
-describe('Utils tests', () => {
+describe('Password Reset Request tests', () => {
   let wrapper = null;
 
   beforeEach(() => {
