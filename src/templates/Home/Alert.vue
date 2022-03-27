@@ -1,7 +1,6 @@
 <template>
   <b-alert
     id="alert"
-    data-test="alert"
     :show="this.visibleSecondsLeft"
     dismissible
     fade

@@ -9,7 +9,7 @@
             name="email"
             v-model="input.email"
             placeholder="Email"
-            data-test="email"
+            data-test="login-email"
           />
         </label>
         <label>
@@ -19,17 +19,17 @@
             name="password"
             v-model="input.password"
             placeholder="Password"
-            data-test="password"
+            data-test="login-password"
           />
         </label>
         <div>
-          <a href="#" v-on:click="toggleModalShow" data-test="reset-password-link">Forgot/Reset Password</a>
+          <a href="#" v-on:click="toggleModalShow" data-test="password-reset-link">Forgot/Reset Password</a>
         </div>
         <b-button type="submit" variant="primary">Login</b-button>
-        <alert v-bind:message="alertMessage" v-bind:type="alertType"/>
+        <alert v-bind:message="alertMessage" v-bind:type="alertType" data-test="login-alert"/>
       </form>
     </b-card>
-    <b-modal v-b-modal.modal-prevent-closing v-model="modalShow" title="Reset Password" hide-footer>
+    <b-modal v-b-modal.modal-prevent-closing v-model="modalShow" title="Reset Password" ref="password-reset-modal" hide-footer>
       <pasword-reset-request />
     </b-modal>
   </div>
