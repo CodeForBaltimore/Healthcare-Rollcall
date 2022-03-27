@@ -1,15 +1,15 @@
 <template>
-  <div id="alert">
-    <b-alert
-      :show="this.visibleSecondsLeft"
-      dismissible
-      fade
-      :variant="this.type"
-      @dismiss-count-down="this.countDownChanged"
-    >
-      {{this.message}}
-    </b-alert>
-  </div>
+  <b-alert
+    id="alert"
+    data-test="alert"
+    :show="this.visibleSecondsLeft"
+    dismissible
+    fade
+    :variant="this.type"
+    @dismiss-count-down="this.countDownChanged"
+  >
+    {{this.message}}
+  </b-alert>
 </template>
 
 <script>
