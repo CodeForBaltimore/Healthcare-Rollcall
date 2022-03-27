@@ -1,11 +1,13 @@
 <template>
-  <div data-test="password-reset-request">
+  <div>
     <p class="my-4">Please provide the email of the account to reset the password for:</p>
-    <label>
-      <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" data-test="reset-email" />
-    </label>
-    <b-button type="submit" v-on:click="resetPass()" variant="primary" data-test="reset-password-submit">Reset Password</b-button>
-    <alert v-bind:message="alertMessage" v-bind:type="alertType"/>
+    <form class="login-container" v-on:submit.prevent="resetPass" data-test="reset-password-submit">
+      <label>
+        <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" data-test="reset-email" required/>
+      </label>
+      <b-button type="submit" variant="primary">Reset Password</b-button>
+    </form>
+    <alert v-bind:message="alertMessage" v-bind:type="alertType" data-test="reset-password-alert"/>
   </div>
 </template>
 
@@ -34,22 +36,18 @@ export default {
   },
 
   methods: {
-    resetPass() {
+    async resetPass() {
       if (this.input.reset_email !== "") {
-        const response = postReset(this.input.reset_email)
-        this.changeAlert("Sending", "warning")
-        response
-          .then(data => {
-            if (data.status == 200) {
-              this.changeAlert("Password reset email sent!", "success")
-
-            } else {
-              this.changeAlert("Failed sending email", "warning")
-            }
-          })
-          .catch(() => {
-            this.changeAlert("Failed sending email", "warning")
-          })
+        try {
+          this.changeAlert("Sending", "warning")
+          const response = await postReset(this.input.reset_email)
+          if (response.status != 200) {
+            throw Error()
+          }
+          this.changeAlert("Password reset email sent!", "success")
+        } catch {
+          this.changeAlert("Failed sending email", "warning")
+        }
       }
     },
     changeAlert(message, type) {
