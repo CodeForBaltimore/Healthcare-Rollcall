@@ -42,7 +42,7 @@ describe('Login tests', () => {
     await flushPromises()
 
     expect(wrapper.vm.$router.replace).toHaveBeenCalledTimes(0)
-    expect(wrapper.find('[data-test="alert"]').exists()).toBe(true)
+    expect(wrapper.find('[data-test="alert"]').text()).toContain('blah')
   })
 
   test('Alert does not show when POST succeeds', async () => {
@@ -58,7 +58,7 @@ describe('Login tests', () => {
     await flushPromises()
 
     expect(wrapper.vm.$router.replace).toHaveBeenCalledTimes(1)
-    expect(wrapper.find('[data-test="alert"]').exists()).toBe(false)
+    expect(wrapper.find('[data-test="alert"]').text()).toBe('')
   })
 
 })
