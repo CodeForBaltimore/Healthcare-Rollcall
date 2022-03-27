@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-test="password-reset-request">
     <p class="my-4">Please provide the email of the account to reset the password for:</p>
     <label>
       <b-form-input type="text" name="email" v-model="input.reset_email" placeholder="Email" data-test="reset-email" />
@@ -28,7 +28,7 @@ export default {
       dismissSecs: 5,
       dismissCountDown: 0,
       dismissLoginCountDown: 0,
-      alertType: "warning",
+      alertType: "",
       alertMessage: ""
     }
   },
