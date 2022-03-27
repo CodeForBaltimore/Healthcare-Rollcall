@@ -23,7 +23,7 @@
           />
         </label>
         <div>
-          <a href="#" v-on:click="toggleModalShow">Forgot/Reset Password</a>
+          <a href="#" v-on:click="toggleModalShow" data-test="reset-password-link">Forgot/Reset Password</a>
         </div>
         <b-button type="submit" variant="primary">Login</b-button>
         <alert v-bind:message="alertMessage" v-bind:type="alertType"/>
@@ -61,21 +61,16 @@ export default {
     toggleModalShow() {
       this.modalShow = !this.modalShow
     },
-    login() {
-      this.changeAlert("", "warning")
+    async login() {
       if (this.input.email !== "" && this.input.password !== "") {
-        const response = postLogin(this.input.email, this.input.password)
-        response.then(data => {
-          if (data.status === 200) {
-            this.$root.authenticateUser(data.data)
-            this.$router.replace({ name: "dashboard" })
-          } else {
-            this.changeAlert(data.message, "warning")
-          }
-        })
-      } else {
-        // eslint-disable-next-line no-console
-        console.log("A email and password must be present")
+        this.changeAlert("", "warning")
+        const response = await postLogin(this.input.email, this.input.password)
+        if (response.status === 200) {
+          this.$root.authenticateUser(response.data)
+          this.$router.replace({ name: "dashboard" })
+        } else {
+          this.changeAlert(response.message, "warning")
+        }
       }
     },
     changeAlert(message, type) {
