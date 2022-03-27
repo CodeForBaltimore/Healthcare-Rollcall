@@ -1,9 +1,9 @@
 <template>
-  <b-container fluid="md" id="login">
+  <b-container fluid="md" id="home">
     <b-row>
       <b-col cols="12" md="6">
-        <description/>
-        <tutorial/>
+        <description data-test="description"/>
+        <tutorial data-test="tutorial"/>
       </b-col>
       <b-col cols="12" md="6">
         <login/>
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#login {
+#home {
   background-color: #ffffff;
   margin: auto;
   padding: 20px;
