@@ -1,28 +1,64 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import {BootstrapVue} from 'bootstrap-vue'
-import LoginComponent from '../src/templates/Login.vue'
+import { BootstrapVue } from 'bootstrap-vue'
+import flushPromises from 'flush-promises'
+import Login from '../src/templates/Home/Login.vue'
+import { postLogin } from '../src/utils/api'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+jest.mock("../src/utils/api.js", () => ({
+  postLogin: jest.fn()
+}))
 
-describe('Utils tests', () => {
-    let wrapper = null;
+describe('Login tests', () => {
+  let wrapper = null
 
-    beforeEach(() => {
-        wrapper = mount(LoginComponent, {localVue})
+  beforeEach(() => {
+    const localVue = createLocalVue()
+    localVue.use(BootstrapVue)
+
+    wrapper = mount(Login, {
+      localVue,
+      mocks: {
+        $router: {
+          replace: jest.fn()
+        }
+      }
     })
-    afterEach(() => {
-        wrapper.destroy()
-        jest.resetModules()
-    })
+  })
+  afterEach(() => {
+    wrapper.destroy()
+    jest.resetModules()
+  })
 
-    test('login function called on submit', async () => {
-        wrapper.vm.login  = jest.fn();
+  test('Alert shows when POST returns error', async () => {
+    postLogin.mockImplementation(() => Promise.resolve({
+      status: 400,
+      message: "blah"
+    }))
 
-        await wrapper.get('[data-test="email"]').setValue('test@test.test')
-        await wrapper.get('[data-test="password"]').setValue('test')
-        await wrapper.get('[data-test="login"]').trigger('submit')
+    await wrapper.get('[data-test="email"]').setValue('test@test.test')
+    await wrapper.get('[data-test="password"]').setValue('test')
+    await wrapper.get('[data-test="login"]').trigger('submit')
 
-        expect(wrapper.vm.login).toHaveBeenCalled();
-    })
+    await flushPromises()
+
+    expect(wrapper.vm.$router.replace).toHaveBeenCalledTimes(0)
+    expect(wrapper.find('[data-test="alert"]').exists()).toBe(true)
+  })
+
+  test('Alert does not show when POST succeeds', async () => {
+    postLogin.mockImplementation(() => Promise.resolve({
+      status: 200,
+      message: "blah"
+    }))
+
+    await wrapper.get('[data-test="email"]').setValue('test@test.test')
+    await wrapper.get('[data-test="password"]').setValue('test')
+    await wrapper.get('[data-test="login"]').trigger('submit')
+
+    await flushPromises()
+
+    expect(wrapper.vm.$router.replace).toHaveBeenCalledTimes(1)
+    expect(wrapper.find('[data-test="alert"]').exists()).toBe(false)
+  })
+
 })
