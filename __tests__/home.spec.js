@@ -49,7 +49,7 @@ describe('Login tests', () => {
     })
 
     expect(wrapper.find('[data-test="tutorial"]').text()).toContain('Tutorial')
-    expect(wrapper.find('[data-test="tutorial-slide"]').exists()).toBe(true)
+    expect(wrapper.find('[title="tutorial"]').exists()).toBe(true)
   })
 
   test('Alert shows when POST returns error', async () => {
