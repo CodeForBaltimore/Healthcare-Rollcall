@@ -10,6 +10,11 @@ services:
       - ${PORT:-3000}
     volumes:
       - ./src:/usr/src/src
+      - ./__tests__:/usr/src/__tests__
+      - ./babel.config.js:/usr/src/babel.config.js
+      - ./jest.config.js:/usr/src/jest.config.js
+      - ./jest.init.js:/usr/src/jest.init.js
+      - ./__mocks__:/usr/src/__mocks__
     env_file: .env
     environment:
       - ${PORT:-3000}

@@ -4,7 +4,7 @@ import ContactListComponent from "./templates/ContactList.vue"
 import DashboardComponent from "./templates/Dashboard.vue"
 import FacilityComponent from "./templates/Facility.vue"
 import FacilityEditComponent from "./templates/FacilityEdit.vue"
-import LoginComponent from "./templates/Login.vue"
+import HomeComponent from "./templates/Home/Home.vue"
 import PasswordResetComponent from "./templates/PasswordReset.vue"
 import Router from 'vue-router'
 import Vue from 'vue'
@@ -23,7 +23,7 @@ export default new Router({
         {
             path: "/login",
             name: "login",
-            component: LoginComponent
+            component: HomeComponent
         },
         {
             path: "/dashboard",
